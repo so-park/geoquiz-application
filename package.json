@@ -1,0 +1,28 @@
+{
+  "name": "csproject",
+  "version": "1.0.0",
+  "description": "front end for database",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SionPark126/csProject.git"
+  },
+  "author": "Sion Park",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SionPark126/csProject/issues"
+  },
+  "homepage": "https://github.com/SionPark126/csProject#readme",
+  "dependencies": {
+    "compression": "^1.7.4",
+    "dotenv": "^7.0.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "mongo": "^0.1.0",
+    "mongoose": "^5.4.20",
+    "request": "^2.88.0"
+  }
+}

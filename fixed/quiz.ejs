@@ -1,0 +1,163 @@
+<div class="row">
+        <div class = "col-lg-6">
+          <div id="map"></div>
+          <% if (practice == false){
+            var quiz = "Quiz"
+            console.log("enterd the quiz page and loading map")%>
+             <button type="submit" class="btn btn-default" id="start" onclick="Start()">Start the <%= quiz %></button>
+            <form class="form-horizontal" id="sentcomment" method ="POST" style ="display: inline" action ="/quizStarted" >
+              <input class="hidden" name ="assignmentId" type = "hidden" value= <%= assignment %> > </input>
+                <input class="hidden" name ="courseId" type = "hidden" value = <%= course %>></input>
+                  <input class="hidden" name = "userId" type = "hidden"  value = <%= user %>></input>
+           </form>
+          <% } else if (practice){
+             quiz = "Practice Quiz"
+             console.log("Entered practice quiz"); %>
+             <button type="button" class="btn btn-default practice" id="start" onclick="Start()" >Start the <%= quiz %></button>
+           <% } %>
+
+
+
+          <button type="button" class="btn btn-default" id="defaultZoom" onclick="DefaultZoom()">Zoom Out to Default</button>
+          <button type="button" class="btn btn-default" id="export-png">Download PNG</button>
+          <p> </p>
+        </div>
+
+
+      <br><br>
+      <!-- <div id="list">
+      </div> -->
+
+    <div id="quiz" class= "col-lg-6">
+
+       <form class="form-horizontal" id ="takeQuiz" style="display: none" method ="POST" action ="/checkanswers" >
+         <!-- onload="FillHidden()" -->
+        <div class="form-group">
+          <div class="row">
+          <label class="col-sm-1" > </label>
+          <label class= "col-sm-5 title"> Capital </label>
+          <label class="col-sm-1" > </label>
+          <label class= "col-sm-5 title"> Country </label>
+         </div>
+        </div>
+
+
+       <div class="form-group">
+         <div class="row">
+         <label class="col-sm-1 quizNumber" for="1">1 </label>
+          <input class="col-sm-5 answer" name="answer" type="text" class="form-control" id="1cap">
+          <label class="col-sm-1" > </label>
+         <input  name ="id" id="1" type = "hidden" > </input>
+         <input class="col-sm-5 answer" name="answer" type="text" class="form-control" >
+
+
+        </div>
+       </div>
+
+       <div class="form-group">
+         <div class="row">
+         <label class="col-sm-1 quizNumber" for="2">2 </label>
+         <input class="col-sm-5 answer" name="answer" type="text" class="form-control">
+         <label class="col-sm-1" > </label>
+          <input  name ="id" id="2" type = "hidden" > </input>
+         <input class="col-sm-5 answer" name="answer" type="text" class="form-control" id="2cap">
+         </div>
+      </div>
+
+       <div class="form-group">
+         <div class="row">
+         <label class="col-sm-1 quizNumber" for="3">3 </label>
+         <input class="col-sm-5 answer" name="answer" type="text" class="form-control">
+         <label class="col-sm-1" > </label>
+         <input  name ="id" id="3" type = "hidden" > </input>
+         <input class="col-sm-5 answer" name="answer" type="text" class="form-control" id="3cap">
+         </div>
+       </div>
+
+       <div class="form-group">
+         <div class="row">
+         <label class="col-sm-1 quizNumber" for="4">4 </label>
+         <input class="col-sm-5 answer" name="answer" type="text" class="form-control">
+         <label class="col-sm-1" > </label>
+          <input  name ="id" id="4" type = "hidden" > </input>
+         <input class="col-sm-5 answer" name="answer" type="text" class="form-control" id="4cap">
+         </div>
+       </div>
+
+       <div class="form-group">
+         <div class="row">
+         <label class="col-sm-1 quizNumber" for="5">5 </label>
+         <input class="col-sm-5 answer" name="answer" type="text" class="form-control">
+         <label class="col-sm-1" > </label>
+          <input  name ="id" id="5" type = "hidden" > </input>
+         <input class="col-sm-5 answer" name="answer" type="text" class="form-control" id="5cap">
+         </div>
+       </div>
+
+       <div class="form-group">
+         <div class="row">
+         <label class="col-sm-1 quizNumber" for="6">6 </label>
+         <input class="col-sm-5 answer" name="answer" type="text" class="form-control">
+         <label class="col-sm-1" > </label>
+          <input  name ="id" id="6" type = "hidden" > </input>
+         <input class="col-sm-5 answer" name="answer" type="text" class="form-control" id="6cap">
+         </div>
+       </div>
+
+       <div class="form-group">
+         <div class="row">
+         <label class="col-sm-1 quizNumber" for="7">7 </label>
+         <input class="col-sm-5 answer" name="answer" type="text" class="form-control">
+         <label class="col-sm-1" > </label>
+          <input  name ="id" id="7" type = "hidden" > </input>
+         <input class="col-sm-5 answer" name="answer" type="text" class="form-control" id="7cap">
+         </div>
+       </div>
+
+       <div class="form-group">
+         <div class="row">
+         <label class="col-sm-1 quizNumber" for="8">8 </label>
+         <input class="col-sm-5 answer" name="answer" type="text" class="form-control" >
+         <label class="col-sm-1" > </label>
+          <input  name ="id" id="8" type = "hidden" > </input>
+         <input class="col-sm-5 answer" name="answer" type="text" class="form-control" id="8cap">
+         </div>
+       </div>
+
+      <div class="form-group">
+         <div class="row">
+         <label class="col-sm-1 quizNumber" for="9">9 </label>
+         <input class="col-sm-5 answer" name="answer" type="text" class="form-control" >
+         <label class="col-sm-1" > </label>
+          <input  name ="id" id="9" type = "hidden" > </input>
+         <input class="col-sm-5 answer" name="answer" type="text" class="form-control" id="9cap">
+         </div>
+       </div>
+
+      <div class="form-group">
+        <div class="row">
+         <label class="col-sm-1 quizNumber" for="10">10</label>
+         <input class="col-sm-5 answer" name="answer" type="text" class="form-control">
+         <label class="col-sm-1" > </label>
+          <input  name ="id" id="10" type = "hidden" > </input>
+         <input class="col-sm-5 answer" name="answer" type="text" class="form-control" id="10cap">
+       </div>
+      </div>
+
+<% if (practice == false ){
+  console.log("it is a reqlquiz so sending ids back"); %>
+        <input class="hidden" name ="hidden" type = "hidden" value= <%= assignment %> > </input>
+          <input class="hidden" name ="hidden" type = "hidden" value = <%= course %>></input>
+            <input class="hidden" name = "hidden" type = "hidden"  value = <%= user %>></input>
+<% } %>
+      <input type="hidden" name= "practice" value = <%= practice %>></input>
+        <input type="hidden" name= "continent" value = <%= continent.trim() %>></input>
+       <button type="submit" id="submit" class="btn btn-default">Submit </button>
+       <!-- onclick ="CheckAnswer()" -->
+      </form>
+    </div>
+</div>
+   <!-- <div id="info"></div> -->
+   <div id = "myModal">
+       <div class="loader"></div>
+   </div>
