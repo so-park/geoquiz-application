@@ -319,11 +319,11 @@ exports.selectContinent = function SelectContinentHandler (request, response){
 
 exports.getCountryInfo =function getCountryHandler(request, response){
 	console.log("accessing database");
-	console.log(request.params);
-	 Country.find({ "properties.name" : request.params.countryName}).
+	console.log(request.query.countryName);
+	 Country.find({ "properties.name" : request.query.countryName}).
 	 then(function HandleFindOne(data){
 		 console.log(data);
-		 response.send(data)
+		 response.render("crud", {data:data});
 	} )
 };
 

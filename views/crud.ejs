@@ -23,6 +23,7 @@
   </head>
   <body>
 
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="#">Navbar</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,14 +51,106 @@
         </ul>
       </div>
     </nav>
-
+    <% var data
+        var nameIndex
+        var capIndex
+        var nameLength
+        var capitalLength %>
     <div class="container">
-      <form method="GET" action="getCountryInfo">
-          Enter country name: <input id="countryName" type="text">
+      <form method="GET" action="/getCountryInfo">
+          Enter country name: <input id="countryName" name="countryName" type="text">
          <input type="submit" value="submit">
       </form>
-    </div>
 
+    <%if (data != undefined){ %>
+        <% data = data[0] %>
+      <table class="table">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Continent</th>
+          <td><%= data.properties.continent %></td>
+        </tr>
+        <tr>
+          <th scope="row">Capital</th>
+          <td><%= data.properties.capital %></td>
+        </tr>
+        <tr>
+          <th scope="row">Country</th>
+          <td><%= data.properties.name %></td>
+        </tr>
+
+          <% if (data.properties.misspell_name.length != 0) {
+                  nameIndex = data.properties.misspell_name.indexOf("3")
+           } else {
+                  nameIndex = 0
+           }
+          if (data.properties.misspell_capital.length != 0) {
+                  capIndex = data.properties.misspell_capital.indexOf("3")
+           } else {
+                  capIndex = 0
+           }
+          nameLength = data.properties.misspell_name.length
+              capitalLength= data.properties.misspell_capital.length %>
+        <tr>
+          <th scope="row">Alternative Answers for Capital</th>
+                <td>
+                 <% for (var i =0; i < capIndex; i++){  %>
+                    <%= data.properties.misspell_capital[i]%>
+                 <% } %>
+                 </td>
+
+        </tr>
+        <tr>
+          <th scope="row">Misspellings for Capital (3)</th>
+          <td>
+                <% for (var i =capIndex+1; i < capitalLength; i++){  %>
+                      <%= data.properties.misspell_capital[i]%>
+                    </br>
+                   <% } %>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Alternative Answers for Country</th>
+          <td>
+                  <% for (var i =0; i < nameIndex; i++){  %>
+                      <%= data.properties.misspell_name[i] %>
+                      </br>
+                 <% } %>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Misspellings for Country (3)</th>
+                <td>
+                  <% for (var i =nameIndex+1; i < nameLength; i++){  %>
+                      <%= data.properties.misspell_name[i]%>
+                    </br>
+                  <%} %>
+                  </td>
+        </tr>
+        <tr>
+          <th scope="row">Geometry Type</th>
+            <td>
+                <%= data.geometry.type %>
+            </td>
+        </tr>
+        <tr>
+          <!-- <th scope="row">Geometry Coordinates</th>
+            <td>
+                <%= data.geometry.coordinates %>
+            </td> -->
+        </tr>
+
+
+      </tbody>
+    </table>
+    <%} %>
+      </div>
     <!-- <script src="dbFunctions.js" type="text/javascript" >
     </script> -->
   </body>

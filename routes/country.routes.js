@@ -132,6 +132,7 @@ router.get('/countries/:continent', countries.findCountriesInContinent);
 router.get('/quiz/:continent', countries.sendRandomCountries);
 router.get('/background/:continent', countries.allButOneContinent);
 router.get('/getCountryInfo', countries.getCountryInfo);
+router.post('/')
 
 
 
