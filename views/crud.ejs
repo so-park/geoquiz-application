@@ -12,13 +12,11 @@
         <!-- <script src="https://unpkg.com/@material-ui/core/umd/material-ui.production.min.js" crossorigin="anonymous"></script> -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <!-- Load our React component. -->
         <!-- <script src="like_button.js"></script> -->
         <!--  -->
-        <script type="text/javascript">
 
-        </script>
 
   </head>
   <body>
@@ -59,30 +57,44 @@
     <div class="container">
       <form method="GET" action="/getCountryInfo">
           Enter country name: <input id="countryName" name="countryName" type="text">
-         <input type="submit" value="submit">
+         <input id ="getData" type="submit" value="submit">
       </form>
 
     <%if (data != undefined){ %>
         <% data = data[0] %>
-      <table class="table">
+    <!-- <form class="form-horizontal" id ="updateData" method ="PUT" action ="/update" > -->
+      <table class="table" id="databaseTable">
       <thead>
         <tr>
           <th scope="col"></th>
           <th scope="col">Content</th>
+          <th scope="col">Update</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <th scope="row">Continent</th>
-          <td><%= data.properties.continent %></td>
+          <td><div class="row_data" edit_type="click"><%= data.properties.continent %></div></td>
+          <td>
+              <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
+              <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
+          </td>
         </tr>
         <tr>
           <th scope="row">Capital</th>
-          <td><%= data.properties.capital %></td>
+          <td><div class="row_data" edit_type="click"><%= data.properties.capital %></div></td>
+          <td>
+              <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info" > Save </button></span>
+              <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info" > Cancel </button></span>
+          </td>
         </tr>
         <tr>
           <th scope="row">Country</th>
-          <td><%= data.properties.name %></td>
+          <td><div class="row_data" edit_type="click"><%= data.properties.name %></div></td>
+          <td>
+              <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
+              <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
+          </td>
         </tr>
 
           <% if (data.properties.misspell_name.length != 0) {
@@ -99,60 +111,190 @@
               capitalLength= data.properties.misspell_capital.length %>
         <tr>
           <th scope="row">Alternative Answers for Capital</th>
-                <td>
+                <td><div class="row_data" edit_type="click">
                  <% for (var i =0; i < capIndex; i++){  %>
                     <%= data.properties.misspell_capital[i]%>
                  <% } %>
-                 </td>
+               </div></td>
+                <td>
+                    <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
+                    <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
+                </td>
 
         </tr>
         <tr>
           <th scope="row">Misspellings for Capital (3)</th>
-          <td>
-                <% for (var i =capIndex+1; i < capitalLength; i++){  %>
-                      <%= data.properties.misspell_capital[i]%>
-                    </br>
-                   <% } %>
-          </td>
+              <td><div class="row_data" edit_type="click">
+              <% for (var i =capIndex+1; i < capitalLength; i++){  %>
+                    <%= data.properties.misspell_capital[i]%>
+                  </br>
+                 <% } %>
+              </div></td>
+              <td>
+                  <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
+                  <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info">Cancel </button></span>
+              </td>
         </tr>
         <tr>
           <th scope="row">Alternative Answers for Country</th>
-          <td>
-                  <% for (var i =0; i < nameIndex; i++){  %>
-                      <%= data.properties.misspell_name[i] %>
-                      </br>
-                 <% } %>
-          </td>
+              <td><div class="row_data" edit_type="click">
+                <% for (var i =0; i < nameIndex; i++){  %>
+                    <%= data.properties.misspell_name[i] %>
+                    </br>
+               <% } %>
+             </div></td>
+             <td>
+                 <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
+                 <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
+             </td>
         </tr>
         <tr>
           <th scope="row">Misspellings for Country (3)</th>
-                <td>
-                  <% for (var i =nameIndex+1; i < nameLength; i++){  %>
-                      <%= data.properties.misspell_name[i]%>
-                    </br>
-                  <%} %>
-                  </td>
+              <td><div class="row_data" edit_type="click">
+                <% for (var i =nameIndex+1; i < nameLength; i++){  %>
+                    <%= data.properties.misspell_name[i]%>
+                  </br>
+                <%} %>
+              </div></td>
+              <td>
+                  <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
+                  <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
+              </td>
         </tr>
         <tr>
           <th scope="row">Geometry Type</th>
-            <td>
+            <td><div class="row_data" edit_type="click">
                 <%= data.geometry.type %>
+            </div></td>
+            <td>
+                <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
+                <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
             </td>
         </tr>
         <tr>
           <!-- <th scope="row">Geometry Coordinates</th>
-            <td>
+            <td><div class="row_data" edit_type="click">
                 <%= data.geometry.coordinates %>
-            </td> -->
+            </div></td>
+            <td><span class="btn-edit"><button> Edit </button></span>
+                <span class="btn-save"><button> Edit </button></span>
+                <span class="btn-cancel"><button> Edit </button></span>
+            </td>-->
         </tr>
-
-
+        <%} %>
       </tbody>
     </table>
-    <%} %>
-      </div>
+
+  <!-- </form> -->
+
+
+  </div>
     <!-- <script src="dbFunctions.js" type="text/javascript" >
     </script> -->
+    <script type="text/javascript">
+    $(document).on('click', '.row_data', function(event)
+    {
+    	event.preventDefault();
+
+    	if($(this).attr('edit_type') == 'button')
+    	{
+    		return false;
+    	}
+      var tbl_row = $(this).closest('tr');
+      tbl_row.find('.btn-save').css({"visibility": "visible"});
+	    tbl_row.find('.btn-cancel').css({"visibility": "visible"});
+
+      $(this).attr('original_entry', $(this).html());
+
+    	//make div editable
+    	$(this).closest('div').attr('contenteditable', 'true');
+    	//add bg css
+    	$(this).addClass('bg-warning').css('padding','5px');
+
+    	$(this).focus();
+    })
+
+
+    $(document).on('click', '.btn-cancel', function(event)
+    	{
+    		event.preventDefault();
+    		var tbl_row = $(this).closest('tr');
+    	//	var row_id = tbl_row.attr('row_id');
+    		//hide save and cacel buttons
+    		tbl_row.find('.btn-save').css({"visibility": "hidden"});
+    		tbl_row.find('.btn-cancel').css({"visibility": "hidden"});
+
+    		//make the whole row editable
+    		tbl_row.find('.row_data')
+    		.attr('edit_type', 'click')
+    		.removeClass('bg-warning')
+    		.css('padding','')
+
+    		tbl_row.find('.row_data').each(function(index, val)
+    		{
+    			$(this).html( $(this).attr('original_entry') );
+    		});
+    	});
+
+    $(document).on('focusout', '.row_data', function(event)
+    {
+    	event.preventDefault();
+
+    	if($(this).attr('edit_type') == 'button')
+    	{
+    		return false;
+    	}
+    	var row_div = $(this)
+    	.removeClass('bg-warning') //add bg css
+    	.css('padding','')
+    })
+
+    //Send Update Request
+    $(document).on('click', '.btn_save', function(event)
+    {
+    	event.preventDefault();
+    	var tbl_row = $(this).closest('tr');
+
+    	var row_id = tbl_row.attr('row_id');
+
+
+    	//hide save and cacel buttons
+    	tbl_row.find('.btn_save').hide();
+    	tbl_row.find('.btn_cancel').hide();
+
+    	//show edit button
+    	tbl_row.find('.btn_edit').show();
+
+
+    	//make the whole row editable
+    	tbl_row.find('.row_data')
+    	.attr('edit_type', 'click')
+    	.removeClass('bg-warning')
+    	.css('padding','')
+
+    	//--->get row data > start
+    	var arr = {};
+    	tbl_row.find('.row_data').each(function(index, val)
+    	{
+    		var col_name = $(this).attr('col_name');
+    		var col_val  =  $(this).html();
+    		arr[col_name] = col_val;
+    	});
+    	//--->get row data > end
+
+    	//use the "arr"	object for your ajax call
+    	$.extend(arr, {row_id:row_id});
+
+    	//out put to show
+    	$('.post_msg').html( '<pre class="bg-success">'+JSON.stringify(arr, null, 2) +'</pre>')
+
+
+    });
+
+
+
+    </script>
   </body>
+  <!-- <script type="text/javascript" src="functions2.js"></script> -->
 
 </html>

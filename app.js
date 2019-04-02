@@ -90,10 +90,10 @@ app.use(compression());
 //   next();
 // });
 //serve static files in a folder and cache six months
-app.use('/', express.static(path.join(__dirname,'views'),{
-				maxAge: 2592000*2, //about a month *2
-				etag: false
-			}));
+// app.use('/', express.static(path.join(__dirname,'views'),{
+// 				maxAge: 2592000*2, //about a month *2
+// 				etag: false
+// 			}));
 app.use('/', router);
 app.all('/:action', function(request, response) {});
 

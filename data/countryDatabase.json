@@ -2092,7 +2092,7 @@
         "name": "South Korea",
         "id": "KOR",
         "capital": "Seoul",
-        "misspell_name": ["Republic of Korea","hanguk","3","ROK"],
+        "misspell_name": ["Republic of Korea","Hanguk","3","ROK"],
         "misspell_capital": ["3","Soul"],
         "continent": "asia"
      },
