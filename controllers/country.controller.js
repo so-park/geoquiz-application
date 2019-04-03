@@ -328,7 +328,8 @@ exports.getCountryInfo =function getCountryHandler(request, response){
 };
 
 exports.update = function UpdateHandler(request, response){
-
+		console.log("update handler entered");
+		console.log(request.body);
 };
 exports.delete = function DeleteHandler(request, response){
 };
