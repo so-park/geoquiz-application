@@ -12,9 +12,9 @@ const CountrySchema = mongoose.Schema({
 
 	type: String,
 	properties: {
-		name: String,
+		name: [],
 		id: String,
-		capital: String,
+		capital: [],
 		misspell_name: [],
 		misspell_capital: [],
 		continent: String,

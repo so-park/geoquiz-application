@@ -29,8 +29,8 @@ exports.checkAnswers = function checkAnswersHandler(request, response){
 	var input = request.body.answer;  //array of 20 inputs cap,name,cap, ....
 	var correctAnswers =[]; // array that stores 20 correct answers in the same order as input
 	var correct = []; //each item has "wrong","right","halfright"
-	var misspell_name;
-	var misspel_capital;
+	var misspell_name, country_name;
+	var misspel_capital, capital_name;
 	var score=0 ;
 	var tenCountries = request.body.id;
 	 var isPractice = request.body.practice;
@@ -53,80 +53,69 @@ exports.checkAnswers = function checkAnswersHandler(request, response){
 					  var capital = input[2*i].toLowerCase().trim();
 					  var name = input[(2*i)+1].toLowerCase().trim();
 						var selectedCountry =  country[index].properties;
-						correctAnswers[2*i]= selectedCountry.capital;
-						correctAnswers[(2*i)+1] = selectedCountry.name;
+						capital_name = selectedCountry.capital;
+						country_name = selectedCountry.name;
+						correctAnswers[2*i]= capital_name[0];
+						correctAnswers[(2*i)+1] = country_name[0];
+
 						misspell_name =selectedCountry.misspell_name;
 						misspell_capital =selectedCountry.misspell_capital;
 
-						 if ( capital != correctAnswers[2*i].toLowerCase()){
-								correct[2*i] = "wrong";
-								if ( capital == ""){
-									input[2*i] ="No entry";
-								}
-								else if ( misspell_capital.length != 0){
-
-									//after "3" it will contain misspellings for 3 points
-									for (var j = 0; j < misspell_capital.length ; j++){
-										if (misspell_capital.includes("3")){
-											var point = misspell_capital.indexOf("3")
-											if( capital == misspell_capital[j].toLowerCase() ){
-												if(j < point){
-													correct[2*i] = "right"
-													score += 5;
-												}
-												else{
+						//Check if the inputed capital name is same
+						for (var j =0; j < capital_name.length; j++)
+						{
+							if (capital == capital_name[j].toLowerCase())
+							{
+								correct[2*i] ="right"
+								score += 5;
+								break;
+							}
+							correct[2*i]="wrong"
+						}
+						if (correct[2*i]=="wrong" && misspell_capital.length != 0)
+						{
+								for (var j = 0; j < misspell_capital.length ; j++)
+								{
+										if( capital == misspell_capital[j].toLowerCase() )
+										{
 													correct[2*i] = "halfright"
 													score += 3;
-												}
-											}
+													break;
 										}
-										else if( capital == misspell_capital[j].toLowerCase() ){
-											correct[2*i] = "right";
-											score += 5;
-										}
-									}
-						 		}
+								}
 						}
-						else {
-							correct[2*i] = "right";
-							score += 5;
-						};
+						if (correct[2*i]=="wrong" && capital ==""){
+							input[2*i]="No entry";
+						}
 
-						if ( name != correctAnswers[(2*i)+1].toLowerCase()){
-							 correct[(2*i)+1] = "wrong";
-							 if ( name == ""){
-								 input[(2*i)+1] ="No entry";
-							 }
-							 else if ( misspell_name.length != 0){
-								 for (var j = 0; j < misspell_name.length ; j++){
-									 if (misspell_name.includes("3")){
-										 var point = misspell_name.indexOf("3")
-										 console.log(point)
-										 if( name == misspell_name[j].toLowerCase() ){
-											 if(j < point){
-												 correct[(2*i)+1] = "right";
-												 score += 5;
-											 }
-											 else{
+						//Check for country names
+						for (var j =0; j < country_name.length; j++)
+						{
+							if (name == country_name[j].toLowerCase())
+							{
+								correct[(2*i)+1] ="right"
+								score += 5;
+								break;
+							}
+							correct[(2*i)+1]="wrong"
+						}
+						if (correct[(2*i)+1]=="wrong" && misspell_name.length != 0)
+						{
+								for (var j = 0; j < misspell_name.length ; j++)
+								{
+										if( capital == misspell_name[j].toLowerCase() )
+										{
+													correct[(2*i)+1] = "halfright"
+													score += 3;
+													break;
+										}
+								}
+						}
+						if (correct[(2*i)+1]=="wrong" && name ==""){
+							input[(2*i)+1]="No entry";
+						}
 
-												  correct[(2*i)+1] = "halfright"
-												  score += 3;
-											 }
-										 }
-									 }
-									 else if ( name == misspell_name[j].toLowerCase() ){
-										 console.log(misspell_name[j]);
-										 correct[(2*i)+1] = "right";
-										 score += 5;
-									 }
-								 }
-							 }
-					 }
-					 else {
-						 correct[(2*i)+1] = "right";
-						 score += 5;
-					 };
-				 }
+
 
 				//	 var answersAsComments =JSON.stringify(input);
 					 if (isPractice =="true"){

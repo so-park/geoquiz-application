@@ -108,13 +108,16 @@
                   capIndex = 0
            }
           nameLength = data.properties.misspell_name.length
-              capitalLength= data.properties.misspell_capital.length %>
+              capitalLength= data.properties.misspell_capital.length
+          var dataToUpdateCapital=[];
+          var dataToUpdateCountry=[];%>
         <tr>
           <th scope="row">Alternative Answers for Capital</th>
                 <td><div class="row_data" edit_type="click" value=<%= capIndex %>>
                   <% var altCaps = data.properties.misspell_capital.splice(0,capIndex)
                       console.log(altCaps)%>
                  <% for (var i =0; i < capIndex; i++){  %>
+                    <% dataToUpdateCapital[i]=data.properties.misspell_capital[i] %>
                     <%= data.properties.misspell_capital[i]%>
                  <% } %>
                </div></td>
@@ -127,12 +130,14 @@
         <tr>
           <th scope="row">Misspellings for Capital (3)</th>
               <td><div class="row_data" edit_type="click" value=<%= capIndex %>>
+                    <%dataToUpdateCapital[capIndex] = "3" %>
+                    <% for (var i =capIndex+1; i < capitalLength; i++){  %>
+                        <% dataToUpdateCapital[i]=data.properties.misspell_capital[i] %>
+                       <%= data.properties.misspell_capital[i]%><br/>
 
-                      <% console.log(typeof(data.properties.misspell_capital))%>
-                    <%var list = data.properties.misspell_capital.splice(capIndex+1,capitalLength)%>
-                    <%=list.toString().split(',').join('\n')%>
-
-
+                    <% } %>
+                    <% console.log(dataToUpdateCapital) %>
+                    <input class="other_row_data"  type="hidden" value= <%= dataToUpdateCapital %>>
               </div></td>
               <td>
                   <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
@@ -258,7 +263,7 @@
     {
     	event.preventDefault();
     	var tbl_row = $(this).closest('tr');
-
+  
     	var row_id = tbl_row.attr('row_id');
 
 
@@ -289,11 +294,16 @@
     	// //out put to show
     	// $('.post_msg').html( '<pre class="bg-success">'+JSON.stringify(arr, null, 2) +'</pre>')
       console.log("Save button clicked")
-      console.log();
+
 
       var middleIndex = tbl_row.find('.row_data').attr('value')
-console.log(tbl_row.find('.row_data').html());
-      console.log(tbl_row.find('.row_data').html().split("\n"));
+      var text = tbl_row.find('.row_data').html().replace(/<br>/g,'').trim();
+
+      console.log(tbl_row.find('.row_data').html().replace(/<br>/g,''));
+      console.log()
+       console.log(typeof(tbl_row.find('.row_data').html().replace(/<br>/g,'')));
+
+      console.log(text.split(/\s+/));
       // $.ajax({
       //   url: '/update',
       //   type: 'PUT',

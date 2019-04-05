@@ -101,7 +101,7 @@ var beforeHighlight = 0;
       format: new ol.format.GeoJSON()
     }),
     style: function(feature){
-      if (feature.get('name') == "BB"){
+      if (feature.get('name')[0] == "BB"){
         // console.log("entered bb")
         if (beforeHighlight < 14){
           bbFeatures[bbindex] = feature;
