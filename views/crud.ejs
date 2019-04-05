@@ -72,7 +72,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr value = "continent">
           <th scope="row">Continent</th>
           <td><div class="row_data" edit_type="click"><%= data.properties.continent %></div></td>
           <td>
@@ -80,97 +80,108 @@
               <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
           </td>
         </tr>
-        <tr>
+        <tr value ="capital">
           <th scope="row">Capital</th>
-          <td><div class="row_data" edit_type="click"><%= data.properties.capital %></div></td>
+          <td><div class="row_data" edit_type="click" value ="0"><%= data.properties.capital[0] %></div></td>
           <td>
               <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info" > Save </button></span>
               <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info" > Cancel </button></span>
           </td>
         </tr>
-        <tr>
+        <tr value ="name">
           <th scope="row">Country</th>
-          <td><div class="row_data" edit_type="click"><%= data.properties.name %></div></td>
+          <td><div class="row_data" edit_type="click" value = "0"><%= data.properties.name[0] %></div></td>
           <td>
               <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
               <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
           </td>
         </tr>
 
-          <% if (data.properties.misspell_name.length != 0) {
-                  nameIndex = data.properties.misspell_name.indexOf("3")
-           } else {
-                  nameIndex = 0
-           }
-          if (data.properties.misspell_capital.length != 0) {
-                  capIndex = data.properties.misspell_capital.indexOf("3")
-           } else {
-                  capIndex = 0
-           }
-          nameLength = data.properties.misspell_name.length
-              capitalLength= data.properties.misspell_capital.length
-          var dataToUpdateCapital=[];
-          var dataToUpdateCountry=[];%>
-        <tr>
+        <tr value ="capital">
           <th scope="row">Alternative Answers for Capital</th>
-                <td><div class="row_data" edit_type="click" value=<%= capIndex %>>
-                  <% var altCaps = data.properties.misspell_capital.splice(0,capIndex)
-                      console.log(altCaps)%>
-                 <% for (var i =0; i < capIndex; i++){  %>
-                    <% dataToUpdateCapital[i]=data.properties.misspell_capital[i] %>
-                    <%= data.properties.misspell_capital[i]%>
+                <td>
+                  <% var capLen = data.properties.capital.length  %>
+                   <% if ( capLen > 1){ %>
+                      <% for (var i =1; i < capLen; i++ ){ %>
+                        <div class="row_data" edit_type="click" value =<%=i %>>
+                          <%= data.properties.capital[i]%>
+                        </div>
+                    <%  } %>
                  <% } %>
-               </div></td>
+               </td>
                 <td>
                     <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
                     <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
                 </td>
 
         </tr>
-        <tr>
+        <tr value ="misspell_capital">
           <th scope="row">Misspellings for Capital (3)</th>
-              <td><div class="row_data" edit_type="click" value=<%= capIndex %>>
-                    <%dataToUpdateCapital[capIndex] = "3" %>
-                    <% for (var i =capIndex+1; i < capitalLength; i++){  %>
-                        <% dataToUpdateCapital[i]=data.properties.misspell_capital[i] %>
-                       <%= data.properties.misspell_capital[i]%><br/>
-
-                    <% } %>
-                    <% console.log(dataToUpdateCapital) %>
-                    <input class="other_row_data"  type="hidden" value= <%= dataToUpdateCapital %>>
-              </div></td>
+              <td>
+                <% var mCapLen = data.properties.misspell_capital.length  %>
+                <% if (mCapLen !=0) { %>
+                    <% for (var i =0; i < mCapLen; i++ ){ %>
+                        <div class="row_data" edit_type="click" value = <%= i %>>
+                            <%= data.properties.misspell_capital[i]%>
+                        </div>
+                  <% } %>
+               <% } %>
+            </td>
               <td>
                   <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
                   <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info">Cancel </button></span>
               </td>
         </tr>
-        <tr>
-          <th scope="row">Alternative Answers for Country</th>
-              <td><div class="row_data" edit_type="click" value=<%= nameIndex %>>
-                <% for (var i =0; i < nameIndex; i++){  %>
-                    <%= data.properties.misspell_name[i] %>
-
+        <tr value ="misspell_capital">
+          <th scope="row">Misspellings for Capital (3 TEST)</th>
+              <td><div class="row_data" edit_type="click" >
+                <% var mCapLen = data.properties.misspell_capital.length  %>
+                <% if (mCapLen !=0) { %>
+                    <!-- <% for (var i =0; i < mCapLen; i++ ){ %> -->
+                            <%= data.properties.misspell_capital%>
+                  <!-- <% } %> -->
                <% } %>
-             </div></td>
+            </div>  </td>
+              <td>
+                  <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
+                  <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info">Cancel </button></span>
+              </td>
+        </tr>
+        <tr value ="name">
+          <th scope="row">Alternative Answers for Country</th>
+              <td>
+                <% var nameLen = data.properties.name.length  %>
+                 <% if ( nameLen > 1){ %>
+                    <% for (var i =1; i < nameLen; i++ ){ %>
+                      <div class="row_data" edit_type="click" value = <%=i %>>
+                      <%= data.properties.name[i]%>
+                      </div>
+                  <%  } %>
+               <% } %>
+             </td>
              <td>
                  <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
                  <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
              </td>
         </tr>
-        <tr>
+        <tr value ="misspell_name">
           <th scope="row">Misspellings for Country (3)</th>
-              <td><div class="row_data" edit_type="click" value=<%= nameIndex %> >
-                <% for (var i =nameIndex+1; i < nameLength; i++){  %>
-                    <%= data.properties.misspell_name[i]%>
-                  </br>
-                <%} %>
-              </div></td>
+              <td>
+                <% var mNameLen = data.properties.misspell_name.length  %>
+                <% if (mNameLen !=0) { %>
+                    <% for (var i =0; i < mNameLen; i++ ){ %>
+                        <div class="row_data" edit_type="click" value = <%= i %>>
+                          <%= data.properties.misspell_name[i]%>
+                      </div>
+                <%  } %>
+             <% } %>
+            </td>
               <td>
                   <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
                   <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
               </td>
         </tr>
-        <tr>
+        <tr value ="geometry">
           <th scope="row">Geometry Type</th>
             <td><div class="row_data" edit_type="click">
                 <%= data.geometry.type %>
@@ -180,6 +191,7 @@
                 <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
             </td>
         </tr>
+
         <tr>
           <!-- <th scope="row">Geometry Coordinates</th>
             <td><div class="row_data" edit_type="click">
@@ -210,6 +222,7 @@
     		return false;
     	}
       var tbl_row = $(this).closest('tr');
+
       tbl_row.find('.btn-save').css({"visibility": "visible"});
 	    tbl_row.find('.btn-cancel').css({"visibility": "visible"});
 
@@ -262,21 +275,32 @@
     $(document).on('click', '.btn-save', function(event)
     {
     	event.preventDefault();
+
     	var tbl_row = $(this).closest('tr');
-  
-    	var row_id = tbl_row.attr('row_id');
+      var field = tbl_row.attr('value');
+
+      //send field: new array
+
+      console.log(tbl_row.find('.row_data').attr('original_entry'));
+      console.log(field);
+
+      //hide save and cacel buttons
+      tbl_row.find('.btn-save').css({"visibility": "hidden"});
+      tbl_row.find('.btn-cancel').css({"visibility": "hidden"});
 
 
-    	//hide save and cacel buttons
-    	tbl_row.find('.btn-save').css({"visibility": "hidden"});
-    	tbl_row.find('.btn-cancel').css({"visibility": "hidden"});
+    //	var arrayToUpdate = tbl_row.find('.cell_data').attr('value');
+      //console.log(arrayToUpdate.split(','));
+
+
+
 
 
     	//make the whole row editable
-    	tbl_row.find('.row_data')
-    	.attr('edit_type', 'click')
-    	.removeClass('bg-warning')
-    	.css('padding','')
+    	// tbl_row.find('.row_data')
+    	// .attr('edit_type', 'click')
+    	// .removeClass('bg-warning')
+    	// .css('padding','')
 
     	//--->get row data > start
     	// var arr = {};
@@ -296,14 +320,11 @@
       console.log("Save button clicked")
 
 
-      var middleIndex = tbl_row.find('.row_data').attr('value')
+      var arrayIndex = tbl_row.find('.row_data').attr('value')
       var text = tbl_row.find('.row_data').html().replace(/<br>/g,'').trim();
+      console.log(text);
+      console.log("Array indext" +arrayIndex)
 
-      console.log(tbl_row.find('.row_data').html().replace(/<br>/g,''));
-      console.log()
-       console.log(typeof(tbl_row.find('.row_data').html().replace(/<br>/g,'')));
-
-      console.log(text.split(/\s+/));
       // $.ajax({
       //   url: '/update',
       //   type: 'PUT',

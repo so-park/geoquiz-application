@@ -116,7 +116,7 @@ exports.checkAnswers = function checkAnswersHandler(request, response){
 						}
 
 
-
+}
 				//	 var answersAsComments =JSON.stringify(input);
 					 if (isPractice =="true"){
 						 console.log("You got " + score + " points in this practice test")

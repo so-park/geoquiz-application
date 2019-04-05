@@ -1316,7 +1316,7 @@
          "properties": {
            "name": ["Luxembourg"],
            "id": "LUX",
-           "capital": ["Luxembourg"]
+           "capital": ["Luxembourg"],
            "misspell_name": ["Luxemburg","Luxumburg","Luxumbourg","Lexembourg","Lexemburg"],
            "misspell_capital": ["Luxemburg","Luxumburg","Luxumbourg","Lexembourg","Lexemburg"],
            "continent": "europe"
