@@ -50,20 +50,30 @@
       </div>
     </nav>
     <% var data
-        var nameIndex
-        var capIndex
-        var nameLength
-        var capitalLength %>
+        var result %>
     <div class="container">
       <form method="GET" action="/getCountryInfo">
           Enter country name: <input id="countryName" name="countryName" type="text">
          <input id ="getData" type="submit" value="submit">
       </form>
 
+
+      <% if (result != undefined){ %>
+
+            <p>This sdfa</p>
+
+      <% } %>
+
+      <% if (result == "success") { %>
+          <% console.log(result=="success"); %>
+            <p>This</p>
+
+      <% } %>
+
     <%if (data != undefined){ %>
         <% data = data[0] %>
     <!-- <form class="form-horizontal" id ="updateData" method ="PUT" action ="/update" > -->
-      <table class="table" id="databaseTable">
+      <table class="table"  id="databaseTable" value= <%= data._id %> >
       <thead>
         <tr>
           <th scope="col"></th>
@@ -74,7 +84,7 @@
       <tbody>
         <tr value = "continent">
           <th scope="row">Continent</th>
-          <td><div class="row_data" edit_type="click"><%= data.properties.continent %></div></td>
+          <td><div id="continent" class="row_data" edit_type="click"><%= data.properties.continent %></div></td>
           <td>
               <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
               <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
@@ -82,28 +92,28 @@
         </tr>
         <tr value ="capital">
           <th scope="row">Capital</th>
-          <td><div class="row_data" edit_type="click" value ="0"><%= data.properties.capital[0] %></div></td>
+          <td><div id ="capital" class="row_data" edit_type="click" value ="0"><%= data.properties.capital[0] %></div></td>
           <td>
               <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info" > Save </button></span>
               <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info" > Cancel </button></span>
           </td>
         </tr>
-        <tr value ="name">
+        <tr value ="name" >
           <th scope="row">Country</th>
-          <td><div class="row_data" edit_type="click" value = "0"><%= data.properties.name[0] %></div></td>
+          <td><div id="name" class="row_data" edit_type="click"><%= data.properties.name[0] %></div></td>
           <td>
               <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
               <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
           </td>
         </tr>
 
-        <tr value ="capital">
+        <tr value ="altCapital">
           <th scope="row">Alternative Answers for Capital</th>
                 <td>
                   <% var capLen = data.properties.capital.length  %>
                    <% if ( capLen > 1){ %>
                       <% for (var i =1; i < capLen; i++ ){ %>
-                        <div class="row_data" edit_type="click" value =<%=i %>>
+                        <div class="row_data" edit_type="click">
                           <%= data.properties.capital[i]%>
                         </div>
                     <%  } %>
@@ -121,39 +131,25 @@
                 <% var mCapLen = data.properties.misspell_capital.length  %>
                 <% if (mCapLen !=0) { %>
                     <% for (var i =0; i < mCapLen; i++ ){ %>
-                        <div class="row_data" edit_type="click" value = <%= i %>>
+                        <div class="row_data" edit_type="click">
                             <%= data.properties.misspell_capital[i]%>
                         </div>
                   <% } %>
                <% } %>
+
             </td>
               <td>
                   <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
                   <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info">Cancel </button></span>
               </td>
         </tr>
-        <tr value ="misspell_capital">
-          <th scope="row">Misspellings for Capital (3 TEST)</th>
-              <td><div class="row_data" edit_type="click" >
-                <% var mCapLen = data.properties.misspell_capital.length  %>
-                <% if (mCapLen !=0) { %>
-                    <!-- <% for (var i =0; i < mCapLen; i++ ){ %> -->
-                            <%= data.properties.misspell_capital%>
-                  <!-- <% } %> -->
-               <% } %>
-            </div>  </td>
-              <td>
-                  <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
-                  <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info">Cancel </button></span>
-              </td>
-        </tr>
-        <tr value ="name">
+        <tr value ="altName">
           <th scope="row">Alternative Answers for Country</th>
               <td>
                 <% var nameLen = data.properties.name.length  %>
                  <% if ( nameLen > 1){ %>
                     <% for (var i =1; i < nameLen; i++ ){ %>
-                      <div class="row_data" edit_type="click" value = <%=i %>>
+                      <div class="row_data" edit_type="click">
                       <%= data.properties.name[i]%>
                       </div>
                   <%  } %>
@@ -170,9 +166,9 @@
                 <% var mNameLen = data.properties.misspell_name.length  %>
                 <% if (mNameLen !=0) { %>
                     <% for (var i =0; i < mNameLen; i++ ){ %>
-                        <div class="row_data" edit_type="click" value = <%= i %>>
+                        <div class="row_data" edit_type="click">
                           <%= data.properties.misspell_name[i]%>
-                      </div>
+                       </div>
                 <%  } %>
              <% } %>
             </td>
@@ -183,30 +179,33 @@
         </tr>
         <tr value ="geometry">
           <th scope="row">Geometry Type</th>
-            <td><div class="row_data" edit_type="click">
+            <td>
+              <div class="row_data" edit_type="click">
                 <%= data.geometry.type %>
-            </div></td>
+           </div></td>
             <td>
                 <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
                 <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
             </td>
         </tr>
 
-        <tr>
-          <!-- <th scope="row">Geometry Coordinates</th>
-            <td><div class="row_data" edit_type="click">
-                <%= data.geometry.coordinates %>
-            </div></td>
-            <td><span class="btn-edit"><button> Edit </button></span>
-                <span class="btn-save"><button> Edit </button></span>
-                <span class="btn-cancel"><button> Edit </button></span>
-            </td>-->
-        </tr>
+        <!-- <tr>
+          <th scope="row">Geometry Coordinates</th>
+            <td>
+                <span class="btn-edit" ><button class="btn btn-outline-info"> Edit </button></span>
+              <div class="row_data" edit_type="click">
+                    <%= data.geometry.coordinates%>
+
+                        <br>
+             </div></td>
+            <td>
+              <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
+              <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
+            </td>
+        </tr> -->
         <%} %>
       </tbody>
     </table>
-
-  <!-- </form> -->
 
 
   </div>
@@ -277,65 +276,53 @@
     	event.preventDefault();
 
     	var tbl_row = $(this).closest('tr');
+
+      //Field to update in a database
       var field = tbl_row.attr('value');
-
+      var id = $("#databaseTable").attr('value');
+      //Formatting the data in an array form without empty strings.
+      var newData = tbl_row.find('.row_data').text().trim().split('\n');
+      newData = newData.map(s =>s.trim());
+      newData = newData.filter(Boolean)
+      console.log(newData)
       //send field: new array
-
-      console.log(tbl_row.find('.row_data').attr('original_entry'));
+      console.log(tbl_row.find('.row_data').text());
       console.log(field);
 
       //hide save and cacel buttons
       tbl_row.find('.btn-save').css({"visibility": "hidden"});
       tbl_row.find('.btn-cancel').css({"visibility": "hidden"});
 
-
-    //	var arrayToUpdate = tbl_row.find('.cell_data').attr('value');
-      //console.log(arrayToUpdate.split(','));
-
-
-
-
-
-    	//make the whole row editable
-    	// tbl_row.find('.row_data')
-    	// .attr('edit_type', 'click')
-    	// .removeClass('bg-warning')
-    	// .css('padding','')
-
-    	//--->get row data > start
-    	// var arr = {};
-    	// tbl_row.find('.row_data').each(function(index, val)
-    	// {
-    	// 	var col_name = $(this).attr('col_name');
-    	// 	var col_val  =  $(this).html();
-    	// 	arr[col_name] = col_val;
-    	// });
-    	//--->get row data > end
-
-    	//use the "arr"	object for your ajax call
-    	// $.extend(arr, {row_id:row_id});
-      //
-    	// //out put to show
-    	// $('.post_msg').html( '<pre class="bg-success">'+JSON.stringify(arr, null, 2) +'</pre>')
-      console.log("Save button clicked")
+      var name; //can be capital or name depending on what field to update
+      if (field == "altCapital"){
+        name = $("#capital").html()
+      }
+      else{
+        name = $('#name').html();
+      }
+      console.log("name ---- " +name)
 
 
-      var arrayIndex = tbl_row.find('.row_data').attr('value')
-      var text = tbl_row.find('.row_data').html().replace(/<br>/g,'').trim();
-      console.log(text);
-      console.log("Array indext" +arrayIndex)
+// console.log(dataToSend)
+      $.ajax({
+        url: '/update',
+        type: 'PUT',
 
-      // $.ajax({
-      //   url: '/update',
-      //   type: 'PUT',
-      //   data: "name=John&location=Boston",
-      //   success: function(data) {
-      //     alert('Load was performed.');
-      //   }
-      // });
+        contentType: 'application/json',
+        data: JSON.stringify({
+          id: id,
+          name: name,
+          field: field,
+          value: newData
+        }),
+        dataType: 'json',
+        success: function(data){
+          console.log(data)
+          console.log("Success update request")
+        }
+      });
+
     });
-
-
 
     </script>
   </body>

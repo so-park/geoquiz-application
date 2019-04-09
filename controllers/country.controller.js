@@ -306,6 +306,7 @@ exports.selectContinent = function SelectContinentHandler (request, response){
 	response.render('index', {practice: practice, continent: continent});
 }
 
+
 exports.getCountryInfo =function getCountryHandler(request, response){
 	console.log("accessing database");
 	console.log(request.query.countryName);
@@ -317,8 +318,40 @@ exports.getCountryInfo =function getCountryHandler(request, response){
 };
 
 exports.update = function UpdateHandler(request, response){
-		console.log("update handler entered");
-		console.log(request.body);
+		// console.log("update handler entered");
+	//	console.log(request)
+		var data = request.body
+		var value = data.value;
+		console.log(value)
+		// //console.log(JSON.parse(request[0]));
+		console.log("here")
+		console.log(data.name)
+		if (data.field == "altName"){
+			data.field ="properties.name"
+			value.unshift(data.name)
+			console.log(value)
+		}
+		if (data.field == "altCapital"){
+			data.field == "properties.capital";
+			value.unshift(data.name)
+		}
+
+
+		// console.log(data.name)
+		Country.updateOne(
+			{ "_id": data.id},
+			{$set:
+				{
+					[data.field]: value
+				}
+			}).then(function HandleUpdateOne(res){
+				console.log("done")
+				console.log(res)
+				response.send("success");
+			}).catch(error=>{
+				console.log(error)
+			})
+
 };
 exports.delete = function DeleteHandler(request, response){
 };
