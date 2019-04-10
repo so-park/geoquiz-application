@@ -111,6 +111,11 @@ router.post('/submission', function handleSubmissionsPage(request, response){
 	 			}
 	 	 });
 		})
+router.post('/addData', countries.addData);
+router.post('/deleteData', countries.delete);
+router.get('/login', function handleAfricaPage(request, response) {
+	response.render('login');
+})
 
 router.post('/:continent', function handleAfricaPage(request, response) {
 	var practice =false;
@@ -133,6 +138,10 @@ router.get('/quiz/:continent', countries.sendRandomCountries);
 router.get('/background/:continent', countries.allButOneContinent);
 router.get('/getCountryInfo', countries.getCountryInfo);
 router.put('/update', countries.update);
+router.get('/addDatapage', function handleAddDataPage(request, response){
+	response.render('addData');
+})
+
 
 
 

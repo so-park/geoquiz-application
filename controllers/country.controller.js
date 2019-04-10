@@ -326,32 +326,64 @@ exports.update = function UpdateHandler(request, response){
 		// //console.log(JSON.parse(request[0]));
 		console.log("here")
 		console.log(data.name)
+		console.log(data.field)
+		var field =data.field;
+		console.log(typeof(data.id))
 		if (data.field == "altName"){
-			data.field ="properties.name"
+			field ="properties.name"
+			// field = data.field
 			value.unshift(data.name)
 			console.log(value)
 		}
 		if (data.field == "altCapital"){
-			data.field == "properties.capital";
+			field == "properties.capital";
 			value.unshift(data.name)
 		}
-
+		var obj ={};
+				obj[data.field] = value
 
 		// console.log(data.name)
 		Country.updateOne(
-			{ "_id": data.id},
-			{$set:
-				{
-					[data.field]: value
-				}
+			{"_id": ObjectId(data.id)},
+			{$set:	{
+					[field]: value
+			}
 			}).then(function HandleUpdateOne(res){
 				console.log("done")
 				console.log(res)
 				response.send("success");
+
 			}).catch(error=>{
 				console.log(error)
 			})
 
+
+};
+
+exports.addData =function addDataHandler(request, response){
+	console.log("add data");
+	console.log(request.body);
+	var data = request.body;
+	Country.updateOne(
+		{"_id": data.id},
+		{$push:
+			{
+				[data.field]: data.value
+			}
+		}
+	).then(res=>{
+		console.log(res)
+		response.send("success")
+	})
+	//  Country.find({ "properties.name" : request.query.countryName}).
+	//  then(function HandleFindOne(data){
+	// 	 console.log(data);
+	// 	 response.render("crud", {data:data});
+	// } )
 };
 exports.delete = function DeleteHandler(request, response){
+	console.log("delete");
+	console.log(response.body)
+	console.log(request)
+	response.send();
 };
