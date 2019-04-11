@@ -325,7 +325,6 @@ exports.update = function UpdateHandler(request, response){
 		console.log(value)
 		// //console.log(JSON.parse(request[0]));
 		console.log("here")
-		console.log(data.name)
 		console.log(data.field)
 		var field =data.field;
 		console.log(typeof(data.id))
@@ -374,7 +373,7 @@ exports.addData =function addDataHandler(request, response){
 	).then(res=>{
 		console.log(res)
 		response.send("success")
-	})
+	});
 	//  Country.find({ "properties.name" : request.query.countryName}).
 	//  then(function HandleFindOne(data){
 	// 	 console.log(data);
@@ -383,7 +382,66 @@ exports.addData =function addDataHandler(request, response){
 };
 exports.delete = function DeleteHandler(request, response){
 	console.log("delete");
-	console.log(response.body)
-	console.log(request)
+	var data = request.body;
+	console.log(data)
+	Country.updateOne(
+		{"_id": data.id},
+		{$pull:
+			{
+				[data.field]: data.value
+			}
+		}
+	).then(res=>{
+		console.log(res)
+	//	response.json(res)
+	});
 	response.send();
+};
+
+exports.delete = function DeleteHandler(request, response){
+	console.log("delete");
+	var data = request.body;
+	console.log(data)
+	Country.updateOne(
+		{"_id": data.id},
+		{$pull:
+			{
+				[data.field]: data.value
+			}
+		}
+	).then(res=>{
+		console.log(res)
+	//	response.json(res)
+	});
+	response.send();
+};
+
+exports.addCountry = function AddCountryHandler(request, response){
+	console.log("addCountry");
+	console.log(request.body);
+	var data = request.body;
+	var properties={
+		continent: data.continent;
+		capital: data.capital;
+		name: data.name;
+		misspell_capital: data.misspell_capital,
+		misspell_name: data.misspell_name
+	};
+	for (var field in properties){
+		
+	}
+	properties[continent] = data.continent;
+
+	// Country.updateOne(
+	// 	{"_id": data.id},
+	// 	{$pull:
+	// 		{
+	// 			[data.field]: data.value
+	// 		}
+	// 	}
+	// ).then(res=>{
+	// 	console.log(res)
+	// //	response.json(res)
+	// });
+	//response.send();
 };

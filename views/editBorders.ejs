@@ -84,11 +84,11 @@
           <th scope="col"></th>
           <th scope="col">Content</th>
           <th scope="col">Update</th>
-          <th scope="col">Add</th>
+          <!-- <th scope="col">Add</th> -->
         </tr>
       </thead>
       <tbody>
-        <tr value = "properties.continent">
+        <!-- <tr value = "properties.continent">
           <th scope="row">Continent</th>
           <td><div id="continent" class="row_data" edit_type="click"><%= data.properties.continent %></div></td>
           <td>
@@ -105,7 +105,7 @@
               <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info" > Cancel </button></span>
           </td>
           <td></td>
-        </tr>
+        </tr> -->
         <tr value ="properties.name" >
           <th scope="row">Country</th>
           <td><div id="name" class="row_data" edit_type="click"><%= data.properties.name[0] %></div></td>
@@ -116,7 +116,7 @@
             <td></td>
         </tr>
 
-        <tr id="altCapital" value ="altCapital">
+        <!-- <tr id="altCapital" value ="altCapital">
           <th scope="row">Alternative Answers for Capital</th>
                 <td>
                   <% var capLen = data.properties.capital.length  %>
@@ -206,9 +206,9 @@
               <td>
                    <input type=text class="form-control input" placeholder="add new data">
                   <span class="btn-add" style="visibility: hidden"><button class="btn btn-outline-info"> Add </button></span>
-              </td>
-        </tr>
-        <!-- <tr value ="geometry.type">
+              </td> -->
+        <!-- </tr> -->
+        <tr value ="geometry.type">
           <th scope="row">Geometry Type</th>
             <td>
               <div class="row_data" edit_type="click">
@@ -218,22 +218,21 @@
                 <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
                 <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
             </td>
-        </tr> -->
+        </tr>
 
-        <!-- <tr>
+        <tr>
           <th scope="row">Geometry Coordinates</th>
             <td>
                 <span class="btn-edit" ><button class="btn btn-outline-info"> Edit </button></span>
               <div class="row_data" edit_type="click">
                     <%= data.geometry.coordinates%>
-
                         <br>
              </div></td>
             <td>
               <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
               <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
             </td>
-        </tr> -->
+        </tr>
         <%} %>
       </tbody>
     </table>

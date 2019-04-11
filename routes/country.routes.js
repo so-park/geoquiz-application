@@ -113,20 +113,15 @@ router.post('/submission', function handleSubmissionsPage(request, response){
 		})
 router.post('/addData', countries.addData);
 router.post('/deleteData', countries.delete);
+router.post('/addCountry', countries.addCountry);
+//router.post('/removeCountry', countries.removeCountry);
 router.get('/login', function handleAfricaPage(request, response) {
 	response.render('login');
 })
+router.post('/editBorders', function handleAddDataPage(request, response){
+	response.render('editBorders');
+})
 
-router.post('/:continent', function handleAfricaPage(request, response) {
-	var practice =false;
-	console.log("Got the POST request " + request.params.continent);
-
-	var courseID = request.body.custom_canvas_course_id;
-	var assignmentID = request.body.custom_canvas_assignment_id;
-	var userId = request.body.custom_canvas_user_id;
-
-		response.render('index', {continent: request.params.continent,practice: practice, user: userId, assignment: assignmentID, course:courseID});
-});
 
 
 
@@ -138,9 +133,19 @@ router.get('/quiz/:continent', countries.sendRandomCountries);
 router.get('/background/:continent', countries.allButOneContinent);
 router.get('/getCountryInfo', countries.getCountryInfo);
 router.put('/update', countries.update);
-router.get('/addDatapage', function handleAddDataPage(request, response){
-	response.render('addData');
+router.get('/editCountry', function handleAddDataPage(request, response){
+	response.render('editCountry');
 })
+router.post('/:continent', function handleAfricaPage(request, response) {
+	var practice =false;
+	console.log("Got the POST request " + request.params.continent);
+
+	var courseID = request.body.custom_canvas_course_id;
+	var assignmentID = request.body.custom_canvas_assignment_id;
+	var userId = request.body.custom_canvas_user_id;
+
+		response.render('index', {continent: request.params.continent,practice: practice, user: userId, assignment: assignmentID, course:courseID});
+});
 
 
 
