@@ -81,14 +81,14 @@
           <div class="form-group">
             <div class="row">
             <label class="col-sm-3 quizNumber"> Alternative Capital </label>
-             <input class="col-sm-5 form-control" name="capital" type="text" >
+             <input class="col-sm-5 form-control" name="altCapital" type="text" >
            </div>
           </div>
 
           <div class="form-group">
             <div class="row">
             <label class="col-sm-3 quizNumber"> Alternative Country Names </label>
-             <input class="col-sm-5 form-control" name="name" type="text">
+             <input class="col-sm-5 form-control" name="altName" type="text">
            </div>
           </div>
 
@@ -125,7 +125,7 @@
         </div>
       </form>
 
-      <form id="removeCountry" style="display: none;" method="DELETE" action="/removeCountry" autocomplete="off">
+      <form id="removeCountry" style="display: none;" method="POST" action="/removeCountry" autocomplete="off">
         <div class="row">
           <label>Enter Country Name to Remove: </label>
         </div>

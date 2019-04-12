@@ -270,7 +270,7 @@ exports.findCountriesInContinent = function FindOneHandler(request, response){
 	            var oneCountry = new Object;
 	            oneCountry.type = country[c].type;
 	            oneCountry.properties = new Object;
-	            oneCountry.properties.id= country[c].properties.id;
+	            //oneCountry.properties.id= country[c].properties.id;
 							oneCountry.id= country[c]._id;
 
 							oneCountry.geometry = country[c].geometry;
@@ -418,30 +418,58 @@ exports.delete = function DeleteHandler(request, response){
 
 exports.addCountry = function AddCountryHandler(request, response){
 	console.log("addCountry");
-	console.log(request.body);
 	var data = request.body;
-	var properties={
-		continent: data.continent;
-		capital: data.capital;
-		name: data.name;
-		misspell_capital: data.misspell_capital,
-		misspell_name: data.misspell_name
-	};
-	for (var field in properties){
-		
+	var coordinates;
+	if (data.coordinates == ''){
+		coordinates = [];
 	}
-	properties[continent] = data.continent;
+	else{
+		coordinates = JSON.parse(data.coordinates.replace(/['"]+/g, ''));
+	}
+	console.log(coordinates);
+	data.altCapital= data.altCapital.split(',');
+	data.altName= data.altName.split(',');
+	data.capital = data.capital.split(',').concat(data.altCapital);
+	data.name = data.name.split(',').concat(data.altName);
+	data.misspell_capital = data.misspell_capital.split(',');
+	data.misspell_name = data.misspell_name.split(',');
 
-	// Country.updateOne(
-	// 	{"_id": data.id},
-	// 	{$pull:
-	// 		{
-	// 			[data.field]: data.value
-	// 		}
-	// 	}
-	// ).then(res=>{
-	// 	console.log(res)
-	// //	response.json(res)
-	// });
-	//response.send();
+	var properties={
+		continent: data.continent,
+		capital: data.capital.filter(Boolean),
+		name: data.name.filter(Boolean),
+		misspell_capital: data.misspell_capital.filter(Boolean),
+		misspell_name: data.misspell_name.filter(Boolean)
+	};
+	var geometry={
+		type: data.type,
+		coordinates: coordinates
+	}
+	var documentToInsert =	{
+			"type": "Feature",
+			"properties": properties,
+			"geometry": geometry
+		}
+	console.log(Country);
+	console.log(properties);
+	console.log(geometry);
+	Country.create( documentToInsert, function (err, small) {
+  		console.log(err);
+			console.log(small);
+			response.send();
+	})
+
+//	response.send();
+};
+exports.removeCountry = function DeleteHandler(request, response){
+	console.log("delete");
+	var data = request.body;
+	console.log(data)
+	Country.deleteOne(
+		{"properties.name": data.countryName},
+	).then(res=>{
+		console.log(res)
+	response.send();
+	});
+
 };

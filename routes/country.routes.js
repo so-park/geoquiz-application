@@ -114,7 +114,7 @@ router.post('/submission', function handleSubmissionsPage(request, response){
 router.post('/addData', countries.addData);
 router.post('/deleteData', countries.delete);
 router.post('/addCountry', countries.addCountry);
-//router.post('/removeCountry', countries.removeCountry);
+router.post('/removeCountry', countries.removeCountry);
 router.get('/login', function handleAfricaPage(request, response) {
 	response.render('login');
 })
