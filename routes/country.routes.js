@@ -1,4 +1,5 @@
 var express = require('express');
+var express = require('express-session');
 var httpRequest = require('request');
 var router = express.Router();
 const path = require('path');
@@ -6,6 +7,7 @@ const path = require('path');
 require('dotenv').config();
 token = process.env.TOKEN
 const countries = require('../controllers/country.controller.js');
+const users = require('../controllers/user.controller.js')
 
 router.get ('/', function handleHomePage(request, response) {
 	console.log("index called");
@@ -115,7 +117,10 @@ router.post('/addData', countries.addData);
 router.post('/deleteData', countries.delete);
 router.post('/addCountry', countries.addCountry);
 router.post('/removeCountry', countries.removeCountry);
-router.get('/login', function handleAfricaPage(request, response) {
+router.post('/checkUser', users.checkUser);
+router.post('/createUser', users.create);
+router.get('/logout',users.logout);
+router.get('/login', function handleLoginPage(request, response) {
 	response.render('login');
 })
 router.get('/editBorders', function handleAddDataPage(request, response){

@@ -1,6 +1,7 @@
 const express    =   require('express');
 const bodyParser =   require('body-parser');
 const app        =   express();
+const session  	 =   require('express-session')
 const path       =   require('path');
 //configuring the database
 const dbConfig   =   { url: 'mongodb://localhost:27017/geoquiz'};
@@ -36,6 +37,11 @@ mongoose.connect(dbConfig.url, {useNewUrlParser: true})
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(session({
+	secret: 'geoquiz',
+	resave: true,
+	saveUninitialized: true
+}))
 
 //check for new changes before sending the cached version
 app.set('etag', false);

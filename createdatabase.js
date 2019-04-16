@@ -5,6 +5,7 @@ const url = 'mongodb://localhost:27017';
 const dbName = "geoquiz";
 
 var data = require('./data/countryDatabase.json');
+var userData = require('./data/userDatabase.json')
 
 
 
@@ -25,6 +26,15 @@ MongoClient.connect(url, function DBConnectHandler(err, client){
 		console.log(res);
         client.close();
 	});
+	db.collection("users").insertMany(userData,function InsertHandler(err,res){
+		if (err){
+			console.log("Error Inserting User data");
+			console.log(err);
+			throw err;
+		}
+		console.log(res);
+				client.close();
+	})
 
 });
 
