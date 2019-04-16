@@ -29,8 +29,8 @@ exports.checkAnswers = function checkAnswersHandler(request, response){
 	var input = request.body.answer;  //array of 20 inputs cap,name,cap, ....
 	var correctAnswers =[]; // array that stores 20 correct answers in the same order as input
 	var correct = []; //each item has "wrong","right","halfright"
-	var misspell_name;
-	var misspel_capital;
+	var misspell_name, country_name;
+	var misspel_capital, capital_name;
 	var score=0 ;
 	var tenCountries = request.body.id;
 	 var isPractice = request.body.practice;
@@ -53,81 +53,70 @@ exports.checkAnswers = function checkAnswersHandler(request, response){
 					  var capital = input[2*i].toLowerCase().trim();
 					  var name = input[(2*i)+1].toLowerCase().trim();
 						var selectedCountry =  country[index].properties;
-						correctAnswers[2*i]= selectedCountry.capital;
-						correctAnswers[(2*i)+1] = selectedCountry.name;
+						capital_name = selectedCountry.capital;
+						country_name = selectedCountry.name;
+						correctAnswers[2*i]= capital_name[0];
+						correctAnswers[(2*i)+1] = country_name[0];
+
 						misspell_name =selectedCountry.misspell_name;
 						misspell_capital =selectedCountry.misspell_capital;
 
-						 if ( capital != correctAnswers[2*i].toLowerCase()){
-								correct[2*i] = "wrong";
-								if ( capital == ""){
-									input[2*i] ="No entry";
-								}
-								else if ( misspell_capital.length != 0){
-
-									//after "3" it will contain misspellings for 3 points
-									for (var j = 0; j < misspell_capital.length ; j++){
-										if (misspell_capital.includes("3")){
-											var point = misspell_capital.indexOf("3")
-											if( capital == misspell_capital[j].toLowerCase() ){
-												if(j < point){
-													correct[2*i] = "right"
-													score += 5;
-												}
-												else{
+						//Check if the inputed capital name is same
+						for (var j =0; j < capital_name.length; j++)
+						{
+							if (capital == capital_name[j].toLowerCase())
+							{
+								correct[2*i] ="right"
+								score += 5;
+								break;
+							}
+							correct[2*i]="wrong"
+						}
+						if (correct[2*i]=="wrong" && misspell_capital.length != 0)
+						{
+								for (var j = 0; j < misspell_capital.length ; j++)
+								{
+										if( capital == misspell_capital[j].toLowerCase() )
+										{
 													correct[2*i] = "halfright"
 													score += 3;
-												}
-											}
+													break;
 										}
-										else if( capital == misspell_capital[j].toLowerCase() ){
-											correct[2*i] = "right";
-											score += 5;
-										}
-									}
-						 		}
+								}
 						}
-						else {
-							correct[2*i] = "right";
-							score += 5;
-						};
+						if (correct[2*i]=="wrong" && capital ==""){
+							input[2*i]="No entry";
+						}
 
-						if ( name != correctAnswers[(2*i)+1].toLowerCase()){
-							 correct[(2*i)+1] = "wrong";
-							 if ( name == ""){
-								 input[(2*i)+1] ="No entry";
-							 }
-							 else if ( misspell_name.length != 0){
-								 for (var j = 0; j < misspell_name.length ; j++){
-									 if (misspell_name.includes("3")){
-										 var point = misspell_name.indexOf("3")
-										 console.log(point)
-										 if( name == misspell_name[j].toLowerCase() ){
-											 if(j < point){
-												 correct[(2*i)+1] = "right";
-												 score += 5;
-											 }
-											 else{
+						//Check for country names
+						for (var j =0; j < country_name.length; j++)
+						{
+							if (name == country_name[j].toLowerCase())
+							{
+								correct[(2*i)+1] ="right"
+								score += 5;
+								break;
+							}
+							correct[(2*i)+1]="wrong"
+						}
+						if (correct[(2*i)+1]=="wrong" && misspell_name.length != 0)
+						{
+								for (var j = 0; j < misspell_name.length ; j++)
+								{
+										if( capital == misspell_name[j].toLowerCase() )
+										{
+													correct[(2*i)+1] = "halfright"
+													score += 3;
+													break;
+										}
+								}
+						}
+						if (correct[(2*i)+1]=="wrong" && name ==""){
+							input[(2*i)+1]="No entry";
+						}
 
-												  correct[(2*i)+1] = "halfright"
-												  score += 3;
-											 }
-										 }
-									 }
-									 else if ( name == misspell_name[j].toLowerCase() ){
-										 console.log(misspell_name[j]);
-										 correct[(2*i)+1] = "right";
-										 score += 5;
-									 }
-								 }
-							 }
-					 }
-					 else {
-						 correct[(2*i)+1] = "right";
-						 score += 5;
-					 };
-				 }
 
+}
 				//	 var answersAsComments =JSON.stringify(input);
 					 if (isPractice =="true"){
 						 console.log("You got " + score + " points in this practice test")
@@ -281,7 +270,7 @@ exports.findCountriesInContinent = function FindOneHandler(request, response){
 	            var oneCountry = new Object;
 	            oneCountry.type = country[c].type;
 	            oneCountry.properties = new Object;
-	            oneCountry.properties.id= country[c].properties.id;
+	            //oneCountry.properties.id= country[c].properties.id;
 							oneCountry.id= country[c]._id;
 
 							oneCountry.geometry = country[c].geometry;
@@ -317,19 +306,182 @@ exports.selectContinent = function SelectContinentHandler (request, response){
 	response.render('index', {practice: practice, continent: continent});
 }
 
+
 exports.getCountryInfo =function getCountryHandler(request, response){
 	console.log("accessing database");
 	console.log(request.query.countryName);
+	console.log(request.params);
+	console.log(request.query.option)
 	 Country.find({ "properties.name" : request.query.countryName}).
 	 then(function HandleFindOne(data){
-		 console.log(data);
-		 response.render("crud", {data:data});
+
+		 if (request.query.option == "spelling"){
+			 response.render("crud", {data:data});
+		 }
+		 else{
+			 response.render("editBorders", {data:data});
+		 }
+
 	} )
 };
 
 exports.update = function UpdateHandler(request, response){
-		console.log("update handler entered");
-		console.log(request.body);
+		// console.log("update handler entered");
+	//	console.log(request)
+		var data = request.body
+		var value = data.value;
+		console.log(value)
+		// //console.log(JSON.parse(request[0]));
+		console.log("here")
+		console.log(data.field)
+		var field =data.field;
+		console.log(typeof(data.id))
+		if (data.field == "altName"){
+			field ="properties.name"
+			// field = data.field
+			value.unshift(data.name)
+			console.log(value)
+		}
+		if (data.field == "altCapital"){
+			field == "properties.capital";
+			value.unshift(data.name)
+		}
+		var obj ={};
+				obj[data.field] = value
+		if (data.field =="geometry.coordinates"){
+
+			value = JSON.parse(value[0])
+
+		}
+
+		// console.log(data.name)
+		Country.updateOne(
+			{"_id": ObjectId(data.id)},
+			{$set:	{
+					[field]: value
+			}
+			}).then(function HandleUpdateOne(res){
+				console.log("done")
+				console.log(res)
+				response.send();
+
+			}).catch(error=>{
+				console.log(error)
+			})
+
+
+};
+
+exports.addData =function addDataHandler(request, response){
+	console.log("add data");
+	console.log(request.body);
+	var data = request.body;
+	Country.updateOne(
+		{"_id": data.id},
+		{$push:
+			{
+				[data.field]: data.value
+			}
+		}
+	).then(res=>{
+		console.log(res)
+		response.send("success")
+	});
+	//  Country.find({ "properties.name" : request.query.countryName}).
+	//  then(function HandleFindOne(data){
+	// 	 console.log(data);
+	// 	 response.render("crud", {data:data});
+	// } )
 };
 exports.delete = function DeleteHandler(request, response){
+	console.log("delete");
+	var data = request.body;
+	console.log(data)
+	Country.updateOne(
+		{"_id": data.id},
+		{$pull:
+			{
+				[data.field]: data.value
+			}
+		}
+	).then(res=>{
+		console.log(res)
+	//	response.json(res)
+	});
+	response.send();
+};
+
+exports.delete = function DeleteHandler(request, response){
+	console.log("delete");
+	var data = request.body;
+	console.log(data)
+	Country.updateOne(
+		{"_id": data.id},
+		{$pull:
+			{
+				[data.field]: data.value
+			}
+		}
+	).then(res=>{
+		console.log(res)
+	//	response.json(res)
+	});
+	response.send();
+};
+
+exports.addCountry = function AddCountryHandler(request, response){
+	console.log("addCountry");
+	var data = request.body;
+	var coordinates;
+	if (data.coordinates == ''){
+		coordinates = [];
+	}
+	else{
+		coordinates = JSON.parse(data.coordinates.replace(/['"]+/g, ''));
+	}
+	console.log(coordinates);
+	data.altCapital= data.altCapital.split(',');
+	data.altName= data.altName.split(',');
+	data.capital = data.capital.split(',').concat(data.altCapital);
+	data.name = data.name.split(',').concat(data.altName);
+	data.misspell_capital = data.misspell_capital.split(',');
+	data.misspell_name = data.misspell_name.split(',');
+
+	var properties={
+		continent: data.continent,
+		capital: data.capital.filter(Boolean),
+		name: data.name.filter(Boolean),
+		misspell_capital: data.misspell_capital.filter(Boolean),
+		misspell_name: data.misspell_name.filter(Boolean)
+	};
+	var geometry={
+		type: data.type,
+		coordinates: coordinates
+	}
+	var documentToInsert =	{
+			"type": "Feature",
+			"properties": properties,
+			"geometry": geometry
+		}
+	console.log(Country);
+	console.log(properties);
+	console.log(geometry);
+	Country.create( documentToInsert, function (err, small) {
+  		console.log(err);
+			console.log(small);
+			response.send();
+	})
+
+};
+exports.removeCountry = function DeleteHandler(request, response){
+	console.log("delete");
+	var data = request.body;
+	console.log(data)
+	Country.deleteOne(
+		{"properties.name": data.countryName},
+	).then(res=>{
+		console.log(res)
+		response.send();
+	});
+
 };
