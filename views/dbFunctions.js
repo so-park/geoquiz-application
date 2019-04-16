@@ -1,93 +1,239 @@
-let table = document.getElementById('databaseTable');
+console.log("hi")
 
-let editingTd;
+var id = $("#databaseTable").attr('value');
+$(document).on('click', '.row_data', function(event)
+{
+event.preventDefault();
 
-table.onclick = function(event) {
-
-  // 3 possible targets
-  let target = event.target.closest('.edit-cancel,.edit-ok,td');
-
-  if (!table.contains(target)) return;
-
-  if (target.className == 'edit-cancel') {
-    finishTdEdit(editingTd.elem, false);
-  } else if (target.className == 'edit-ok') {
-    finishTdEdit(editingTd.elem, true);
-  } else if (target.nodeName == 'TD') {
-    if (editingTd) return; // already editing
-
-    makeTdEditable(target);
-  }
-
-};
-
-function makeTdEditable(td) {
-  editingTd = {
-    elem: td,
-    data: td.innerHTML
-  };
-
-  td.classList.add('edit-td'); // td is in edit state, CSS also styles the area inside
-
-  let textArea = document.createElement('textarea');
-  textArea.style.width = td.clientWidth + 'px';
-  textArea.style.height = td.clientHeight + 'px';
-  textArea.className = 'edit-area';
-
-  textArea.value = td.innerHTML;
-  td.innerHTML = '';
-  td.appendChild(textArea);
-  textArea.focus();
-
-  td.insertAdjacentHTML("beforeEnd",
-    '<div class="edit-controls"><button class="edit-ok">OK</button><button class="edit-cancel">CANCEL</button></div>'
-  );
+if($(this).attr('edit_type') == 'button')
+{
+  return false;
 }
+var tbl_row = $(this).closest('tr');
 
-function finishTdEdit(td, isOk) {
-  if (isOk) {
-    td.innerHTML = td.firstChild.value;
-  } else {
-    td.innerHTML = editingTd.data;
-  }
-  td.classList.remove('edit-td');
-  editingTd = null;
-}
-console.log("function is called")
-// function passWord() {
-//   var testV = 1;
-//   var pass1 = prompt('Please Enter Your Password',' ');
-//   while (testV < 3) {
-//     if (!pass1) history.go(-1);
-//     if (pass1.toLowerCase() == "letmein") {
-//       alert('You Got it Right!');
-//       document.getElementById("editDatabase").style.display = "block";
-//       break;
-//     }
-//     testV+=1;
-//     var pass1 =
-//     prompt('Access Denied - Password Incorrect, Please Try Again.','Password');
-//   }
-//     if (pass1.toLowerCase()!="password" & testV ==3)
-//     history.go(-1);
-//   return " ";
-// }
-//
-var country = document.getElementById("countryName").value;
-function submitCountryName(){
-  //get country name that user types in the form
-  console.log("submit is called")
+tbl_row.find('.btn-save').css({"visibility": "visible"});
+tbl_row.find('.btn-cancel').css({"visibility": "visible"});
+tbl_row.find('.btn-delete').css({"visibility": "visible"});
+tbl_row.find('.row_data').attr("clicked", false);
 
-  console.log(country)
-  var urlforCountry =  window.location.host + "/get/" + country;
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function ReceivedCallback() {
-      if (this.readyState == 4 && this.status == 200) {
-          selectedCountries =JSON.parse(this.responseText);
-          console.log("Response Received")
+$(this).attr('original_entry', $(this).html());
+$(this).attr('clicked', true);
+
+//make div editable
+$(this).closest('div').attr('contenteditable', 'true');
+//add bg css
+$(this).addClass('bg-warning').css('padding','5px');
+
+$(this).focus();
+})
+
+
+$(document).on('click', '.btn-cancel', function(event)
+{
+  event.preventDefault();
+  var tbl_row = $(this).closest('tr');
+//	var row_id = tbl_row.attr('row_id');
+  //hide save and cacel buttons
+  tbl_row.find('.btn-save').css({"visibility": "hidden"});
+  tbl_row.find('.btn-cancel').css({"visibility": "hidden"});
+  tbl_row.find('.btn-delete').css({"visibility": "hidden"});
+  tbl_row.find('.btn-add').css({"visibility": "hidden"});
+
+  //make the whole row editable
+  tbl_row.find('.row_data')
+  .attr('edit_type', 'click')
+  .removeClass('bg-warning')
+  .css('padding','')
+
+  tbl_row.find('.row_data').each(function(index, val)
+  {
+    $(this).html( $(this).attr('original_entry') );
+
+  });
+
+  tbl_row.find('.input').val("");
+
+});
+
+$(document).on('click', '.btn-delete', function(event)
+  {
+    event.preventDefault();
+    var tbl_row = $(this).closest('tr');
+    var field = tbl_row.attr('value');
+    var dataToRemove = $(".row_data[clicked=true]").html().trim();
+  //  console.log(dataToRemove);
+    //hide save and cacel buttons
+    tbl_row.find('.btn-save').css({"visibility": "hidden"});
+    tbl_row.find('.btn-cancel').css({"visibility": "hidden"});
+    tbl_row.find('.btn-add').css({"visibility": "hidden"});
+    tbl_row.find('.btn-delete').css({"visibility": "hidden"});
+
+    if (field =="altName"){
+      field = "properties.name"
+    }
+    if (field =="altCapital"){
+      field= "properties.capital"
+    }
+
+    //make the whole row editable
+    tbl_row.find('.row_data')
+    .attr('edit_type', 'click')
+    .removeClass('bg-warning')
+    .css('padding','')
+
+    $.ajax({
+      url: '/deleteData',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        id: id,
+        field: field,
+        value: dataToRemove
+      }),
+      dataType: 'json',
+      success: function(data){
+        console.log(data)
+        console.log("Success update request")
+        location.reload();
       }
-  };
-  xhttp.open("GET", urlforCountry , true);
-  xhttp.send(null);
+    });
 
+  });
+
+//make cancel and add button appear
+$(document).on('click', '.input', function(event)
+  {
+      event.preventDefault();
+    var tbl_row = $(this).closest('tr');
+    //hide save and cacel buttons
+    tbl_row.find('.btn-add').css({"visibility": "visible"});
+    tbl_row.find('.btn-cancel').css({"visibility": "visible"});
+
+  });
+
+//Add the data that was added
+$(document).on('click', '.btn-add', function(event)
+  {
+    event.preventDefault();
+    var tbl_row = $(this).closest('tr');
+    var field = tbl_row.attr('value');
+
+    var dataToAdd = tbl_row.find(".input").val();
+    //hide save and cacel buttons
+    tbl_row.find('.btn-save').css({"visibility": "hidden"});
+    tbl_row.find('.btn-cancel').css({"visibility": "hidden"});
+
+  //  var id = $("#databaseTable").attr('value');
+    if (field =="altName"){
+      field = "properties.name"
+    }
+    if (field =="altCapital"){
+      field= "properties.capital"
+    }
+
+
+    $.ajax({
+      url: '/addData',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        id: id,
+        field: field,
+        value: dataToAdd
+      }),
+      dataType: 'json',
+      success: function(data){
+        console.log(data)
+        console.log("Success update request")
+        location.reload();
+      }
+    });
+
+
+  });
+
+$(document).on('focusout', '.row_data', function(event)
+{
+event.preventDefault();
+
+if($(this).attr('edit_type') == 'button')
+{
+  return false;
 }
+var row_div = $(this)
+.removeClass('bg-warning') //add bg css
+.css('padding','')
+
+})
+
+//Send Update Request
+$(document).on('click', '.btn-save', function(event)
+{
+event.preventDefault();
+
+var tbl_row = $(this).closest('tr');
+
+//Field to update in a database
+var field = tbl_row.attr('value');
+// var id = $("#databaseTable").attr('value');
+//  console.log(typeof(id));
+//Formatting the data in an array form without empty strings.
+var newData = tbl_row.find('.row_data').text().trim().split('\n');
+newData = newData.map(s =>s.trim());
+newData = newData.filter(Boolean)
+console.log(newData)
+//send field: new array
+console.log(tbl_row.find('.row_data').text());
+console.log(field);
+
+//hide save and cacel buttons
+tbl_row.find('.btn-save').css({"visibility": "hidden"});
+tbl_row.find('.btn-cancel').css({"visibility": "hidden"});
+tbl_row.find('.btn-delete').css({"visibility": "hidden"});
+
+var name; //can be capital or name depending on what field to update
+if (field == "altCapital"){
+  name = $("#capital").html()
+}
+else if (field=="altName"){
+  name = $('#name').html();
+}
+else if(field =="properties.name"){
+  name = $('#name').html();
+  var otherNames = $("#altName").find('.row_data').text().trim().split('\n');
+  otherNames = otherNames.map(s=>s.trim()).filter(Boolean)
+  newData = newData.concat(otherNames);
+  console.log(newData)
+
+//  newData.
+}
+else if(field =="properties.capital"){
+  name = $("#capital").html()
+  var otherCaps = $("#altCapital").find('.row_data').text().trim().split('\n');
+  otherCaps = otherNames.map(s=>s.trim()).filter(Boolean)
+  newData = newData.concat(otherCaps);
+  console.log(newData)
+}
+console.log("name ---- " +name)
+
+
+
+$.ajax({
+  url: '/update',
+  type: 'PUT',
+
+  contentType: 'application/json',
+  data: JSON.stringify({
+    id: id,
+    name: name,
+    field: field,
+    value: newData
+  }),
+  dataType: 'json',
+  success: function(data){
+    console.log(data)
+    console.log("Success update request")
+  }
+});
+
+});
