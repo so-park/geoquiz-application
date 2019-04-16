@@ -57,6 +57,7 @@
             <div class="col-xs-5 mr-4">
                 Enter country name:
                 <input class="form-control" id="countryName" name="countryName" type="text">
+                <input class="form-control" name="option" value="borders" type="hidden">
             </div>
             <div class="col-xs-3">
               <br>
@@ -65,15 +66,6 @@
           </div>
       </form>
 
-
-      <% if (result != undefined){ %>
-            <p>This sdfa</p>
-      <% } %>
-
-      <% if (result == "success") { %>
-          <% console.log(result=="success"); %>
-            <p>This</p>
-      <% } %>
 
     <%if (data != undefined){ %>
         <% data = data[0] %>
@@ -88,24 +80,6 @@
         </tr>
       </thead>
       <tbody>
-        <!-- <tr value = "properties.continent">
-          <th scope="row">Continent</th>
-          <td><div id="continent" class="row_data" edit_type="click"><%= data.properties.continent %></div></td>
-          <td>
-              <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
-              <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
-          </td>
-            <td></td>
-        </tr>
-        <tr value ="properties.capital">
-          <th scope="row">Capital</th>
-          <td><div id ="capital" class="row_data" edit_type="click" value ="0"><%= data.properties.capital[0] %></div></td>
-          <td>
-              <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info" > Save </button></span>
-              <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info" > Cancel </button></span>
-          </td>
-          <td></td>
-        </tr> -->
         <tr value ="properties.name" >
           <th scope="row">Country</th>
           <td><div id="name" class="row_data" edit_type="click"><%= data.properties.name[0] %></div></td>
@@ -116,120 +90,30 @@
             <td></td>
         </tr>
 
-        <!-- <tr id="altCapital" value ="altCapital">
-          <th scope="row">Alternative Answers for Capital</th>
-                <td>
-                  <% var capLen = data.properties.capital.length  %>
-                   <% if ( capLen > 1){ %>
-                      <% for (var i =1; i < capLen; i++ ){ %>
-                        <div class="row_data" edit_type="click">
-                          <%= data.properties.capital[i]%>
-                        </div>
-                    <%  } %>
-                 <% } %>
-               </td>
-              <td>
-                  <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
-                  <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
-                  <span class="btn-delete" style="visibility: hidden"><button class="btn btn-outline-info"> Remove </button></span>
-              </td>
-              <td>
-                   <input type=text class="form-control input" placeholder="add new data">
-                  <span class="btn-add" style="visibility: hidden"><button class="btn btn-outline-info"> Add </button></span>
-              </td>
-
-        </tr>
-        <tr value ="properties.misspell_capital">
-          <th scope="row">Misspellings for Capital (3)</th>
-              <td>
-                <% var mCapLen = data.properties.misspell_capital.length  %>
-                <% if (mCapLen !=0) { %>
-                    <% for (var i =0; i < mCapLen; i++ ){ %>
-                        <div class="row_data" edit_type="click">
-                            <%= data.properties.misspell_capital[i]%>
-                        </div>
-                  <% } %>
-               <% } %>
-
-            </td>
-              <td>
-                  <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
-                  <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info">Cancel </button></span>
-                  <span class="btn-delete" style="visibility: hidden"><button class="btn btn-outline-info"> Remove </button></span>
-              </td>
-              <td>
-                   <input type=text class="form-control input" placeholder="add new data">
-                  <span class="btn-add" style="visibility: hidden"><button class="btn btn-outline-info"> Add </button></span>
-              </td>
-        </tr>
-        <tr id="altName" value ="altName">
-          <th scope="row">Alternative Answers for Country</th>
-              <td>
-                <% var nameLen = data.properties.name.length  %>
-                 <% if ( nameLen > 1){ %>
-                    <% for (var i =1; i < nameLen; i++ ){ %>
-                      <div class="row_data" edit_type="click">
-                      <%= data.properties.name[i]%>
-                      </div>
-                  <%  } %>
-               <% } %>
-             </td>
-             <td>
-                 <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
-                 <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
-                 <span class="btn-delete" style="visibility: hidden"><button class="btn btn-outline-info"> Remove </button></span>
-
-             </td>
-             <td>
-                  <input type=text class="form-control input" placeholder="add new data">
-                   <span class="btn-add" style="visibility: hidden"><button class="btn btn-outline-info"> Add </button></span>
-
-             </td>
-        </tr>
-        <tr value ="properties.misspell_name">
-          <th scope="row">Misspellings for Country (3)</th>
-              <td>
-                <% var mNameLen = data.properties.misspell_name.length  %>
-                <% if (mNameLen !=0) { %>
-                    <% for (var i =0; i < mNameLen; i++ ){ %>
-                        <div class="row_data" edit_type="click">
-                          <%= data.properties.misspell_name[i]%>
-                       </div>
-                <%  } %>
-             <% } %>
-            </td>
-              <td>
-                  <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
-                  <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
-                  <span class="btn-delete" style="visibility: hidden"><button class="btn btn-outline-info"> Remove </button></span>
-              </td>
-              <td>
-                   <input type=text class="form-control input" placeholder="add new data">
-                  <span class="btn-add" style="visibility: hidden"><button class="btn btn-outline-info"> Add </button></span>
-              </td> -->
-        <!-- </tr> -->
         <tr value ="geometry.type">
           <th scope="row">Geometry Type</th>
             <td>
               <div class="row_data" edit_type="click">
                 <%= data.geometry.type %>
+                hello
            </div></td>
             <td>
                 <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
+                <span class="btn-delete" style="visibility: hidden"><button class="btn btn-outline-info"> Remove </button></span>
                 <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
             </td>
         </tr>
 
-        <tr>
+        <tr value="geometry.coordinates">
           <th scope="row">Geometry Coordinates</th>
             <td>
-                <span class="btn-edit" ><button class="btn btn-outline-info"> Edit </button></span>
               <div class="row_data" edit_type="click">
-                    <%= data.geometry.coordinates%>
+                    <%= JSON.stringify(data.geometry.coordinates)%>
                         <br>
              </div></td>
             <td>
               <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
+              <span class="btn-delete" style="visibility: hidden"><button class="btn btn-outline-info"> Remove </button></span>
               <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
             </td>
         </tr>
@@ -239,8 +123,7 @@
 
 
   </div>
-    <!-- <script src="dbFunctions.js" type="text/javascript" >
-    </script> -->
+
     <script type="text/javascript">
 
       var id = $("#databaseTable").attr('value');
@@ -261,8 +144,6 @@
 
       $(this).attr('original_entry', $(this).html());
       $(this).attr('clicked', true);
-  //    console.log($(this).attr('clicked'));
-      // console.log($(this).attr('selected').val());
 
     	//make div editable
     	$(this).closest('div').attr('contenteditable', 'true');
@@ -306,7 +187,7 @@
           var tbl_row = $(this).closest('tr');
           var field = tbl_row.attr('value');
           var dataToRemove = $(".row_data[clicked=true]").html().trim();
-          console.log(dataToRemove);
+        //  console.log(dataToRemove);
           //hide save and cacel buttons
           tbl_row.find('.btn-save').css({"visibility": "hidden"});
           tbl_row.find('.btn-cancel').css({"visibility": "hidden"});

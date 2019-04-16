@@ -310,10 +310,18 @@ exports.selectContinent = function SelectContinentHandler (request, response){
 exports.getCountryInfo =function getCountryHandler(request, response){
 	console.log("accessing database");
 	console.log(request.query.countryName);
+	console.log(request.params);
+	console.log(request.query.option)
 	 Country.find({ "properties.name" : request.query.countryName}).
 	 then(function HandleFindOne(data){
-		 console.log(data);
-		 response.render("crud", {data:data});
+
+		 if (request.query.option == "spelling"){
+			 response.render("crud", {data:data});
+		 }
+		 else{
+			 response.render("editBorders", {data:data});
+		 }
+
 	} )
 };
 
@@ -340,6 +348,11 @@ exports.update = function UpdateHandler(request, response){
 		}
 		var obj ={};
 				obj[data.field] = value
+		if (data.field =="geometry.coordinates"){
+
+			value = JSON.parse(value[0])
+
+		}
 
 		// console.log(data.name)
 		Country.updateOne(
@@ -350,7 +363,7 @@ exports.update = function UpdateHandler(request, response){
 			}).then(function HandleUpdateOne(res){
 				console.log("done")
 				console.log(res)
-				response.send("success");
+				response.send();
 
 			}).catch(error=>{
 				console.log(error)
@@ -459,7 +472,6 @@ exports.addCountry = function AddCountryHandler(request, response){
 			response.send();
 	})
 
-//	response.send();
 };
 exports.removeCountry = function DeleteHandler(request, response){
 	console.log("delete");
@@ -469,7 +481,7 @@ exports.removeCountry = function DeleteHandler(request, response){
 		{"properties.name": data.countryName},
 	).then(res=>{
 		console.log(res)
-	response.send();
+		response.send();
 	});
 
 };

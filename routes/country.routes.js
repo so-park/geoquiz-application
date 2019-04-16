@@ -118,7 +118,7 @@ router.post('/removeCountry', countries.removeCountry);
 router.get('/login', function handleAfricaPage(request, response) {
 	response.render('login');
 })
-router.post('/editBorders', function handleAddDataPage(request, response){
+router.get('/editBorders', function handleAddDataPage(request, response){
 	response.render('editBorders');
 })
 
