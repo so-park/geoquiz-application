@@ -39,7 +39,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(session({
 	secret: 'geoquiz',
-	resave: true,
+	resave: false,
 	saveUninitialized: true
 }))
 

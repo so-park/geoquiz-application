@@ -35,7 +35,6 @@ MongoClient.connect(url, function DBConnectHandler(err, client){
 		console.log(res);
 				client.close();
 	})
-
 });
 
 /***********
