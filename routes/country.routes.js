@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var express = require('express-session');
 var httpRequest = require('request');
+var formidable = require('formidable');
+var fs = require('fs');
 
 const path = require('path');
 //use locally
@@ -16,15 +18,15 @@ router.get ('/', function handleHomePage(request, response) {
 });
 
 //For professors to add/edit database
-router.get('/crud', function handleAccessDBPage(request, response){
-	if (request.session.user){
-		response.render("crud");
-	}
-	else{
-		response.render("login",{message: "Login required"})
-	}
-
-})
+// router.get('/crud', function handleAccessDBPage(request, response){
+// 	if (request.session.user){
+// 		response.render("crud");
+// 	}
+// 	else{
+// 		response.render("login",{message: "Login required"})
+// 	}
+//
+// })
 
 router.post('/',function handleAfricaPage(request, response) {
 	response.render('practice');
@@ -126,27 +128,28 @@ router.post('/addCountry', countries.addCountry);
 router.post('/removeCountry', countries.removeCountry);
 router.post('/checkUser', users.checkUser);
 router.post('/createUser', users.create);
-router.get('/createUser', function handleCreateUserPage(request,response){
-	if (request.session.user){
-		response.render("createUser");
-	}
-	else{
-		response.render("login",{message: "Login required"})
-	}
-});
+router.post('/fileUpload', users.fileUpload);
+// router.get('/createUser', function handleCreateUserPage(request,response){
+// 	if (request.session.user){
+// 		response.render("createUser");
+// 	}
+// 	else{
+// 		response.render("login",{message: "Login required"})
+// 	}
+// });
 router.get('/logout',users.logout);
 router.get('/login', function handleLoginPage(request, response) {
 	response.render('login');
 })
-router.get('/editBorders', function handleAddDataPage(request, response){
-	if (request.session.user){
-		response.render("editBorders");
-	}
-	else{
-		response.render("login",{message: "Login required"})
-	}
-})
 
+// router.get('/editBorders', function handleAddDataPage(request, response){
+// 	if (request.session.user){
+// 		response.render("editBorders");
+// 	}
+// 	else{
+// 		response.render("login",{message: "Login required"})
+// 	}
+// })
 
 
 
@@ -158,14 +161,8 @@ router.get('/quiz/:continent', countries.sendRandomCountries);
 router.get('/background/:continent', countries.allButOneContinent);
 router.get('/getCountryInfo', countries.getCountryInfo);
 router.put('/update', countries.update);
-router.get('/editCountry', function handleAddDataPage(request, response){
-	if (request.session.user){
-		response.render("editCountry");
-	}
-	else{
-		response.render("login",{message: "Login required"})
-	}
-})
+
+
 router.post('/:continent', function handleAfricaPage(request, response) {
 	var practice =false;
 	console.log("Got the POST request " + request.params.continent);
@@ -176,6 +173,16 @@ router.post('/:continent', function handleAfricaPage(request, response) {
 
 		response.render('index', {continent: request.params.continent,practice: practice, user: userId, assignment: assignmentID, course:courseID});
 });
+//editBorders, editCountry, createUser, fileUpload,crud pages
+router.get('/:page', function handleAddDataPage(request, response){
+	console.log(request.params.page)
+	if (request.session.user){
+		response.render(request.params.page);
+	}
+	else{
+		response.render("login",{message: "Login required"})
+	}
+})
 
 
 

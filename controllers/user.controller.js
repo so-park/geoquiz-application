@@ -1,5 +1,8 @@
 const User = require('../models/user.model.js');
 var ObjectId = require('mongodb').ObjectID;
+var formidable = require('formidable');
+var fs = require('fs');
+
 
 exports.create = function CreateHandler(request, response){
   console.log("create user");
@@ -68,4 +71,23 @@ exports.logout = function Logouthanlder(request,response){
 
   response.header('Cache-Control', 'no-cache, no-store, must-revalidate,post-check=0, pre-check=0');
   response.render("login",{message:"logout Success!"});
+}
+
+exports.fileUpload = function handlefileUpload(request, response){
+			var data;
+			new formidable.IncomingForm().parse(request,(err,fields,file) =>{
+				fs.readFile(file.file.path,"utf8", function(err,res){
+          console.log(res);
+          data = res;
+          console.log("data "+ data)
+        //  console.log("data json "+ JSON.parse(data));
+          console.log(typeof(data));
+
+				})
+
+      //  console.log(data.length);
+
+			})
+
+      response.render("fileUpload")
 }
