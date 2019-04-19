@@ -82,12 +82,43 @@ exports.fileUpload = function handlefileUpload(request, response){
           console.log("data "+ data)
         //  console.log("data json "+ JSON.parse(data));
           console.log(typeof(data));
+          data = data.split("\n")
+
+
+          console.log(data.length);
+          for (var i=0; i< data.length; i++){
+            var line = data[i].split(',')
+            var option;
+            //Index for option
+            switch (line[1]){
+              case "a":
+                option = "name"
+                break;
+              case "ac":
+                option = "capital"
+                break;
+              case "m":
+                option = "misspell_name"
+                break;
+              case "mc":
+                option ="misspell_capital"
+                break;
+              default:
+                break;
+          }
+          //make arrary with misspellings Only
+          
+          //Update database
+          // User.update(
+          //   {"name": line[0]},
+          //   {$addToSet:
+          //     {
+          //       option: {$each: []}
+          //     }
+          //   }
+          // )
 
 				})
-
-      //  console.log(data.length);
-
 			})
-
-      response.render("fileUpload")
+      response.render("fileUpload",{message: "Database Updated"})
 }

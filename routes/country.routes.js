@@ -2,8 +2,6 @@ var express = require('express');
 var router = express.Router();
 var express = require('express-session');
 var httpRequest = require('request');
-var formidable = require('formidable');
-var fs = require('fs');
 
 const path = require('path');
 //use locally

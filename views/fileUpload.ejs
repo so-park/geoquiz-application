@@ -11,6 +11,30 @@
 <body>
   <% include ../fixed/nav %>
   <div class="container">
+    <div class="row">
+      <div class = "col-md-auto" style="white-space: pre-wrap;">
+        <p class= "border border-info rounded p-3">
+        <span class="text-info"> Only csv file is accepted </span>
+        The each row of the file should follow the format below:
+        country, option, spelling, spelling ,...
+
+        Options are: "a" for alternative spelling for country.
+                     "m" for misspelling for country.
+                     "ac" for alternative spelling for capital.
+                     "mc" for misspelling for capital.
+
+                     options with "a" are 5 point spellings and "m" are 3 point spellings.
+
+        example:
+        Algeria, m, Algear
+        Algeria, mc, Algers, Aleris
+
+        All of these records will be appened to the list in the database and will skip any
+        duplicates. If you wish to update country or capital name or do further editing,
+        please go to edit country page.
+      </p>
+    </div>
+    <div class="col-sm-4 mt-5">
     <form class="form-group" method="POST" action="/fileUpload" enctype="multipart/form-data">
         <div class="form-group">
             <label>Upload File: </label>
@@ -20,6 +44,8 @@
             <input type="submit" class="btn btn-outline-info"/>
        </div>
      </form>
+   </div>
+   </div>
   </div>
 </body>
 </html>
