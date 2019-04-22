@@ -87,7 +87,8 @@ exports.fileUpload = function handlefileUpload(request, response){
 
           console.log(data.length);
           for (var i=0; i< data.length; i++){
-            var line = data[i].split(',')
+            var line = data[i].split(',');
+            var lenLine = line.length;
             var option;
             //Index for option
             switch (line[1]){
@@ -106,8 +107,11 @@ exports.fileUpload = function handlefileUpload(request, response){
               default:
                 break;
           }
+
+          var spellings = line.slice(2,lenLine);
+          console.log(spellings);
           //make arrary with misspellings Only
-          
+
           //Update database
           // User.update(
           //   {"name": line[0]},
