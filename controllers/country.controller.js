@@ -1,10 +1,8 @@
 
 const Country = require('../models/country.model.js');
-
+var formidable = require('formidable');
+var fs = require('fs');
 var ObjectId = require('mongodb').ObjectID;
-
-exports.create = function CreateHandler(request, response){
-};
 
 //Find all countries
 exports.findAll = function FindAllHandler(request, response){
@@ -430,7 +428,7 @@ exports.delete = function DeleteHandler(request, response){
 	response.send();
 };
 
-exports.addCountry = function AddCountryHandler(request, response){
+exports.create = function CreateHandler(request, response){
 	console.log("addCountry");
 	var data = request.body;
 	var coordinates;
@@ -486,3 +484,76 @@ exports.removeCountry = function DeleteHandler(request, response){
 	});
 
 };
+
+exports.fileUpload = function handlefileUpload(request, response){
+			var data;
+			var failedList =[];
+			new formidable.IncomingForm().parse(request,(err,fields,file) =>{
+				fs.readFile(file.file.path,"utf8", async function(err,res){
+
+          console.log(res);
+          data = res;
+          console.log("data "+ data)
+        //  console.log("data json "+ JSON.parse(data));
+          console.log(typeof(data));
+          data = data.split("\n")
+
+
+          console.log(data.length);
+          for (var i=0; i< data.length; i++){
+            var line = JSON.parse(data[i]).split(',');
+            var lenLine = line.length;
+            var option;
+            //Index for option
+            switch (line[1]){
+              case "a":
+                option = "properties.name"
+                break;
+              case "ac":
+                option = "properties.capital"
+                break;
+              case "m":
+                option = "properties.misspell_name"
+                break;
+              case "mc":
+                option ="properties.misspell_capital"
+                break;
+              default:
+								option =""
+                break;
+              }
+
+							if (option == ""){
+								failedList.push(i+1);
+								continue;
+							}
+
+              //make arrary with misspellings Only
+              var spellings = line.slice(2,lenLine);
+
+            // Update database
+							var result = await updateFromFile(line[0],option,spellings)
+							console.log(result)
+							if (result.n == 0){
+								console.log(i)
+								failedList.push(i+1)
+							}
+        }
+				console.log(failedList);
+				response.render("fileUpload",{message: "Database Updated", failedList: failedList})
+				})
+			})
+
+
+}
+
+function updateFromFile(name, option,spellings){
+			return Country.updateOne(
+				{"properties.name": name},
+				{$addToSet:
+					{
+						[option]: {$each: spellings}
+					}
+				}
+			)
+}

@@ -1,6 +1,8 @@
 const User = require('../models/user.model.js');
 var ObjectId = require('mongodb').ObjectID;
 
+
+
 exports.create = function CreateHandler(request, response){
   console.log("create user");
   console.log(request.body)
