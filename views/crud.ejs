@@ -20,35 +20,7 @@
 
   </head>
   <body>
-
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Geoquiz</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Update</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/addDatapage">Add data for one country</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/addCountry">Add another country</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <% include ../fixed/nav %>
     <% var data;
         var result %>
     <div class="container">
@@ -61,6 +33,7 @@
           <button  onclick ="selectOption()" type="submit" class="btn btn-outline-info">Submit </button>
         </div>
      </div> -->
+
       <form class="mb-3" method="GET" action="/getCountryInfo">
           <div class="row" >
             <div class="col-xs-5 mr-4">

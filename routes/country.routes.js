@@ -1,11 +1,14 @@
 var express = require('express');
-var httpRequest = require('request');
 var router = express.Router();
+var express = require('express-session');
+var httpRequest = require('request');
+
 const path = require('path');
 //use locally
 require('dotenv').config();
 token = process.env.TOKEN
 const countries = require('../controllers/country.controller.js');
+const users = require('../controllers/user.controller.js')
 
 router.get ('/', function handleHomePage(request, response) {
 	console.log("index called");
@@ -14,7 +17,13 @@ router.get ('/', function handleHomePage(request, response) {
 
 //For professors to add/edit database
 router.get('/crud', function handleAccessDBPage(request, response){
-	response.render("crud");
+	if (request.session.user){
+		response.render("crud");
+	}
+	else{
+		response.render("login",{message: "Login required"})
+	}
+
 })
 
 router.post('/',function handleAfricaPage(request, response) {
@@ -115,11 +124,27 @@ router.post('/addData', countries.addData);
 router.post('/deleteData', countries.delete);
 router.post('/addCountry', countries.addCountry);
 router.post('/removeCountry', countries.removeCountry);
-router.get('/login', function handleAfricaPage(request, response) {
+router.post('/checkUser', users.checkUser);
+router.post('/createUser', users.create);
+router.get('/createUser', function handleCreateUserPage(request,response){
+	if (request.session.user){
+		response.render("createUser");
+	}
+	else{
+		response.render("login",{message: "Login required"})
+	}
+});
+router.get('/logout',users.logout);
+router.get('/login', function handleLoginPage(request, response) {
 	response.render('login');
 })
 router.get('/editBorders', function handleAddDataPage(request, response){
-	response.render('editBorders');
+	if (request.session.user){
+		response.render("editBorders");
+	}
+	else{
+		response.render("login",{message: "Login required"})
+	}
 })
 
 
@@ -134,7 +159,12 @@ router.get('/background/:continent', countries.allButOneContinent);
 router.get('/getCountryInfo', countries.getCountryInfo);
 router.put('/update', countries.update);
 router.get('/editCountry', function handleAddDataPage(request, response){
-	response.render('editCountry');
+	if (request.session.user){
+		response.render("editCountry");
+	}
+	else{
+		response.render("login",{message: "Login required"})
+	}
 })
 router.post('/:continent', function handleAfricaPage(request, response) {
 	var practice =false;
