@@ -15,17 +15,6 @@ router.get ('/', function handleHomePage(request, response) {
 	response.render('practice');
 });
 
-//For professors to add/edit database
-// router.get('/crud', function handleAccessDBPage(request, response){
-// 	if (request.session.user){
-// 		response.render("crud");
-// 	}
-// 	else{
-// 		response.render("login",{message: "Login required"})
-// 	}
-//
-// })
-
 router.post('/',function handleAfricaPage(request, response) {
 	response.render('practice');
 });
@@ -42,7 +31,6 @@ router.post('/submission', function handleSubmissionsPage(request, response){
 		}
 		comments += "Score: " + newScore;
 		console.log("After contructing formatted comments" + comments);
-	//	console.log("This is the answers entered router to send to comments " + inputs);
 
 
 		httpRequest({
@@ -128,30 +116,10 @@ router.post('/fileUpload', countries.fileUpload);
 router.post('/checkUser', users.checkUser);
 router.post('/createUser', users.create);
 
-// router.get('/createUser', function handleCreateUserPage(request,response){
-// 	if (request.session.user){
-// 		response.render("createUser");
-// 	}
-// 	else{
-// 		response.render("login",{message: "Login required"})
-// 	}
-// });
 router.get('/logout',users.logout);
 router.get('/login', function handleLoginPage(request, response) {
-	response.render('login');
+	response.render('login',{message: "Welcome!"});
 })
-
-// router.get('/editBorders', function handleAddDataPage(request, response){
-// 	if (request.session.user){
-// 		response.render("editBorders");
-// 	}
-// 	else{
-// 		response.render("login",{message: "Login required"})
-// 	}
-// })
-
-
-
 
 
 router.get('/countries', countries.findAll);

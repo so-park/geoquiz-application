@@ -307,13 +307,8 @@ exports.selectContinent = function SelectContinentHandler (request, response){
 
 
 exports.getCountryInfo =function getCountryHandler(request, response){
-	console.log("accessing database");
-	console.log(request.query.countryName);
-	console.log(request.params);
-	console.log(request.query.option)
 	 Country.find({ "properties.name" : request.query.countryName}).
 	 then(function HandleFindOne(data){
-
 		 if (request.query.option == "spelling"){
 			 response.render("crud", {data:data});
 		 }
@@ -325,12 +320,10 @@ exports.getCountryInfo =function getCountryHandler(request, response){
 };
 
 exports.update = function UpdateHandler(request, response){
-		// console.log("update handler entered");
-	//	console.log(request)
 		var data = request.body
 		var value = data.value;
 		console.log(value)
-		// //console.log(JSON.parse(request[0]));
+
 		console.log("here")
 		console.log(data.field)
 		var field =data.field;
@@ -353,7 +346,7 @@ exports.update = function UpdateHandler(request, response){
 
 		}
 
-		// console.log(data.name)
+
 		Country.updateOne(
 			{"_id": ObjectId(data.id)},
 			{$set:	{
@@ -362,8 +355,7 @@ exports.update = function UpdateHandler(request, response){
 			}).then(function HandleUpdateOne(res){
 				console.log("done")
 				console.log(res)
-				response.send();
-
+				response.send(res);
 			}).catch(error=>{
 				console.log(error)
 			})
@@ -384,30 +376,8 @@ exports.addData =function addDataHandler(request, response){
 		}
 	).then(res=>{
 		console.log(res)
-		response.send("success")
+		response.send(res)
 	});
-	//  Country.find({ "properties.name" : request.query.countryName}).
-	//  then(function HandleFindOne(data){
-	// 	 console.log(data);
-	// 	 response.render("crud", {data:data});
-	// } )
-};
-exports.delete = function DeleteHandler(request, response){
-	console.log("delete");
-	var data = request.body;
-	console.log(data)
-	Country.updateOne(
-		{"_id": data.id},
-		{$pull:
-			{
-				[data.field]: data.value
-			}
-		}
-	).then(res=>{
-		console.log(res)
-	//	response.json(res)
-	});
-	response.send();
 };
 
 exports.delete = function DeleteHandler(request, response){
@@ -423,9 +393,9 @@ exports.delete = function DeleteHandler(request, response){
 		}
 	).then(res=>{
 		console.log(res)
-	//	response.json(res)
+			response.send(res);
 	});
-	response.send();
+
 };
 
 exports.create = function CreateHandler(request, response){

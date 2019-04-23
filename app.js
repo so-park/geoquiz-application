@@ -49,6 +49,10 @@ app.set('etag', false);
 var router = require('./routes/country.routes.js');
 app.use(compression());
 
+app.get('/favicon.ico' , function(req , res){
+		res.status(204)
+	});
+
 // let transporter = nodeMailer.createTransport({
 //             host: 'smtp.gmail.com',
 // 						port: 465,
@@ -101,7 +105,7 @@ app.use(compression());
 // 				etag: false
 // 			}));
 app.use('/', router);
-app.all('/:action', function(request, response) {});
+// app.all('/:action', function(request, response) {});
 
 
   // Workers can share any TCP connection
