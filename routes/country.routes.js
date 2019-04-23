@@ -122,11 +122,12 @@ router.post('/submission', function handleSubmissionsPage(request, response){
 		})
 router.post('/addData', countries.addData);
 router.post('/deleteData', countries.delete);
-router.post('/addCountry', countries.addCountry);
+router.post('/addCountry', countries.create);
 router.post('/removeCountry', countries.removeCountry);
+router.post('/fileUpload', countries.fileUpload);
 router.post('/checkUser', users.checkUser);
 router.post('/createUser', users.create);
-router.post('/fileUpload', users.fileUpload);
+
 // router.get('/createUser', function handleCreateUserPage(request,response){
 // 	if (request.session.user){
 // 		response.render("createUser");

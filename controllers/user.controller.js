@@ -1,7 +1,6 @@
 const User = require('../models/user.model.js');
 var ObjectId = require('mongodb').ObjectID;
-var formidable = require('formidable');
-var fs = require('fs');
+
 
 
 exports.create = function CreateHandler(request, response){
@@ -71,58 +70,4 @@ exports.logout = function Logouthanlder(request,response){
 
   response.header('Cache-Control', 'no-cache, no-store, must-revalidate,post-check=0, pre-check=0');
   response.render("login",{message:"logout Success!"});
-}
-
-exports.fileUpload = function handlefileUpload(request, response){
-			var data;
-			new formidable.IncomingForm().parse(request,(err,fields,file) =>{
-				fs.readFile(file.file.path,"utf8", function(err,res){
-          console.log(res);
-          data = res;
-          console.log("data "+ data)
-        //  console.log("data json "+ JSON.parse(data));
-          console.log(typeof(data));
-          data = data.split("\n")
-
-
-          console.log(data.length);
-          for (var i=0; i< data.length; i++){
-            var line = data[i].split(',');
-            var lenLine = line.length;
-            var option;
-            //Index for option
-            switch (line[1]){
-              case "a":
-                option = "name"
-                break;
-              case "ac":
-                option = "capital"
-                break;
-              case "m":
-                option = "misspell_name"
-                break;
-              case "mc":
-                option ="misspell_capital"
-                break;
-              default:
-                break;
-          }
-
-          var spellings = line.slice(2,lenLine);
-          console.log(spellings);
-          //make arrary with misspellings Only
-
-          //Update database
-          // User.update(
-          //   {"name": line[0]},
-          //   {$addToSet:
-          //     {
-          //       option: {$each: []}
-          //     }
-          //   }
-          // )
-
-				})
-			})
-      response.render("fileUpload",{message: "Database Updated"})
 }
