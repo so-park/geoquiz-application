@@ -367,17 +367,23 @@ exports.addData =function addDataHandler(request, response){
 	console.log("add data");
 	console.log(request.body);
 	var data = request.body;
-	Country.updateOne(
-		{"_id": data.id},
-		{$push:
-			{
-				[data.field]: data.value
-			}
-		}
-	).then(res=>{
-		console.log(res)
-		response.send(res)
-	});
+	if (data.value == ""){
+		var res = {nModified: "Input needed"}
+		response.send(res);
+	}
+	else{
+			Country.updateOne(
+				{"_id": data.id},
+				{$addToSet:
+					{
+						[data.field]: data.value
+					}
+				}
+			).then(res=>{
+				console.log(res)
+				response.send(res)
+			});
+	}
 };
 
 exports.delete = function DeleteHandler(request, response){
@@ -399,49 +405,49 @@ exports.delete = function DeleteHandler(request, response){
 };
 
 exports.create = function CreateHandler(request, response){
-	console.log("addCountry");
-	var data = request.body;
-	var coordinates;
-	if (data.coordinates == ''){
-		coordinates = [];
-	}
-	else{
-		coordinates = JSON.parse(data.coordinates.replace(/['"]+/g, ''));
-	}
-	console.log(coordinates);
-	data.altCapital= data.altCapital.split(',');
-	data.altName= data.altName.split(',');
-	data.capital = data.capital.split(',').concat(data.altCapital);
-	data.name = data.name.split(',').concat(data.altName);
-	data.misspell_capital = data.misspell_capital.split(',');
-	data.misspell_name = data.misspell_name.split(',');
-
-	var properties={
-		continent: data.continent,
-		capital: data.capital.filter(Boolean),
-		name: data.name.filter(Boolean),
-		misspell_capital: data.misspell_capital.filter(Boolean),
-		misspell_name: data.misspell_name.filter(Boolean)
-	};
-	var geometry={
-		type: data.type,
-		coordinates: coordinates
-	}
-	var documentToInsert =	{
-			"type": "Feature",
-			"properties": properties,
-			"geometry": geometry
+		console.log("addCountry");
+		var data = request.body;
+		var coordinates;
+		if (data.coordinates == ''){
+			coordinates = [];
 		}
-	console.log(Country);
-	console.log(properties);
-	console.log(geometry);
-	Country.create( documentToInsert, function (err, small) {
-  		console.log(err);
-			console.log(small);
-			response.send();
-	})
+		else{
+			coordinates = JSON.parse(data.coordinates.replace(/['"]+/g, ''));
+		}
+		console.log(coordinates);
+		data.altCapital= data.altCapital.split(',');
+		data.altName= data.altName.split(',');
+		data.capital = data.capital.split(',').concat(data.altCapital);
+		data.name = data.name.split(',').concat(data.altName);
+		data.misspell_capital = data.misspell_capital.split(',');
+		data.misspell_name = data.misspell_name.split(',');
 
+		var properties={
+			continent: data.continent,
+			capital: data.capital.filter(Boolean),
+			name: data.name.filter(Boolean),
+			misspell_capital: data.misspell_capital.filter(Boolean),
+			misspell_name: data.misspell_name.filter(Boolean)
+		};
+		var geometry={
+			type: data.type,
+			coordinates: coordinates
+		}
+		var documentToInsert =	{
+				"type": "Feature",
+				"properties": properties,
+				"geometry": geometry
+			}
+		console.log(Country);
+		console.log(properties);
+		console.log(geometry);
+		Country.create( documentToInsert).then(res =>
+		{response.send(res)}
+		).catch(err=>{
+				console.log(err);
+		})
 };
+
 exports.removeCountry = function DeleteHandler(request, response){
 	console.log("delete");
 	var data = request.body;
@@ -450,7 +456,7 @@ exports.removeCountry = function DeleteHandler(request, response){
 		{"properties.name": data.countryName},
 	).then(res=>{
 		console.log(res)
-		response.send();
+		response.send(res);
 	});
 
 };
@@ -501,7 +507,7 @@ exports.fileUpload = function handlefileUpload(request, response){
               //make arrary with misspellings Only
               var spellings = line.slice(2,lenLine);
 
-            // Update database
+             //Update database
 							var result = await updateFromFile(line[0],option,spellings)
 							console.log(result)
 							if (result.n == 0){

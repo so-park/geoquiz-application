@@ -6,10 +6,10 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
+      <!-- <li class="nav-item active">
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
+      </li> -->
+      <li class="nav-item active">
         <a class="nav-link" href="/crud">Update</a>
       </li>
       <li class="nav-item">
@@ -29,16 +29,15 @@
         <a class="nav-link " href="/logout">Logout</a>
       </li>
 
-        <% var userName; %>
-          <% if (userName != undefined){ %>
-            <li class="nav-item">
-              <a class="nav-link " >
-                Hello, <%= userName %>!
-              </a>
-            </li>
-          <% } %>
-
-
     </ul>
   </div>
 </nav>
+
+<script>
+$(document).ready(function() {
+  $(".nav .nav-link").on("click", function(){
+     $(".nav").find(".active").removeClass("active");
+     $(this).addClass("active");
+  });
+});
+</script>

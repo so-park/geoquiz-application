@@ -187,89 +187,82 @@
 
       });
 
-    //make cancel and add button appear
-    $(document).on('click', '.input', function(event)
-      {
-          event.preventDefault();
-        var tbl_row = $(this).closest('tr');
-        //hide save and cacel buttons
-        tbl_row.find('.btn-add').css({"visibility": "visible"});
-        tbl_row.find('.btn-cancel').css({"visibility": "visible"});
-
-      });
-
-    //Add the data that was added
-    $(document).on('click', '.btn-add', function(event)
-      {
+  //make cancel and add button appear
+  $(document).on('click', '.input', function(event)
+    {
         event.preventDefault();
-        var tbl_row = $(this).closest('tr');
-        var field = tbl_row.attr('value');
+      var tbl_row = $(this).closest('tr');
+      //hide save and cacel buttons
+      tbl_row.find('.btn-add').css({"visibility": "visible"});
+      tbl_row.find('.btn-cancel').css({"visibility": "visible"});
 
-        var dataToAdd = tbl_row.find(".input").val();
-        //hide save and cacel buttons
-        tbl_row.find('.btn-save').css({"visibility": "hidden"});
-        tbl_row.find('.btn-cancel').css({"visibility": "hidden"});
+    });
 
-      //  var id = $("#databaseTable").attr('value');
-        if (field =="altName"){
-          field = "properties.name"
+  //Add the data that was added
+  $(document).on('click', '.btn-add', function(event)
+    {
+      event.preventDefault();
+      var tbl_row = $(this).closest('tr');
+      var field = tbl_row.attr('value');
+
+      var dataToAdd = tbl_row.find(".input").val();
+      //hide save and cacel buttons
+      tbl_row.find('.btn-save').css({"visibility": "hidden"});
+      tbl_row.find('.btn-cancel').css({"visibility": "hidden"});
+
+      if (field =="altName"){
+        field = "properties.name"
+      }
+      if (field =="altCapital"){
+        field= "properties.capital"
+      }
+
+
+      $.ajax({
+        url: '/addData',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          id: id,
+          field: field,
+          value: dataToAdd
+        }),
+        dataType: 'json',
+        success: function(data){
+          console.log(data)
+          location.reload();
         }
-        if (field =="altCapital"){
-          field= "properties.capital"
-        }
-
-
-        $.ajax({
-          url: '/addData',
-          type: 'POST',
-          contentType: 'application/json',
-          data: JSON.stringify({
-            id: id,
-            field: field,
-            value: dataToAdd
-          }),
-          dataType: 'json',
-          success: function(data){
-            console.log(data)
-            console.log("Success update request")
-            location.reload();
-          }
-        });
-
-
       });
+    });
 
-    $(document).on('focusout', '.row_data', function(event)
-    {
-    event.preventDefault();
+  $(document).on('focusout', '.row_data', function(event)
+  {
+  event.preventDefault();
 
-    if($(this).attr('edit_type') == 'button')
-    {
-      return false;
-    }
-    var row_div = $(this)
-    .removeClass('bg-warning') //add bg css
-    .css('padding','')
+  if($(this).attr('edit_type') == 'button')
+  {
+    return false;
+  }
+  var row_div = $(this)
+  .removeClass('bg-warning') //add bg css
+  .css('padding','')
 
-    })
+  })
 
     //Send Update Request
-    $(document).on('click', '.btn-save', function(event)
-    {
+  $(document).on('click', '.btn-save', function(event)
+  {
     event.preventDefault();
 
     var tbl_row = $(this).closest('tr');
-
     //Field to update in a database
     var field = tbl_row.attr('value');
-    // var id = $("#databaseTable").attr('value');
-    //  console.log(typeof(id));
+
     //Formatting the data in an array form without empty strings.
     var newData = tbl_row.find('.row_data').text().trim().split('\n');
     newData = newData.map(s =>s.trim());
     newData = newData.filter(Boolean)
     console.log(newData)
-    //send field: new array
     console.log(tbl_row.find('.row_data').text());
     console.log(field);
 
@@ -291,8 +284,6 @@
       otherNames = otherNames.map(s=>s.trim()).filter(Boolean)
       newData = newData.concat(otherNames);
       console.log(newData)
-
-    //  newData.
     }
     else if(field =="properties.capital"){
       name = $("#capital").html()
@@ -302,7 +293,6 @@
       console.log(newData)
     }
     console.log("name ---- " +name)
-
 
 
     $.ajax({
@@ -322,8 +312,7 @@
         console.log("Success update request")
       }
     });
-
-    });
+  });
 </script>
   </body>
   <!-- <script type="text/javascript" src="functions2.js"></script> -->

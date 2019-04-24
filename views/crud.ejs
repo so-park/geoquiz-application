@@ -13,21 +13,27 @@
     <% include ../fixed/nav %>
     <% var data; %>
     <div class="container">
-
-      <form class="mb-3" method="GET" action="/getCountryInfo">
-          <div class="row mt-3" >
-            <p>Enter country name: </p>
-            <div class="col-xs-5 col-m-5" >
-
-                <input class="form-control" id="countryName" name="countryName" type="text">
+      <div class="row justify-content-center" style="white-space: pre-wrap;">
+        This page is to update spellings for countries.
+        Click each spelling to edit and remove.
+        Use the add column to add a new spelling.
+      </div>
+      <div class="row justify-content-center" >
+        <form class="mb-3" method="GET" action="/getCountryInfo">
+            <div class="col-xs-5 col-m-5">
+            <div class="input-group" >
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Enter country name: </span>
+                </div>
+                <input class="form-control col-xs-5" id="countryName" name="countryName" type="text">
                 <input class="form-control" name="option" value="spelling" type="hidden">
+                <div class="input-group-append">
+                  <input class="btn btn-info" id ="getData" type="submit" value="submit">
+                </div>
             </div>
-            <div class="col-xs-3 col-m-3 ml-2">
-              <br>
-              <input class="btn btn-info" id ="getData" type="submit" value="submit">
-       </div>
           </div>
       </form>
+    </div>
 
 
       <% if ( data != undefined && data[0] == undefined) { %>
@@ -284,20 +290,21 @@
         });
       });
 
-      //make cancel and add button appear
-      $(document).on('click', '.input', function(event)
-        {
-          	event.preventDefault();
-          var tbl_row = $(this).closest('tr');
-          //hide save and cacel buttons
-          tbl_row.find('.btn-add').css({"visibility": "visible"});
-          tbl_row.find('.btn-cancel').css({"visibility": "visible"});
+  //make cancel and add button appear
+  $(document).on('click', '.input', function(event)
+    {
+      	event.preventDefault();
+      var tbl_row = $(this).closest('tr');
+      //hide save and cacel buttons
+      tbl_row.find('.btn-add').css({"visibility": "visible"});
+      tbl_row.find('.btn-cancel').css({"visibility": "visible"});
 
-        });
+    });
 
   //Add the data that was added
   $(document).on('click', '.btn-add', function(event)
     {
+
       event.preventDefault();
       var tbl_row = $(this).closest('tr');
       var field = tbl_row.attr('value');
@@ -328,7 +335,12 @@
         dataType: 'json',
         success: function(data){
           console.log(data)
-          console.log("Success update request")
+          if (data.nModified ==0){
+            alert("Spelling already exists in the database");
+          }
+          else if (data.nModified){
+            alert(data.nModified)
+          }
           location.reload();
         }
       });
@@ -383,20 +395,23 @@
       else if(field =="properties.name"){
         name = $('#name').html();
         var otherNames = $("#altName").find('.row_data').text().trim().split('\n');
-        otherNames = otherNames.map(s=>s.trim()).filter(Boolean)
-        newData = newData.concat(otherNames);
-        console.log(newData)
-
+        if (otherNames != undefined){
+          otherNames = otherNames.map(s=>s.trim()).filter(Boolean)
+          newData = newData.concat(otherNames);
+          console.log(newData)
+        }
       }
       else if(field =="properties.capital"){
         name = $("#capital").html()
         var otherCaps = $("#altCapital").find('.row_data').text().trim().split('\n');
-        otherCaps = otherNames.map(s=>s.trim()).filter(Boolean)
-        newData = newData.concat(otherCaps);
-        console.log(newData)
+        if (otherCaps != undefined){
+          otherCaps = otherCaps.map(s=>s.trim()).filter(Boolean)
+          newData = newData.concat(otherCaps);
+          console.log(newData)
+        }
+
       }
       console.log("name ---- " +name)
-
 
 
       $.ajax({
