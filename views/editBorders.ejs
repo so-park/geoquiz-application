@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewpoint" content="width=device-width, initial-scalre= 1">
+    <meta name="viewpoint" content="width=device-width, initial-scale= 1">
     <title>CRUD for geoquiz</title>
-
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
   </head>
   <body>
@@ -15,20 +14,22 @@
     <% var data
         var result %>
     <div class="container">
-      <form class="mb-3" method="GET" action="/getCountryInfo">
-          <div class="row" >
-            <div class="col-xs-5 mr-4">
-                Enter country name:
+      <div class="row justify-content-center mt-5">
+        <div class="col-xs-5 mr-4">
+          <form class="mb-3" method="GET" action="/getCountryInfo">
+              <div class="input-group" >
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Enter Country Name: </span>
+                </div>
                 <input class="form-control" id="countryName" name="countryName" type="text">
                 <input class="form-control" name="option" value="borders" type="hidden">
-            </div>
-            <div class="col-xs-3">
-              <br>
-              <input class="btn btn-info" id ="getData" type="submit" value="submit">
-       </div>
-          </div>
-      </form>
-
+                <div class="input-group-append">
+                  <input class="btn btn-info" id ="getData" type="submit" value="submit">
+                </div>
+              </div>
+        </form>
+      </div>
+    </div>
 
     <%if (data != undefined){ %>
         <% data = data[0] %>
