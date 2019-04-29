@@ -11,12 +11,18 @@ const compression=   require('compression')
 // const pm2   = require('pm2');
 // const nodeMailer = require('nodemailer');
 const port = 3000;
+//var fs = require('fs');
 // require('dotenv').config();
 
+// var options ={
+// 	key: fs.readFileSync('keys/localhost.key'),
+// 	cert: fs.readFileSync('keys/localhost.cert'),
+// 	requestCert: false
+// }
 
 // SSL Keys
 // Setting up the credentials for the https server
-// var fs = require('fs');
+
 // var privateKey = fs.readFileSync('yaoshi/geo-quiz.me.key');
 // var certificate = fs.readFileSync('yaoshi/geo-quiz.me.crt');
 // var credentials = {key: privateKey, cert: certificate};
@@ -34,6 +40,8 @@ mongoose.connect(dbConfig.url, {useNewUrlParser: true})
 		process.exit();
 	});
 
+// app.set('modules', __dirname + '/modules');
+app.use(express.static(__dirname + '/views'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -110,13 +118,18 @@ app.use('/', router);
 
   // Workers can share any TCP connection
   // In this case it is an HTTP server
-// var httpsServer = https.createServer(credentials, app);
+//	var httpsServer = https.createServer(credentials, app);
 // httpsServer.listen(3443);
+// httpsServer.on('error', onError);
+// httpsServer.on('listening', onListeningS);
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 app.on('error', onError);
 app.on('listening', onListening)
+// var httpsServer = https.createServer(options, app);
+// httpsServer.listen(port);
 // httpsServer.on('error', onError);
-// httpsServer.on('listening', onListeningS);
+// httpsServer.on('listening',onListeningS);
 
 function onError(error) {
   if (error.syscall !== 'listen') {

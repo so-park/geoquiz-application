@@ -1,2 +1,2 @@
 # Geoquiz
-Geoquiz for professor Ediger
+This Repository contains geoquiz application.

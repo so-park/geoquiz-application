@@ -141,6 +141,7 @@ exports.checkAnswers = function checkAnswersHandler(request, response){
 
 //Get countries in a continent and randomly select 10 countries from it.
 exports.sendRandomCountries = function(request, response){
+	console.log("Send random countries")
 	Country.find({"properties.continent": request.params.continent})
 		.then(function HandleFindOne(continent){
 			if (!continent){

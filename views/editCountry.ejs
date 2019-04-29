@@ -108,19 +108,25 @@
     <!-- </div> -->
     </div>
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-3">
       <form id="removeCountry" style="display: none;" method="POST" action="/removeCountry" autocomplete="off">
-        <div class="row">
-          <label>Enter Country Name to Remove: </label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+              <span class="input-group-text">Enter Country Name to Remove: </span>
+          </div>
+          <input class="form-control" name="countryName" type="text">
+          <div class="input-group-append">
+            <input class="btn btn-info" id ="getData" type="submit" value="Remove">
+          </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-lg-4">
           <input class="form-control" name="countryName" type="text">
         </div>
           <div class="col-lg-2">
           <button class="form-control btn-outline-info" type="submit">Remove </button>
           </div>
-        </div>
+        </div> -->
       </form>
     </div>
 

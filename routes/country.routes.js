@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var express = require('express-session');
 var httpRequest = require('request');
-
 const path = require('path');
 //use locally
 require('dotenv').config();
@@ -150,8 +149,5 @@ router.get('/:page', function handleAddDataPage(request, response){
 		response.render("login",{message: "Login required"})
 	}
 })
-
-
-
 
 module.exports = router;
