@@ -13,7 +13,11 @@
     <% include ../fixed/nav %>
     <% var data %>
     <div class="container">
-      <div class="row justify-content-center mt-5">
+      <div class="row justify-content-center mt-2" style="white-space: pre-wrap;">
+          This page is to add or remove country.
+          Use drop down menu to select.
+      </div>
+      <div class="row justify-content-center">
         <div class="col-xs-3 col-m-6">
           <div class="input-group" >
             <div class="input-group-prepend">
@@ -41,21 +45,21 @@
            <div class="form-group">
              <div class="row">
              <label class="col-sm-3 quizNumber"> Continent </label>
-              <input class="col-sm-5 form-control" name="continent" type="text">
+              <input class="col-sm-5 form-control" name="continent" type="text" required>
             </div>
            </div>
 
            <div class="form-group">
              <div class="row">
              <label class="col-sm-3 quizNumber"> Capital </label>
-              <input class="form-control col-sm-5" name="capital" type="text">
+              <input class="form-control col-sm-5" name="capital" type="text" required>
             </div>
            </div>
 
           <div class="form-group">
             <div class="row">
             <label class="col-sm-3 quizNumber"> Country name </label>
-             <input class="col-sm-5 form-control" name="name" type="text" >
+             <input class="col-sm-5 form-control" name="name" type="text" required>
            </div>
           </div>
 
@@ -90,22 +94,20 @@
           <div class="form-group">
             <div class="row">
             <label class="col-sm-3 quizNumber"> Geometry Type </label>
-             <input class="col-sm-5 form-control" name="type" type="text">
+             <input class="col-sm-5 form-control" name="type" type="text" required>
            </div>
           </div>
 
           <div class="form-group">
             <div class="row">
             <label for ="input-lg" class="col-sm-3 quizNumber"> Coordinates </label>
-             <!-- <input class="col-sm-5 form-control form-control-lg" name="name" type="text" > -->
-             <textarea class="col-sm-5 form-control" rows="4" type="text" name="coordinates" ></textarea>
+             <textarea class="col-sm-5 form-control" rows="4" type="text" name="coordinates" required></textarea>
            </div>
           </div>
           <div class="text-center">
           <button type="submit" class="btn btn-outline-info">Submit </button>
         </div>
       </form>
-    <!-- </div> -->
     </div>
 
     <div class="row justify-content-center mt-3">
@@ -114,24 +116,29 @@
           <div class="input-group-prepend">
               <span class="input-group-text">Enter Country Name to Remove: </span>
           </div>
-          <input class="form-control" name="countryName" type="text">
+          <input class="form-control" name="countryName" type="text" required>
           <div class="input-group-append">
             <input class="btn btn-info" id ="getData" type="submit" value="Remove">
           </div>
         </div>
-        <!-- <div class="row">
-          <div class="col-lg-4">
-          <input class="form-control" name="countryName" type="text">
-        </div>
-          <div class="col-lg-2">
-          <button class="form-control btn-outline-info" type="submit">Remove </button>
-          </div>
-        </div> -->
       </form>
     </div>
 
+    <% var res;
+        var additionRes;%>
+    <% if (res!= undefined){ %>
+      <div class="row justify-content-center">
+        <% if (res.n ==0){ %>
+            Error removing, please check the spelling of country
+        <% } else { %>
+            Successfully Removed!
+        <% } %>
+    <%} %>
+
   </div>
   <script type="text/javascript">
+  $('li a').removeClass('active');
+  $('a[href="/editCountry"]').addClass('active')
           function selectOption(){
             var option = $("#option :selected").val();
             if (option == "add"){

@@ -324,6 +324,9 @@ exports.update = function UpdateHandler(request, response){
 		var data = request.body
 		var value = data.value;
 		console.log(value)
+		if (data == undefined){
+			response.send("undefined")
+		}
 
 		console.log("here")
 		console.log(data.field)
@@ -358,7 +361,8 @@ exports.update = function UpdateHandler(request, response){
 				console.log(res)
 				response.send(res);
 			}).catch(error=>{
-				console.log(error)
+				console.log(error);
+
 			})
 
 
@@ -413,7 +417,13 @@ exports.create = function CreateHandler(request, response){
 			coordinates = [];
 		}
 		else{
-			coordinates = JSON.parse(data.coordinates.replace(/['"]+/g, ''));
+			try {
+				coordinates = JSON.parse(data.coordinates.replace(/['"]+/g, ''));
+			}
+			catch(e){
+				response.send("Incorrect format of coordinates. Cannot parse data correctly");
+			}
+
 		}
 		console.log(coordinates);
 		data.altCapital= data.altCapital.split(',');
@@ -457,7 +467,7 @@ exports.removeCountry = function DeleteHandler(request, response){
 		{"properties.name": data.countryName},
 	).then(res=>{
 		console.log(res)
-		response.send(res);
+		response.render("editCountry",{res: res});
 	});
 
 };
@@ -465,6 +475,7 @@ exports.removeCountry = function DeleteHandler(request, response){
 exports.fileUpload = function handlefileUpload(request, response){
 			var data;
 			var failedList =[];
+			// console.log(request.header)
 			new formidable.IncomingForm().parse(request,(err,fields,file) =>{
 				fs.readFile(file.file.path,"utf8", async function(err,res){
 

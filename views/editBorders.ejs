@@ -11,17 +11,23 @@
   <body>
 
     <% include ../fixed/nav %>
-    <% var data
+    <% var data;
         var result %>
     <div class="container">
-      <div class="row justify-content-center mt-5">
+      <div class="row justify-content-center mt-3" style="white-space: pre-wrap;">
+        <p>       This page is to update borders of country.
+        Please make sure the coordinates are <span style="color: red;"> valid</span>
+        and <span style="color: red;"> don't overlap </span> with other countries' borders.
+        Use <a href="http://geojson.io/#map=2/20.0/0.0"> Geojson editer </a> to validate and edit borders.</p>
+      </div>
+      <div class="row justify-content-center mt-3 ">
         <div class="col-xs-5 mr-4">
           <form class="mb-3" method="GET" action="/getCountryInfo">
               <div class="input-group" >
                 <div class="input-group-prepend">
                     <span class="input-group-text">Enter Country Name: </span>
                 </div>
-                <input class="form-control" id="countryName" name="countryName" type="text">
+                <input class="form-control" id="countryName" name="countryName" type="text" required>
                 <input class="form-control" name="option" value="borders" type="hidden">
                 <div class="input-group-append">
                   <input class="btn btn-info" id ="getData" type="submit" value="submit">
@@ -31,7 +37,7 @@
       </div>
     </div>
 
-    <%if (data != undefined){ %>
+    <%if (data != undefined && data[0] != undefined){ %>
         <% data = data[0] %>
     <!-- <form class="form-horizontal" id ="updateData" method ="PUT" action ="/update" > -->
       <table class="table"  id="databaseTable" value= <%= data._id %> >
@@ -80,14 +86,21 @@
               <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
             </td>
         </tr>
-        <%} %>
+
       </tbody>
     </table>
-
+    <%} else if(data != undefined && data[0] == undefined){%>
+        <div class="row justify-content-center"> Incorrect Country Name entered, please try again. </div>
+    <% } %>
 
   </div>
 
+
+
     <script type="text/javascript" >
+     $('li a').removeClass('active');
+     $('a[href="/editBorders"]').addClass('active')
+
     var id = $("#databaseTable").attr('value');
     $(document).on('click', '.row_data', function(event)
     {
@@ -180,10 +193,9 @@
           }),
           dataType: 'json',
           success: function(data){
-            console.log(data)
-            console.log("Success update request")
-            location.reload();
-          }
+              console.log("Success update request")
+              location.reload();
+            }
         });
 
       });
