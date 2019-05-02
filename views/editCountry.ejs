@@ -127,14 +127,16 @@
     <% var res;
         var additionRes;%>
     <% if (res!= undefined){ %>
-      <div class="row justify-content-center">
+      <div class="row justify-content-center" id="message">
         <% if (res.n ==0){ %>
             Error removing, please check the spelling of country
-        <% } else { %>
-            Successfully Removed!
+        <% } else if(res.n == undefined){ %>
+            <%= res %>
+        <% }else{ %>
+          Successfully Removed!
         <% } %>
     <%} %>
-
+    </div>
   </div>
   <script type="text/javascript">
   $('li a').removeClass('active');
@@ -144,10 +146,12 @@
             if (option == "add"){
               $('#addCountry').show();
               $('#removeCountry').hide();
+              $('#message').text("")
             }
             if (option =="remove"){
               $('#removeCountry').show();
               $("#addCountry").hide();
+              $('#message').text("");
             }
           }
   </script>

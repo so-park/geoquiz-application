@@ -15,8 +15,23 @@
         This page is to add a user to access database for editing.
     </div>
     <div class="row justify-content-center">
-      <div class="col-lg-5 col-m-5 col-s-8">
-                <form class="form-group" method="POST" action="/createUser">
+      <div class="col-xs-3 col-m-6">
+        <div class="input-group" >
+          <div class="input-group-prepend">
+             <select class="form-control" name="fieldToAdd" id="option">
+                <option value="add">Add a new user</option>
+                <option value="remove">Remove a user</option>
+             </select>
+           </div>
+         <div class="input-group-append">
+           <button  onclick ="selectOption()" type="submit" class="btn btn-info">Submit </button>
+         </div>
+       </div>
+     </div>
+   </div>
+       <div class="row justify-content-center">
+      <div class="col-lg-6 col-m-5 col-s-8">
+                <form id="addUser" class="form-group" style="display: none;" method="POST" action="/createUser">
                     <div class="input-group mt-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Id: </span>
@@ -39,12 +54,45 @@
                         <input type="submit" class="btn btn-info"/>
                    </div>
                  </form>
+
+                 <form id="removeUser" class="form-group mt-3" style="display: none;" method="POST" action="/removeUser" autocomplete="off">
+                   <div class="input-group">
+                     <div class="input-group-prepend">
+                         <span class="input-group-text">User Id to Remove: </span>
+                     </div>
+                     <input class="form-control" name="userId" type="text" required>
+                     <div class="input-group-append">
+                       <input class="btn btn-info" type="submit" value="Remove">
+                     </div>
+                   </div>
+                 </form>
+
         </div>
     </div>
+    <% var message;%>
+    <% if (message!= undefined){ %>
+      <div class="row justify-content-center mt-3" id="message">
+            <%= message %>
+        </div>
+    <%} %>
+
   </div>
   <script type="text/javascript">
   $('li a').removeClass('active');
   $('a[href="/createUser"]').addClass('active')
+  function selectOption(){
+    var option = $("#option :selected").val();
+    if (option == "add"){
+      $('#addUser').show();
+      $('#removeUser').hide();
+      $('#message').text("")
+    }
+    if (option =="remove"){
+      $('#removeUser').show();
+      $("#addUser").hide();
+      $('#message').text("")
+    }
+  }
   </script>
 </body>
 </html>

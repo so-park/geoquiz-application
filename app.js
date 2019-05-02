@@ -11,15 +11,9 @@ const compression=   require('compression')
 // const pm2   = require('pm2');
 // const nodeMailer = require('nodemailer');
 const port = 3000;
+
+
 //var fs = require('fs');
-// require('dotenv').config();
-
-// var options ={
-// 	key: fs.readFileSync('keys/localhost.key'),
-// 	cert: fs.readFileSync('keys/localhost.cert'),
-// 	requestCert: false
-// }
-
 // SSL Keys
 // Setting up the credentials for the https server
 
@@ -94,24 +88,24 @@ app.get('/favicon.ico' , function(req , res){
 // 	    setTimeout(worker, 60000 * 60 *24 *7);
 // 	  }, 60000 * 60 *24 *7);
 // });
-// app.use(function(req, res, next) {
-//   req.url = req.url.replace(/\/([^\/]+)\.[0-9a-f]+\.(css|js|jpg|png|gif|svg)$/, '/$1.$2');
-//   next();
-// });
+
 // app.use( function(req, res, next) {
 // 	res.set('Cache-Control', 'no-cache');
 //  next();
 // });
+
 // app.get('/*', function(req, res, next){
 //   res.set('Last-Modified', (new Date()).toUTCString());
 // 	console.log("entered last modified handler")
 //   next();
 // });
+
 //serve static files in a folder and cache six months
 // app.use('/', express.static(path.join(__dirname,'views'),{
 // 				maxAge: 2592000*2, //about a month *2
 // 				etag: false
 // 			}));
+
 app.use('/', router);
 // app.all('/:action', function(request, response) {});
 
@@ -126,10 +120,6 @@ app.use('/', router);
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 app.on('error', onError);
 app.on('listening', onListening)
-// var httpsServer = https.createServer(options, app);
-// httpsServer.listen(port);
-// httpsServer.on('error', onError);
-// httpsServer.on('listening',onListeningS);
 
 function onError(error) {
   if (error.syscall !== 'listen') {

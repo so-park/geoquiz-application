@@ -421,9 +421,9 @@ exports.create = function CreateHandler(request, response){
 				coordinates = JSON.parse(data.coordinates.replace(/['"]+/g, ''));
 			}
 			catch(e){
-				response.send("Incorrect format of coordinates. Cannot parse data correctly");
+				response.render("editCountry",{res:"Incorrect format of coordinates. Cannot parse data correctly"});
+				return 0;
 			}
-
 		}
 		console.log(coordinates);
 		data.altCapital= data.altCapital.split(',');

@@ -114,7 +114,7 @@ router.post('/removeCountry', countries.removeCountry);
 router.post('/fileUpload', countries.fileUpload);
 router.post('/checkUser', users.checkUser);
 router.post('/createUser', users.create);
-
+router.post('/removeUser', users.delete);
 router.get('/logout',users.logout);
 router.get('/login', function handleLoginPage(request, response) {
 	response.render('login',{message: "Welcome!"});
@@ -142,7 +142,10 @@ router.post('/:continent', function handleAfricaPage(request, response) {
 //editBorders, editCountry, createUser, fileUpload,crud pages
 router.get('/:page', function handleAddDataPage(request, response){
 	console.log(request.params.page)
-	if (request.session.user){
+	if (request.params.page =="manageUser" && request.session.user !="admin"){
+		response.render("login",{message: "Admin Access required to mange users"})
+	}
+	else if (request.session.user){
 		response.render(request.params.page);
 	}
 	else{
