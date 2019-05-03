@@ -139,13 +139,11 @@ router.post('/:continent', function handleAfricaPage(request, response) {
 
 		response.render('index', {continent: request.params.continent,practice: practice, user: userId, assignment: assignmentID, course:courseID});
 });
-//editBorders, editCountry, createUser, fileUpload,crud pages
+router.get('/manageUser', users.manageUser);
+//editBorders, editCountry, fileUpload,crud pages
 router.get('/:page', function handleAddDataPage(request, response){
 	console.log(request.params.page)
-	if (request.params.page =="manageUser" && request.session.user !="admin"){
-		response.render("login",{message: "Admin Access required to mange users"})
-	}
-	else if (request.session.user){
+	if (request.session.user){
 		response.render(request.params.page);
 	}
 	else{

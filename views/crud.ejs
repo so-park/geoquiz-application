@@ -46,8 +46,8 @@
         <tr>
           <th scope="col"></th>
           <th scope="col">Content</th>
-          <th scope="col">Update</th>
           <th scope="col">Add</th>
+          <th scope="col">Update</th>
         </tr>
       </thead>
       <tbody>
@@ -91,14 +91,18 @@
                     <%  } %>
                  <% } %>
                </td>
+               <td>
+                 <div class="input-group" >
+                  <input type=text class="form-control input" placeholder="add new data">
+                    <div class="input-group-append btn-add" style="visibility: hidden">
+                      <button class="btn btn-outline-info"> Add </button>
+                    </div>
+                </div>
+               </td>
               <td>
                   <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
                   <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
                   <span class="btn-delete" style="visibility: hidden"><button class="btn btn-outline-info"> Remove </button></span>
-              </td>
-              <td>
-                   <input type=text class="form-control input" placeholder="add new data">
-                  <span class="btn-add" style="visibility: hidden"><button class="btn btn-outline-info"> Add </button></span>
               </td>
 
         </tr>
@@ -115,15 +119,20 @@
                <% } %>
 
             </td>
+            <td>
+              <div class="input-group" >
+               <input type=text class="form-control input" placeholder="add new data">
+                 <div class="input-group-append btn-add" style="visibility: hidden">
+                   <button class="btn btn-outline-info"> Add </button>
+                 </div>
+             </div>
+           </td>
               <td>
                   <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
                   <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info">Cancel </button></span>
                   <span class="btn-delete" style="visibility: hidden"><button class="btn btn-outline-info"> Remove </button></span>
               </td>
-              <td>
-                   <input type=text class="form-control input " placeholder="add new data">
-                  <span class="btn-add" style="visibility: hidden"><button class="btn btn-outline-info"> Add </button></span>
-              </td>
+
         </tr>
         <tr id="altName" value ="altName">
           <th scope="row">Alternative Answers for Country</th>
@@ -138,15 +147,17 @@
                <% } %>
              </td>
              <td>
+               <div class="input-group" >
+                <input type=text class="form-control input" placeholder="add new data">
+                  <div class="input-group-append btn-add" style="visibility: hidden">
+                    <button class="btn btn-outline-info"> Add </button>
+                  </div>
+              </div>
+           </td>
+             <td>
                  <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
                  <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
                  <span class="btn-delete" style="visibility: hidden"><button class="btn btn-outline-info"> Remove </button></span>
-
-             </td>
-             <td>
-                  <input type=text class="form-control input" placeholder="add new data">
-                   <span class="btn-add" style="visibility: hidden"><button class="btn btn-outline-info"> Add </button></span>
-
              </td>
         </tr>
         <tr value ="properties.misspell_name">
@@ -161,14 +172,18 @@
                 <%  } %>
              <% } %>
             </td>
+            <td>
+              <div class="input-group" >
+               <input type=text class="form-control input" placeholder="add new data">
+                 <div class="input-group-append btn-add" style="visibility: hidden">
+                   <button class="btn btn-outline-info"> Add </button>
+                 </div>
+             </div>
+          </td>
               <td>
                   <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
                   <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
                   <span class="btn-delete" style="visibility: hidden"><button class="btn btn-outline-info"> Remove </button></span>
-              </td>
-              <td>
-                   <input type=text class="form-control input" placeholder="add new data">
-                  <span class="btn-add" style="visibility: hidden"><button class="btn btn-outline-info"> Add </button></span>
               </td>
         </tr>
       </tbody>

@@ -17,8 +17,8 @@ const port = 3000;
 // SSL Keys
 // Setting up the credentials for the https server
 
-// var privateKey = fs.readFileSync('yaoshi/geo-quiz.me.key');
-// var certificate = fs.readFileSync('yaoshi/geo-quiz.me.crt');
+// var privateKey = fs.readFileSync('___________.key');
+// var certificate = fs.readFileSync('_.crt');
 // var credentials = {key: privateKey, cert: certificate};
 // *****************************************************************************
 

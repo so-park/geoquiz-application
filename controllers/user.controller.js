@@ -3,7 +3,8 @@ var ObjectId = require('mongodb').ObjectID;
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-var logs;
+var logs="";
+
 exports.create = function CreateHandler(request, response){
   console.log("create user");
   console.log(request.body)
@@ -22,16 +23,23 @@ exports.create = function CreateHandler(request, response){
         throw err;
       }
       console.log(res);
-      response.render("manageUser",{message: "User added"});
+      response.render("manageUser",{message: "User added", logs: logs});
     });
 };
-
+exports.manageUser = function ManageUserHandler(request,response){
+  if (request.session.userName =="admin"){
+    response.render("manageUser",{logs: logs})
+  }
+  else{
+    response.render("login",{message: "Admin Access required to mange users"})
+  }
+}
 exports.delete = function DeleteHandler(request, response){
   console.log("delete user");
   console.log(request.body)
 
     User.deleteOne({
-      userId : request.body.userId
+      userName: request.body.userName
     },function InsertHandler(err,res){
       if (err){
         console.log("Error Removing User data");
@@ -40,10 +48,10 @@ exports.delete = function DeleteHandler(request, response){
       }
       console.log(res);
       if (res.n >0){
-        response.render("manageUser",{message: "User Removed"});
+        response.render("manageUser",{message: "User Removed", logs: logs});
       }
       else{
-        response.render("manageUser",{message: "User Does not exist"});
+        response.render("manageUser",{message: "User Does not exist", logs: logs});
       }
 
     });
@@ -69,14 +77,19 @@ exports.checkUser = function CheckUserHandler(request,response){
       else{
         bcrypt.compare(password, user.password,function(err,result){
           if (result){
-            request.session.user = id;
             var userName = user.userName
+            request.session.user = id;
+            request.session.userName = userName
+
             var today = new Date();
             var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
             var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
             var dateTime = date+' '+time;
             console.log(dateTime)
-
+            if (today.getDate() <2 ){
+              logs = "";
+            }
+            logs += "Id: " + id +" name: " + userName +" time: " + dateTime +"\n";
 
           response.render("crud", {userName: userName, userId: user.userId});
 
