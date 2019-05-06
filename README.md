@@ -6,7 +6,7 @@ This project is originally developed for a political science professor to use fo
 
 The project contains codes for quiz and front end for managing database. The live quiz is hosted in digital ocean and integrated to Canvas, however, users will need to configure those settings separately. 
 
-![image](/images/quiz-demo.gif =400x400 )
+![image](/images/quiz-demo.gif | width =500)
 
 
 ## Prerequisites 
