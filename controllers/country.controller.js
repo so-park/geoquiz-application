@@ -141,6 +141,7 @@ exports.checkAnswers = function checkAnswersHandler(request, response){
 
 //Get countries in a continent and randomly select 10 countries from it.
 exports.sendRandomCountries = function(request, response){
+	console.log("Send random countries")
 	Country.find({"properties.continent": request.params.continent})
 		.then(function HandleFindOne(continent){
 			if (!continent){
@@ -307,13 +308,8 @@ exports.selectContinent = function SelectContinentHandler (request, response){
 
 
 exports.getCountryInfo =function getCountryHandler(request, response){
-	console.log("accessing database");
-	console.log(request.query.countryName);
-	console.log(request.params);
-	console.log(request.query.option)
 	 Country.find({ "properties.name" : request.query.countryName}).
 	 then(function HandleFindOne(data){
-
 		 if (request.query.option == "spelling"){
 			 response.render("crud", {data:data});
 		 }
@@ -325,12 +321,13 @@ exports.getCountryInfo =function getCountryHandler(request, response){
 };
 
 exports.update = function UpdateHandler(request, response){
-		// console.log("update handler entered");
-	//	console.log(request)
 		var data = request.body
 		var value = data.value;
 		console.log(value)
-		// //console.log(JSON.parse(request[0]));
+		if (data == undefined){
+			response.send("undefined")
+		}
+
 		console.log("here")
 		console.log(data.field)
 		var field =data.field;
@@ -353,7 +350,7 @@ exports.update = function UpdateHandler(request, response){
 
 		}
 
-		// console.log(data.name)
+
 		Country.updateOne(
 			{"_id": ObjectId(data.id)},
 			{$set:	{
@@ -362,10 +359,10 @@ exports.update = function UpdateHandler(request, response){
 			}).then(function HandleUpdateOne(res){
 				console.log("done")
 				console.log(res)
-				response.send();
-
+				response.send(res);
 			}).catch(error=>{
-				console.log(error)
+				console.log(error);
+
 			})
 
 
@@ -375,39 +372,23 @@ exports.addData =function addDataHandler(request, response){
 	console.log("add data");
 	console.log(request.body);
 	var data = request.body;
-	Country.updateOne(
-		{"_id": data.id},
-		{$push:
-			{
-				[data.field]: data.value
-			}
-		}
-	).then(res=>{
-		console.log(res)
-		response.send("success")
-	});
-	//  Country.find({ "properties.name" : request.query.countryName}).
-	//  then(function HandleFindOne(data){
-	// 	 console.log(data);
-	// 	 response.render("crud", {data:data});
-	// } )
-};
-exports.delete = function DeleteHandler(request, response){
-	console.log("delete");
-	var data = request.body;
-	console.log(data)
-	Country.updateOne(
-		{"_id": data.id},
-		{$pull:
-			{
-				[data.field]: data.value
-			}
-		}
-	).then(res=>{
-		console.log(res)
-	//	response.json(res)
-	});
-	response.send();
+	if (data.value == ""){
+		var res = {nModified: "Input needed"}
+		response.send(res);
+	}
+	else{
+			Country.updateOne(
+				{"_id": data.id},
+				{$addToSet:
+					{
+						[data.field]: data.value
+					}
+				}
+			).then(res=>{
+				console.log(res)
+				response.send(res)
+			});
+	}
 };
 
 exports.delete = function DeleteHandler(request, response){
@@ -423,55 +404,61 @@ exports.delete = function DeleteHandler(request, response){
 		}
 	).then(res=>{
 		console.log(res)
-	//	response.json(res)
+			response.send(res);
 	});
-	response.send();
+
 };
 
 exports.create = function CreateHandler(request, response){
-	console.log("addCountry");
-	var data = request.body;
-	var coordinates;
-	if (data.coordinates == ''){
-		coordinates = [];
-	}
-	else{
-		coordinates = JSON.parse(data.coordinates.replace(/['"]+/g, ''));
-	}
-	console.log(coordinates);
-	data.altCapital= data.altCapital.split(',');
-	data.altName= data.altName.split(',');
-	data.capital = data.capital.split(',').concat(data.altCapital);
-	data.name = data.name.split(',').concat(data.altName);
-	data.misspell_capital = data.misspell_capital.split(',');
-	data.misspell_name = data.misspell_name.split(',');
-
-	var properties={
-		continent: data.continent,
-		capital: data.capital.filter(Boolean),
-		name: data.name.filter(Boolean),
-		misspell_capital: data.misspell_capital.filter(Boolean),
-		misspell_name: data.misspell_name.filter(Boolean)
-	};
-	var geometry={
-		type: data.type,
-		coordinates: coordinates
-	}
-	var documentToInsert =	{
-			"type": "Feature",
-			"properties": properties,
-			"geometry": geometry
+		console.log("addCountry");
+		var data = request.body;
+		var coordinates;
+		if (data.coordinates == ''){
+			coordinates = [];
 		}
-	console.log(Country);
-	console.log(properties);
-	console.log(geometry);
-	Country.create( documentToInsert, function (err, small) {
-  		console.log(err);
-			console.log(small);
-			response.send();
-	})
+		else{
+			try {
+				coordinates = JSON.parse(data.coordinates.replace(/['"]+/g, ''));
+			}
+			catch(e){
+				response.render("editCountry",{res:"Incorrect format of coordinates. Cannot parse data correctly"});
+				return 0;
+			}
+		}
+		console.log(coordinates);
+		data.altCapital= data.altCapital.split(',');
+		data.altName= data.altName.split(',');
+		data.capital = data.capital.split(',').concat(data.altCapital);
+		data.name = data.name.split(',').concat(data.altName);
+		data.misspell_capital = data.misspell_capital.split(',');
+		data.misspell_name = data.misspell_name.split(',');
 
+		var properties={
+			continent: data.continent,
+			capital: data.capital.filter(Boolean),
+			name: data.name.filter(Boolean),
+			misspell_capital: data.misspell_capital.filter(Boolean),
+			misspell_name: data.misspell_name.filter(Boolean)
+		};
+		var geometry={
+			type: data.type,
+			coordinates: coordinates
+		}
+		var documentToInsert =	{
+				"type": "Feature",
+				"properties": properties,
+				"geometry": geometry
+			}
+		console.log(Country);
+		console.log(properties);
+		console.log(geometry);
+		Country.create( documentToInsert).then(res =>
+		{response.send(res)}
+		).catch(err=>{
+				console.log(err);
+		})
 };
+
 exports.removeCountry = function DeleteHandler(request, response){
 	console.log("delete");
 	var data = request.body;
@@ -480,7 +467,7 @@ exports.removeCountry = function DeleteHandler(request, response){
 		{"properties.name": data.countryName},
 	).then(res=>{
 		console.log(res)
-		response.send();
+		response.render("editCountry",{res: res});
 	});
 
 };
@@ -488,6 +475,7 @@ exports.removeCountry = function DeleteHandler(request, response){
 exports.fileUpload = function handlefileUpload(request, response){
 			var data;
 			var failedList =[];
+			// console.log(request.header)
 			new formidable.IncomingForm().parse(request,(err,fields,file) =>{
 				fs.readFile(file.file.path,"utf8", async function(err,res){
 
@@ -531,7 +519,7 @@ exports.fileUpload = function handlefileUpload(request, response){
               //make arrary with misspellings Only
               var spellings = line.slice(2,lenLine);
 
-            // Update database
+             //Update database
 							var result = await updateFromFile(line[0],option,spellings)
 							console.log(result)
 							if (result.n == 0){

@@ -3,13 +3,14 @@ const MongoClient = require('mongodb').MongoClient;
 
 const url = 'mongodb://localhost:27017';
 const dbName = "geoquiz";
-
+var bcrypt = require('bcrypt');
 var data = require('./data/countryDatabase.json');
 var userData = require('./data/userDatabase.json')
+// var User = require('./models/user.model.js');
 
 
 
-MongoClient.connect(url, function DBConnectHandler(err, client){
+MongoClient.connect(url, async function DBConnectHandler(err, client){
 	if (err){
 		console.log("Error Connecting");
 		console.log(err);
@@ -17,6 +18,7 @@ MongoClient.connect(url, function DBConnectHandler(err, client){
 	}
 	console.log("Connected");
 	const db = client.db(dbName);
+	//Initialize countries
 	db.collection("countries").insertMany(data["features"], function InsertHandler(err, res){
 		if (err){
 			console.log("Error Inserting data");
@@ -26,7 +28,14 @@ MongoClient.connect(url, function DBConnectHandler(err, client){
 		console.log(res);
         client.close();
 	});
-	db.collection("users").insertMany(userData,function InsertHandler(err,res){
+
+	//Initialize Users
+ 	var firstUser = userData[0]
+	let hash = bcrypt.hashSync(firstUser.password,10);
+	firstUser.password = hash
+
+  db.collection("users").insertOne(
+		firstUser,function InsertHandler(err,res){
 		if (err){
 			console.log("Error Inserting User data");
 			console.log(err);
@@ -34,8 +43,9 @@ MongoClient.connect(url, function DBConnectHandler(err, client){
 		}
 		console.log(res);
 				client.close();
-	})
+	 })
 });
+
 
 /***********
 Whenever we are retrieving from the database we must create an object in such

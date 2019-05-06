@@ -1,6 +1,8 @@
 window.location.hash="no-back-button";
 window.location.hash="Again-No-back-button";//again because google chrome don't insert first hash into history
 window.onhashchange=function(){window.location.hash="no-back-button";}
+console.log("here")
+
 
 var selectedCountries;
 var features;
@@ -46,7 +48,9 @@ switch(continent){
   break;
 }
 
-var urlforCountries = "https://" + window.location.host + "/quiz/" + continent;
+// var urlforCountries = "https://" + window.location.host + "/quiz/" + continent;
+ var urlforCountries = "http://"+ window.location.host + "/quiz/" + continent;
+
 console.log("entered")
 console.log(urlforCountries);
 var xhttp = new XMLHttpRequest();
@@ -101,8 +105,9 @@ var beforeHighlight = 0;
       format: new ol.format.GeoJSON()
     }),
     style: function(feature){
-      if (feature.get('name')[0] == "BB"){
-        // console.log("entered bb")
+      //console.log(feature)
+      if (feature.get('name') == "BB"){
+         console.log(feature.get('name'))
         if (beforeHighlight < 14){
           bbFeatures[bbindex] = feature;
           bbindex ++;

@@ -1,36 +1,25 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewpoint" content="width=device-width, initial-scalre= 1">
-    <title>CRUD for geoquiz</title>
-
-
-        <!-- Load React. -->
-        <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
-        <!-- <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script> -->
-        <!-- <script src="https://unpkg.com/@material-ui/core/umd/material-ui.production.min.js" crossorigin="anonymous"></script> -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-
-
+    <meta name="viewpoint" content="width=device-width, initial-scale= 1">
+    <title>Login for geoquiz</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </head>
   <body>
 
   <div class="container">
-    <h2>GEOQUIZ DATABASE </h2>
-
-    <div class="row">
+    <div class="row justify-content-center mt-3">
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-        <div class="card card-signin my-5">
-          <div class="text-center mt-3">
+            <h2 class="text-center text-info mt-3">GEOQUIZ DATABASE </h2>
+        <div class="card card-signin my-3">
+          <div class="text-center mt-2">
 
             <% var message; %>
             <% if ( message != undefined){ %>
               <div class="alert alert-warning">
-              <%= message %>
+                <%= message %>
                 </div>
             <% } %>
 
@@ -58,15 +47,11 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript" >
+  <script type="text/javascript">
   window.location.hash="no-back-button";
   window.location.hash="Again-No-back-button";//again because google chrome don't insert first hash into history
   window.onhashchange=function(){window.location.hash="no-back-button";}
-  // $(document).ready(function() {
-  //    function disableBack() { window.history.forward() }
-  //    window.onload = disableBack();
-  //    window.onpageshow = function(evt) { if (evt.persisted) disableBack() }
-  // });
+
   </script>
 </body>
 </html>

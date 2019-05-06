@@ -7,7 +7,8 @@ geometry
 */
 
 const mongoose	= require('mongoose');
-
+var bcrypt = require('bcrypt');
+const saltRounds = 10
 const UserSchema = mongoose.Schema({
 
 	userId: {
@@ -27,5 +28,8 @@ const UserSchema = mongoose.Schema({
   }
 
 });
+
+
+
 
 module.exports = mongoose.model('User', UserSchema);

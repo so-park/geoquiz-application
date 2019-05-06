@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var express = require('express-session');
 var httpRequest = require('request');
-
 const path = require('path');
 //use locally
 require('dotenv').config();
@@ -14,17 +13,6 @@ router.get ('/', function handleHomePage(request, response) {
 	console.log("index called");
 	response.render('practice');
 });
-
-//For professors to add/edit database
-// router.get('/crud', function handleAccessDBPage(request, response){
-// 	if (request.session.user){
-// 		response.render("crud");
-// 	}
-// 	else{
-// 		response.render("login",{message: "Login required"})
-// 	}
-//
-// })
 
 router.post('/',function handleAfricaPage(request, response) {
 	response.render('practice');
@@ -42,7 +30,6 @@ router.post('/submission', function handleSubmissionsPage(request, response){
 		}
 		comments += "Score: " + newScore;
 		console.log("After contructing formatted comments" + comments);
-	//	console.log("This is the answers entered router to send to comments " + inputs);
 
 
 		httpRequest({
@@ -127,31 +114,11 @@ router.post('/removeCountry', countries.removeCountry);
 router.post('/fileUpload', countries.fileUpload);
 router.post('/checkUser', users.checkUser);
 router.post('/createUser', users.create);
-
-// router.get('/createUser', function handleCreateUserPage(request,response){
-// 	if (request.session.user){
-// 		response.render("createUser");
-// 	}
-// 	else{
-// 		response.render("login",{message: "Login required"})
-// 	}
-// });
+router.post('/removeUser', users.delete);
 router.get('/logout',users.logout);
 router.get('/login', function handleLoginPage(request, response) {
-	response.render('login');
+	response.render('login',{message: "Welcome!"});
 })
-
-// router.get('/editBorders', function handleAddDataPage(request, response){
-// 	if (request.session.user){
-// 		response.render("editBorders");
-// 	}
-// 	else{
-// 		response.render("login",{message: "Login required"})
-// 	}
-// })
-
-
-
 
 
 router.get('/countries', countries.findAll);
@@ -172,7 +139,8 @@ router.post('/:continent', function handleAfricaPage(request, response) {
 
 		response.render('index', {continent: request.params.continent,practice: practice, user: userId, assignment: assignmentID, course:courseID});
 });
-//editBorders, editCountry, createUser, fileUpload,crud pages
+router.get('/manageUser', users.manageUser);
+//editBorders, editCountry, fileUpload,crud pages
 router.get('/:page', function handleAddDataPage(request, response){
 	console.log(request.params.page)
 	if (request.session.user){
@@ -182,8 +150,5 @@ router.get('/:page', function handleAddDataPage(request, response){
 		response.render("login",{message: "Login required"})
 	}
 })
-
-
-
 
 module.exports = router;

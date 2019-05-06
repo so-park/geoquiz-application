@@ -1,5 +1,6 @@
 # Geoquiz
 
+
 ## ABOUT
 This project is originally developed for a political science professor to use for her teaching at SPU and is supported by ETM (Educational Technogloy and Media). 
 
@@ -57,7 +58,5 @@ Use id: etm and password: geoquiz2018 to access the page then add a new user. Ma
 You can remove the default credentials afterwards. 
 
 !(image)[../images/database-demo.gif]
-
-
 
 

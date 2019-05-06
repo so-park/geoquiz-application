@@ -11,14 +11,14 @@ const compression=   require('compression')
 // const pm2   = require('pm2');
 // const nodeMailer = require('nodemailer');
 const port = 3000;
-// require('dotenv').config();
 
 
+//var fs = require('fs');
 // SSL Keys
 // Setting up the credentials for the https server
-// var fs = require('fs');
-// var privateKey = fs.readFileSync('yaoshi/geo-quiz.me.key');
-// var certificate = fs.readFileSync('yaoshi/geo-quiz.me.crt');
+
+// var privateKey = fs.readFileSync('___________.key');
+// var certificate = fs.readFileSync('_.crt');
 // var credentials = {key: privateKey, cert: certificate};
 // *****************************************************************************
 
@@ -34,6 +34,8 @@ mongoose.connect(dbConfig.url, {useNewUrlParser: true})
 		process.exit();
 	});
 
+// app.set('modules', __dirname + '/modules');
+app.use(express.static(__dirname + '/views'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -48,6 +50,10 @@ app.set('etag', false);
 
 var router = require('./routes/country.routes.js');
 app.use(compression());
+
+app.get('/favicon.ico' , function(req , res){
+		res.status(204)
+	});
 
 // let transporter = nodeMailer.createTransport({
 //             host: 'smtp.gmail.com',
@@ -82,37 +88,38 @@ app.use(compression());
 // 	    setTimeout(worker, 60000 * 60 *24 *7);
 // 	  }, 60000 * 60 *24 *7);
 // });
-// app.use(function(req, res, next) {
-//   req.url = req.url.replace(/\/([^\/]+)\.[0-9a-f]+\.(css|js|jpg|png|gif|svg)$/, '/$1.$2');
-//   next();
-// });
+
 // app.use( function(req, res, next) {
 // 	res.set('Cache-Control', 'no-cache');
 //  next();
 // });
+
 // app.get('/*', function(req, res, next){
 //   res.set('Last-Modified', (new Date()).toUTCString());
 // 	console.log("entered last modified handler")
 //   next();
 // });
+
 //serve static files in a folder and cache six months
 // app.use('/', express.static(path.join(__dirname,'views'),{
 // 				maxAge: 2592000*2, //about a month *2
 // 				etag: false
 // 			}));
+
 app.use('/', router);
-app.all('/:action', function(request, response) {});
+// app.all('/:action', function(request, response) {});
 
 
   // Workers can share any TCP connection
   // In this case it is an HTTP server
-// var httpsServer = https.createServer(credentials, app);
+//	var httpsServer = https.createServer(credentials, app);
 // httpsServer.listen(3443);
+// httpsServer.on('error', onError);
+// httpsServer.on('listening', onListeningS);
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 app.on('error', onError);
 app.on('listening', onListening)
-// httpsServer.on('error', onError);
-// httpsServer.on('listening', onListeningS);
 
 function onError(error) {
   if (error.syscall !== 'listen') {

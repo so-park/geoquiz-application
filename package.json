@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/SionPark126/csProject#readme",
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "compression": "^1.7.4",
     "dotenv": "^7.0.0",
     "ejs": "^2.6.1",
