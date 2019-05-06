@@ -8,9 +8,9 @@ The project contains codes for quiz and front end for managing database. The liv
 
 
 / Need to include screenshots
-![alt text](../images/selectScreen.png)
-![alt text](../images/quiz.png)
-![alt text](../images/result.png)
+![alt text](/images/selectScreen.png)
+![alt text](/images/quiz.png)
+![alt text](/images/result.png)
 
 
 ## Prerequisites 
@@ -57,6 +57,6 @@ When the app starts for the first time (/login), there is default credentials fo
 Use id: etm and password: geoquiz2018 to access the page then add a new user. Make sure user name is admin to grant access to manage user page. If you don't want user to have access to manage user page, simply change user name to something else.
 You can remove the default credentials afterwards. 
 
-!(image)[../images/database-demo.gif]
+![image](/images/database-demo.gif)
 
 
