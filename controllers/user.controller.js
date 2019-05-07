@@ -39,7 +39,7 @@ exports.delete = function DeleteHandler(request, response){
   console.log(request.body)
 
     User.deleteOne({
-      userName: request.body.userName
+      userId: request.body.userId
     },function InsertHandler(err,res){
       if (err){
         console.log("Error Removing User data");
