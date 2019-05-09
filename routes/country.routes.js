@@ -116,6 +116,7 @@ router.post('/checkUser', users.checkUser);
 router.post('/createUser', users.create);
 router.post('/removeUser', users.delete);
 router.get('/logout',users.logout);
+router.get('/listUsers', users.listUsers);
 router.get('/login', function handleLoginPage(request, response) {
 	response.render('login',{message: "Welcome!"});
 })

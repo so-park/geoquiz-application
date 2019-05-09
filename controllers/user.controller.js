@@ -37,7 +37,6 @@ exports.manageUser = function ManageUserHandler(request,response){
 exports.delete = function DeleteHandler(request, response){
   console.log("delete user");
   console.log(request.body)
-
     User.deleteOne({
       userId: request.body.userId
     },function InsertHandler(err,res){
@@ -89,7 +88,7 @@ exports.checkUser = function CheckUserHandler(request,response){
             if (today.getDate() <2 ){
               logs = "";
             }
-            logs += "Id: " + id +" name: " + userName +" time: " + dateTime +"\n";
+            logs += "Id: " + id +" Name: " + userName +" Time: " + dateTime +"\n";
 
           response.render("crud", {userName: userName, userId: user.userId});
 
@@ -115,3 +114,10 @@ exports.logout = function Logouthanlder(request,response){
   response.header('Cache-Control', 'no-cache, no-store, must-revalidate,post-check=0, pre-check=0');
   response.render("login",{message:"logout Success!"});
 }
+
+exports.listUsers = function ListUsersHandler(request,response){
+  User.find().then(data=>{
+    const userList = data.map (({userId,userName}) =>({ id: userId, name: userName}));
+    //response.render("manageUser",{userList:userList, logs: logs});
+    response.send(userList);
+})}

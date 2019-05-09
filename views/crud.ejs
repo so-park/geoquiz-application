@@ -15,13 +15,17 @@
     <% var data; %>
     <div class="container">
       <div class="row justify-content-center" style="white-space: pre-wrap;">
+        <p>
         This page is to update spellings for countries.
         Click each spelling to edit and remove.
         Use the add column to add a new spelling.
+        All the data including country name is <span style="color: blue;">case-sensitive</span>,
+        make sure you use proper spellings.
+        </p>
       </div>
       <div class="row justify-content-center" >
         <div class="col-xs-5 col-m-5">
-          <form class="mb-3" method="GET" action="/getCountryInfo">
+          <form class="mb-2" method="GET" action="/getCountryInfo">
             <div class="input-group" >
                 <div class="input-group-prepend">
                     <span class="input-group-text">Enter Country Name: </span>
