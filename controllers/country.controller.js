@@ -313,6 +313,9 @@ exports.getCountryInfo =function getCountryHandler(request, response){
 		 if (request.query.option == "spelling"){
 			 response.render("crud", {data:data});
 		 }
+		 else if(request.query.option =="remove"){
+			 response.render("editCountry", {data:data});
+		 }
 		 else{
 			 response.render("editBorders", {data:data});
 		 }
@@ -339,25 +342,24 @@ exports.update = function UpdateHandler(request, response){
 			console.log(value)
 		}
 		if (data.field == "altCapital"){
-			field == "properties.capital";
+			field = "properties.capital";
 			value.unshift(data.name)
 		}
-		var obj ={};
-				obj[data.field] = value
+
 		if (data.field =="geometry.coordinates"){
 
 			value = JSON.parse(value[0])
 
 		}
 
-
+		console.log(value)
+		console.log(field)
 		Country.updateOne(
-			{"_id": ObjectId(data.id)},
+			{"_id": data.id},
 			{$set:	{
 					[field]: value
 			}
 			}).then(function HandleUpdateOne(res){
-				console.log("done")
 				console.log(res)
 				response.send(res);
 			}).catch(error=>{
@@ -381,7 +383,7 @@ exports.addData =function addDataHandler(request, response){
 				{"_id": data.id},
 				{$addToSet:
 					{
-						[data.field]: data.value
+						[data.field]: data.value.trim()
 					}
 				}
 			).then(res=>{
@@ -399,7 +401,7 @@ exports.delete = function DeleteHandler(request, response){
 		{"_id": data.id},
 		{$pull:
 			{
-				[data.field]: data.value
+				[data.field]: data.value.trim()
 			}
 		}
 	).then(res=>{
@@ -425,6 +427,10 @@ exports.create = function CreateHandler(request, response){
 				return 0;
 			}
 		}
+		if (data.type != "Polygon" || data.type != "MultiPolygon"){
+			response.render("editCountry",{res: "Geometry type is invalid. Only \"Polygon\" and \"MultiPolygon\" are accepted"});
+			return 0;
+		}
 		console.log(coordinates);
 		data.altCapital= data.altCapital.split(',');
 		data.altName= data.altName.split(',');
@@ -449,11 +455,12 @@ exports.create = function CreateHandler(request, response){
 				"properties": properties,
 				"geometry": geometry
 			}
-		console.log(Country);
+
 		console.log(properties);
 		console.log(geometry);
 		Country.create( documentToInsert).then(res =>
-		{response.send(res)}
+		{	console.log("country successfully added")
+			response.render("editCountry",{res: "Country created"})}
 		).catch(err=>{
 				console.log(err);
 		})
@@ -464,10 +471,13 @@ exports.removeCountry = function DeleteHandler(request, response){
 	var data = request.body;
 	console.log(data)
 	Country.deleteOne(
-		{"properties.name": data.countryName},
+		{"_id": data.id},
 	).then(res=>{
 		console.log(res)
-		response.render("editCountry",{res: res});
+			response.render("editCountry",{res: "Country removed"});
+	}).catch(err=>{
+		console.log(err);
+			response.render("editCountry",{res: err});
 	});
 
 };
@@ -489,7 +499,7 @@ exports.fileUpload = function handlefileUpload(request, response){
 
           console.log(data.length);
           for (var i=0; i< data.length; i++){
-            var line = JSON.parse(data[i]).split(',');
+            var line = data[i].split(',');
             var lenLine = line.length;
             var option;
             //Index for option
@@ -518,6 +528,7 @@ exports.fileUpload = function handlefileUpload(request, response){
 
               //make arrary with misspellings Only
               var spellings = line.slice(2,lenLine);
+							spellings =spellings.map(s =>s.trim());
 
              //Update database
 							var result = await updateFromFile(line[0],option,spellings)
