@@ -13,9 +13,10 @@ const compression=   require('compression')
 const port = 3000;
 
 
+
 //var fs = require('fs');
 // SSL Keys
-// Setting up the credentials for the https server
+// *********Setting up the credentials for the https server
 
 // var privateKey = fs.readFileSync('___________.key');
 // var certificate = fs.readFileSync('_.crt');
@@ -34,7 +35,6 @@ mongoose.connect(dbConfig.url, {useNewUrlParser: true})
 		process.exit();
 	});
 
-// app.set('modules', __dirname + '/modules');
 app.use(express.static(__dirname + '/views'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
@@ -107,15 +107,23 @@ app.get('/favicon.ico' , function(req , res){
 // 			}));
 
 app.use('/', router);
-// app.all('/:action', function(request, response) {});
 
 
-  // Workers can share any TCP connection
-  // In this case it is an HTTP server
+//******** Create HTTPS server
 //	var httpsServer = https.createServer(credentials, app);
 // httpsServer.listen(3443);
 // httpsServer.on('error', onError);
 // httpsServer.on('listening', onListeningS);
+
+//********Redirect http -> https
+// app.use(function(req, res, next) {
+//   if (req.secure){
+// 		next();
+// 	}
+// 	else{
+// 		res.redirect('https://'+req.headers.host +req.url);
+// 	}
+// });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 app.on('error', onError);
