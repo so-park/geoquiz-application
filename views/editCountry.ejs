@@ -48,63 +48,63 @@
            <div class="form-group">
              <div class="row">
              <label class="col-sm-3 quizNumber"> Continent </label>
-              <input class="col-sm-5 form-control" name="continent" type="text" required>
+              <input class="col-sm-9 form-control" name="continent" type="text" required>
             </div>
            </div>
 
            <div class="form-group">
              <div class="row">
              <label class="col-sm-3 quizNumber"> Capital </label>
-              <input class="form-control col-sm-5" name="capital" type="text" required>
+              <input class="form-control col-sm-9" name="capital" type="text" required>
             </div>
            </div>
 
           <div class="form-group">
             <div class="row">
             <label class="col-sm-3 quizNumber"> Country name </label>
-             <input class="col-sm-5 form-control" name="name" type="text" required>
+             <input class="col-sm-9 form-control" name="name" type="text" required>
            </div>
           </div>
 
           <div class="form-group">
             <div class="row">
             <label class="col-sm-3 quizNumber"> Alternative Capital </label>
-             <input class="col-sm-5 form-control" name="altCapital" type="text" >
+             <input class="col-sm-9 form-control" name="altCapital" type="text" placeholder="Multiple entries are separated by comma">
            </div>
           </div>
 
           <div class="form-group">
             <div class="row">
             <label class="col-sm-3 quizNumber"> Alternative Country Names </label>
-             <input class="col-sm-5 form-control" name="altName" type="text">
+             <input class="col-sm-9 form-control" name="altName" type="text" placeholder="Multiple entries are separated by comma">
            </div>
           </div>
 
           <div class="form-group">
             <div class="row">
             <label class="col-sm-3 quizNumber"> Misspellings for Capital </label>
-             <input class="col-sm-5 form-control" name="misspell_capital" type="text" >
+             <input class="col-sm-9 form-control" name="misspell_capital" type="text" placeholder="Multiple entries are separated by comma">
            </div>
           </div>
 
           <div class="form-group">
             <div class="row">
             <label class="col-sm-3 quizNumber"> Misspellings for Country </label>
-             <input class="col-sm-5 form-control" name="misspell_name" type="text" >
+             <input class="col-sm-9 form-control" name="misspell_name" type="text" placeholder="Multiple entries are separated by comma" >
            </div>
           </div>
 
           <div class="form-group">
             <div class="row">
             <label class="col-sm-3 quizNumber"> Geometry Type </label>
-             <input class="col-sm-5 form-control" name="type" type="text" required>
+             <input class="col-sm-9 form-control" name="type" type="text" required>
            </div>
           </div>
 
           <div class="form-group">
             <div class="row">
             <label for ="input-lg" class="col-sm-3 quizNumber"> Coordinates </label>
-             <textarea class="col-sm-5 form-control" rows="4" type="text" name="coordinates" required></textarea>
+             <textarea class="col-sm-9 form-control" rows="4" type="text" name="coordinates" required></textarea>
            </div>
           </div>
           <div class="text-center">
@@ -114,49 +114,97 @@
     </div>
 
     <div class="row justify-content-center mt-3">
-      <form id="removeCountry" style="display: none;" method="POST" action="/removeCountry" autocomplete="off">
+      <form id="getCountry" style="display: none;" method="GET" action="/getCountryInfo" autocomplete="off">
         <div class="input-group">
           <div class="input-group-prepend">
               <span class="input-group-text">Enter Country Name to Remove: </span>
           </div>
           <input class="form-control" name="countryName" type="text" required>
+          <input class="form-control" name="option" value="remove" type="hidden">
           <div class="input-group-append">
-            <input class="btn btn-info" id ="getData" type="submit" value="Remove">
+            <input onsubmit="selectOption()" class="btn btn-info" id ="getData" type="submit" value="Find">
           </div>
         </div>
       </form>
     </div>
 
-    <% var res;
-        var additionRes;%>
+    <% var res;%>
     <% if (res!= undefined){ %>
-      <div class="row justify-content-center" id="message">
-        <% if (res.n ==0){ %>
-            Error removing, please check the spelling of country
-        <% } else if(res.n == undefined){ %>
-            <%= res %>
-        <% }else{ %>
-          Successfully Removed!
-        <% } %>
+      <div class="row justify-content-center mt-2" id="message-remove">
+            <%= res %>!
     <%} %>
+
+    <% var data; %>
+      <% if ( data != undefined && data[0] == undefined) { %>
+          <div class="row justify-content-center" id="message"> Incorrect Country Name entered, please try again. </div>
+      <% } else if (data != undefined && data[0] != undefined){ %>
+        <% data = data[0] %>
+        <div id = "confirmPage">
+        <table class="table" >
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Content</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Country Name</th>
+            <td>
+              <%= data.properties.name[0] %>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Capital</th>
+            <td>
+              <%= data.properties.capital[0] %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <form method="POST" action="/removeCountry" autocomplete="off">
+
+      <input class="btn btn-info" id ="removeCountry" type="hidden" name = "id" value= <%= data._id %>>
+      <p style="color: red;"> ** You will not be able to undo this action once you click "Remove". </p>
+      <input class="btn btn-info" value="Remove" type="submit">
+      <button class="btn btn-info" id ="cancel" >Cancel</button>
+       </form>
+      </div>
+    <% } %>
+
+
     </div>
   </div>
   <script type="text/javascript">
   $('li a').removeClass('active');
-  $('a[href="/editCountry"]').addClass('active')
-          function selectOption(){
-            var option = $("#option :selected").val();
-            if (option == "add"){
-              $('#addCountry').show();
-              $('#removeCountry').hide();
-              $('#message').text("")
-            }
-            if (option =="remove"){
-              $('#removeCountry').show();
-              $("#addCountry").hide();
-              $('#message').text("");
-            }
-          }
+  $('a[href="/editCountry"]').addClass('active');
+
+  function selectOption(){
+    var option = $("#option :selected").val();
+    if (option == "add"){
+      $('#addCountry').show();
+      $('#getCountry').hide();
+      // $('#message').text("")
+    }
+    if (option =="remove"){
+      $('#getCountry').show();
+      $("#addCountry").hide();
+
+    }
+    $('#message-remove').text("");
+    $('#message').text("");
+
+  }
+
+  $(document).on('click', '#cancel', function(event)
+  {
+      event.preventDefault();
+      $('#confirmPage').hide();
+      $('#message-remove').text("");
+      $('#message').text("");
+
+  });
+
   </script>
   </body>
 </html>
