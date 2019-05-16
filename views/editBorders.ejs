@@ -6,7 +6,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   </head>
   <body>
 
@@ -15,7 +15,7 @@
         var result %>
     <div class="container">
       <div class="row justify-content-center mt-3" style="white-space: pre-wrap;">
-        <div class="col-lg-5">
+        <div class="col-lg-5 col-xs-9 col-md-9">
         <p>       This page is to update borders of country.
         Please make sure the coordinates are <span style="color: red;"> valid</span> and
        <span style="color: red;"> don't overlap </span> with other countries' borders.
@@ -66,8 +66,8 @@
           <th scope="row">Country</th>
           <td><div id="name" class="row_data" edit_type="click"><%= data.properties.name[0] %></div></td>
           <td>
-              <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
-              <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
+              <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> <i class="fa fa-check fa-lg"></i> </button></span>
+              <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> <i class="fa fa-remove fa-lg"> </i></button></span>
           </td>
             <td></td>
         </tr>
@@ -79,9 +79,8 @@
                 <%= data.geometry.type %>
            </div></td>
             <td>
-                <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
-                <span class="btn-delete" style="visibility: hidden"><button class="btn btn-outline-info"> Remove </button></span>
-                <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
+                <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> <i class="fa fa-check fa-lg"></i></button></span>
+                <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> <i class="fa fa-remove fa-lg"></i></button></span>
             </td>
         </tr>
 
@@ -93,9 +92,9 @@
                         <br>
              </div></td>
             <td>
-              <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
-              <span class="btn-delete" style="visibility: hidden"><button class="btn btn-outline-info"> Remove </button></span>
-              <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
+              <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> <i class="fa fa-check fa-lg"></i></button></span>
+              <span class="btn-delete" style="visibility: hidden"><button class="btn btn-outline-info"> <i class="fa fa-trash fa-lg"> </i></button></span>
+              <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> <i class="fa fa-remove fa-lg"></i></button></span>
             </td>
         </tr>
 

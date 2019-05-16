@@ -5,10 +5,9 @@
     <title>CRUD for geoquiz</title>
     <link rel="icon" href="data:,">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   </head>
   <body>
     <% include ../fixed/nav %>
@@ -25,7 +24,7 @@
       </div>
       <div class="row justify-content-center" >
         <div class="col-xs-5 col-m-5">
-          <form class="mb-2" method="GET" action="/getCountryInfo">
+          <form class="mb-3" method="GET" action="/getCountryInfo">
             <div class="input-group" >
                 <div class="input-group-prepend">
                     <span class="input-group-text">Enter Country Name: </span>
@@ -50,37 +49,60 @@
         <tr>
           <th scope="col"></th>
           <th scope="col">Content</th>
-          <th scope="col">Add</th>
           <th scope="col">Update</th>
+          <!-- <th scope="col">Add</th> -->
         </tr>
       </thead>
       <tbody>
         <tr value = "properties.continent">
           <th scope="row">Continent</th>
-          <td><div id="continent" class="row_data" edit_type="click"><%= data.properties.continent %></div></td>
           <td>
-              <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
-              <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
+
+            <div id="continent" class="row_data" edit_type="click"><%= data.properties.continent %></div>
+
           </td>
-            <td></td>
+          <td>
+            <div class="input-group" >
+              <div class="input-group-prepend" >
+                <span class="btn-save" style="display: none"><button class="btn btn-outline-info"><i class="fa fa-check fa-lg"></i></button></span>
+                <span class="btn-cancel" style="display: none"><button class="btn btn-outline-info"> <i class="fa fa-remove fa-lg"> </i></button></span>
+              </div>
+           </div>
+
+          </td>
         </tr>
         <tr value ="properties.capital">
           <th scope="row">Capital</th>
           <td><div id ="capital" class="row_data" edit_type="click" value ="0"><%= data.properties.capital[0] %></div></td>
           <td>
-              <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info" > Save </button></span>
-              <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info" > Cancel </button></span>
+            <div class="input-group" >
+              <div class="input-group-prepend" >
+                <span class="btn-save" style="display: none"><button class="btn btn-outline-info"><i class="fa fa-check fa-lg"></i></button></span>
+                <span class="btn-cancel" style="display: none"><button class="btn btn-outline-info"> <i class="fa fa-remove fa-lg"> </i></button></span>
+              </div>
+           </div>
           </td>
-          <td></td>
         </tr>
         <tr value ="properties.name" >
           <th scope="row">Country</th>
           <td><div id="name" class="row_data" edit_type="click"><%= data.properties.name[0] %></div></td>
+          <!-- <td>
+            <div class="input-group" >
+              <div class="input-group-append" style="display: none">
+                <span class="btn-save" style="display: none"><button class="btn btn-outline-info"> <i class="fa fa-check fa-lg"></i> </button></span>
+                <span class="btn-cancel" style="display: none"><button class="btn btn-outline-info"> <i class="fa fa-remove fa-lg"></i> </button></span>
+              </div>
+           </div>
+       </td> -->
           <td>
-              <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
-              <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
+            <div class="input-group" >
+              <div class="input-group-prepend" >
+                <span class="btn-save" style="display: none"><button class="btn btn-outline-info"><i class="fa fa-check fa-lg"></i></button></span>
+                <span class="btn-cancel" style="display: none"><button class="btn btn-outline-info"> <i class="fa fa-remove fa-lg"> </i></button></span>
+              </div>
+           </div>
+
           </td>
-            <td></td>
         </tr>
 
         <tr id="altCapital" value ="altCapital">
@@ -97,17 +119,24 @@
                </td>
                <td>
                  <div class="input-group" >
-                  <input type=text class="form-control input" placeholder="add new data">
-                    <div class="input-group-append btn-add" style="visibility: hidden">
-                      <button class="btn btn-outline-info"> Add </button>
-                    </div>
+                   <div class="input-group-prepend" >
+                     <span class="btn-save" style="display: none"><button class="btn btn-outline-info"><i class="fa fa-check fa-lg"></i></button></span>
+                     <span class="btn-cancel" style="display: none"><button class="btn btn-outline-info"> <i class="fa fa-remove fa-lg"> </i></button></span>
+                     <span class="btn-delete" style="display: none"><button class="btn btn-outline-info"> <i class="fa fa-trash fa-lg"></i> </button></span>
+                     <span class="btn-add" style="display: none"><button class="btn btn-outline-info"> <i class="fa fa-plus fa-lg"></i> </button></span>
+                   </div>
+                   <input type=text class="form-control input" placeholder="add new data">
                 </div>
+
                </td>
-              <td>
-                  <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
-                  <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
-                  <span class="btn-delete" style="visibility: hidden"><button class="btn btn-outline-info"> Remove </button></span>
-              </td>
+              <!-- <td>
+                <div class="input-group" >
+                 <input type=text class="form-control input" placeholder="add new data">
+                   <div class="input-group-append btn-add" style="display: none">
+                     <button class="btn btn-outline-info"> <i class="fa fa-plus fa-lg"></i> </button>
+                   </div>
+               </div>
+              </td> -->
 
         </tr>
         <tr value ="properties.misspell_capital">
@@ -125,22 +154,29 @@
             </td>
             <td>
               <div class="input-group" >
-               <input type=text class="form-control input" placeholder="add new data">
-                 <div class="input-group-append btn-add" style="visibility: hidden">
-                   <button class="btn btn-outline-info"> Add </button>
-                 </div>
+                <div class="input-group-prepend" >
+                  <span class="btn-save" style="display: none"><button class="btn btn-outline-info"><i class="fa fa-check fa-lg"></i></button></span>
+                  <span class="btn-cancel" style="display: none"><button class="btn btn-outline-info"> <i class="fa fa-remove fa-lg"> </i></button></span>
+                  <span class="btn-delete" style="display: none"><button class="btn btn-outline-info"> <i class="fa fa-trash fa-lg"></i> </button></span>
+                  <span class="btn-add" style="display: none"><button class="btn btn-outline-info"> <i class="fa fa-plus fa-lg"></i> </button></span>
+                </div>
+                <input type=text class="form-control input" placeholder="add new data">
              </div>
-           </td>
-              <td>
-                  <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
-                  <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info">Cancel </button></span>
-                  <span class="btn-delete" style="visibility: hidden"><button class="btn btn-outline-info"> Remove </button></span>
-              </td>
+            </td>
+           <!-- <td>
+             <div class="input-group" >
+              <input type=text class="form-control input" placeholder="add new data">
+                <div class="input-group-append btn-add" style="display: none">
+                  <button class="btn btn-outline-info"> <i class="fa fa-plus fa-lg"></i> </button>
+                </div>
+            </div>
+           </td> -->
 
         </tr>
         <tr id="altName" value ="altName">
           <th scope="row">Alternative Answers for Country</th>
               <td>
+
                 <% var nameLen = data.properties.name.length  %>
                  <% if ( nameLen > 1){ %>
                     <% for (var i =1; i < nameLen; i++ ){ %>
@@ -150,19 +186,17 @@
                   <%  } %>
                <% } %>
              </td>
-             <td>
-               <div class="input-group" >
-                <input type=text class="form-control input" placeholder="add new data">
-                  <div class="input-group-append btn-add" style="visibility: hidden">
-                    <button class="btn btn-outline-info"> Add </button>
-                  </div>
-              </div>
-           </td>
-             <td>
-                 <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
-                 <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
-                 <span class="btn-delete" style="visibility: hidden"><button class="btn btn-outline-info"> Remove </button></span>
-             </td>
+               <td>
+                 <div class="input-group" >
+                   <div class="input-group-prepend" >
+                     <span class="btn-save" style="display: none"><button class="btn btn-outline-info"><i class="fa fa-check fa-lg"></i></button></span>
+                     <span class="btn-cancel" style="display: none"><button class="btn btn-outline-info"> <i class="fa fa-remove fa-lg"> </i></button></span>
+                     <span class="btn-delete" style="display: none"><button class="btn btn-outline-info"> <i class="fa fa-trash fa-lg"></i> </button></span>
+                     <span class="btn-add" style="display: none"><button class="btn btn-outline-info"> <i class="fa fa-plus fa-lg"></i> </button></span>
+                   </div>
+                   <input type=text class="form-control input" placeholder="add new data">
+                </div>
+              </td>
         </tr>
         <tr value ="properties.misspell_name">
           <th scope="row">Misspellings for Country (3)</th>
@@ -178,17 +212,15 @@
             </td>
             <td>
               <div class="input-group" >
-               <input type=text class="form-control input" placeholder="add new data">
-                 <div class="input-group-append btn-add" style="visibility: hidden">
-                   <button class="btn btn-outline-info"> Add </button>
-                 </div>
+                <div class="input-group-prepend" >
+                  <span class="btn-save" style="display: none"><button class="btn btn-outline-info"><i class="fa fa-check fa-lg"></i></button></span>
+                  <span class="btn-cancel" style="display: none"><button class="btn btn-outline-info"> <i class="fa fa-remove fa-lg"> </i></button></span>
+                  <span class="btn-delete" style="display: none"><button class="btn btn-outline-info"> <i class="fa fa-trash fa-lg"></i> </button></span>
+                  <span class="btn-add" style="display: none"><button class="btn btn-outline-info"> <i class="fa fa-plus fa-lg"></i> </button></span>
+                </div>
+                <input type=text class="form-control input" placeholder="add new data">
              </div>
-          </td>
-              <td>
-                  <span class="btn-save" style="visibility: hidden"><button class="btn btn-outline-info"> Save </button></span>
-                  <span class="btn-cancel" style="visibility: hidden"><button class="btn btn-outline-info"> Cancel </button></span>
-                  <span class="btn-delete" style="visibility: hidden"><button class="btn btn-outline-info"> Remove </button></span>
-              </td>
+            </td>
         </tr>
       </tbody>
     </table>
@@ -199,32 +231,29 @@
     <!-- <script src="dbFunctions.js" type="text/javascript" >
     </script> -->
     <script type="text/javascript">
-    function selectOption(){
-      var option = $("#option :selected").val();
-      if (option == "add"){
-        $('#addCountry').show();
-        $('#removeCountry').hide();
-      }
-      if (option =="remove"){
-        $('#removeCountry').show();
-        $("#addCountry").hide();
-      }
-    }
-
+    console.log("script")
       var id = $("#databaseTable").attr('value');
+
     $(document).on('click', '.row_data', function(event)
     {
     	event.preventDefault();
 
+      $('.row_data').attr('clicked', false)
     	if($(this).attr('edit_type') == 'button')
     	{
+
     		return false;
     	}
       var tbl_row = $(this).closest('tr');
+      $('.btn-add').css({"display": "none"});
+      $('.btn-save').css({"display": "none"});
+      $('.btn-delete').css({"display": "none"});
+      $('.btn-cancel').css({"display": "none"});
 
-      tbl_row.find('.btn-save').css({"visibility": "visible"});
-	    tbl_row.find('.btn-cancel').css({"visibility": "visible"});
-      tbl_row.find('.btn-delete').css({"visibility": "visible"});
+
+      tbl_row.find('.btn-save').css({"display": "block"});
+	    tbl_row.find('.btn-cancel').css({"display": "block"});
+      tbl_row.find('.btn-delete').css({"display": "block"});
       tbl_row.find('.row_data').attr("clicked", false);
 
       $(this).attr('original_entry', $(this).html());
@@ -238,6 +267,7 @@
     	$(this).addClass('bg-warning').css('padding','5px');
 
     	$(this).focus();
+      $(this).attr('edit_type', 'button');
     })
 
 
@@ -247,10 +277,10 @@
     		var tbl_row = $(this).closest('tr');
     	//	var row_id = tbl_row.attr('row_id');
     		//hide save and cacel buttons
-    		tbl_row.find('.btn-save').css({"visibility": "hidden"});
-    		tbl_row.find('.btn-cancel').css({"visibility": "hidden"});
-        tbl_row.find('.btn-delete').css({"visibility": "hidden"});
-        tbl_row.find('.btn-add').css({"visibility": "hidden"});
+    		tbl_row.find('.btn-save').css({"display": "none"});
+    		tbl_row.find('.btn-cancel').css({"display": "none"});
+        tbl_row.find('.btn-delete').css({"display": "none"});
+        tbl_row.find('.btn-add').css({"display": "none"});
 
     		//make the whole row editable
     		tbl_row.find('.row_data')
@@ -276,10 +306,10 @@
         var dataToRemove = $(".row_data[clicked=true]").html().trim();
         console.log(dataToRemove);
         //hide save and cacel buttons
-        tbl_row.find('.btn-save').css({"visibility": "hidden"});
-        tbl_row.find('.btn-cancel').css({"visibility": "hidden"});
-        tbl_row.find('.btn-add').css({"visibility": "hidden"});
-        tbl_row.find('.btn-delete').css({"visibility": "hidden"});
+        tbl_row.find('.btn-save').css({"display": "none"});
+        tbl_row.find('.btn-cancel').css({"display": "none"});
+        tbl_row.find('.btn-add').css({"display": "none"});
+        tbl_row.find('.btn-delete').css({"display": "none"});
 
         if (field =="altName"){
           field = "properties.name"
@@ -306,6 +336,7 @@
           dataType: 'json',
           success: function(data){
             if (data.nModified > 0) location.reload();
+            else alert("Failed to Remove");
           }
         });
       });
@@ -313,26 +344,28 @@
   //make cancel and add button appear
   $(document).on('click', '.input', function(event)
     {
+      $('.btn-add').css({"display": "none"});
+      $('.btn-save').css({"display": "none"});
+      $('.btn-delete').css({"display": "none"});
+      $('.btn-cancel').css({"display": "none"});
       	event.preventDefault();
       var tbl_row = $(this).closest('tr');
       //hide save and cacel buttons
-      tbl_row.find('.btn-add').css({"visibility": "visible"});
-      tbl_row.find('.btn-cancel').css({"visibility": "visible"});
-
+      tbl_row.find('.btn-add').css({"display": "block"});
+      tbl_row.find('.btn-cancel').css({"display": "block"});
+      $(this).attr('edit_type', 'button');
     });
 
   //Add the data that was added
   $(document).on('click', '.btn-add', function(event)
     {
-
+      console.log("add")
       event.preventDefault();
       var tbl_row = $(this).closest('tr');
       var field = tbl_row.attr('value');
 
       var dataToAdd = tbl_row.find(".input").val();
-      //hide save and cacel buttons
-      tbl_row.find('.btn-save').css({"visibility": "hidden"});
-      tbl_row.find('.btn-cancel').css({"visibility": "hidden"});
+
 
     //  var id = $("#databaseTable").attr('value');
       if (field =="altName"){
@@ -358,36 +391,28 @@
           if (data.nModified ==0){
             alert("Spelling already exists in the database");
           }
-          // else if (data.nModified){
-          //   // alert(data.nModified)
-          // }
+          else if (data.nModified =="Input needed"){
+            alert(data.nModified)
+          }
           location.reload();
+          //hide save and cacel buttons
+          tbl_row.find('.btn-save').css({"display": "none"});
+          tbl_row.find('.btn-cancel').css({"display": "none"});
         }
       });
 
 
     });
 
-    $(document).on('focusout', '.row_data', function(event)
-    {
-    	event.preventDefault();
-    	if($(this).attr('edit_type') == 'button')
-    	{
-    		return false;
-    	}
-    	var row_div = $(this)
-    	.removeClass('bg-warning') //add bg css
-    	.css('padding','')
 
-    })
 
     //Send Update Request
     $(document).on('click', '.btn-save', function(event)
     {
     	event.preventDefault();
-
+      console.log("save")
     	var tbl_row = $(this).closest('tr');
-
+      $(this).attr('edit_type', 'click');
       //Field to update in a database
       var field = tbl_row.attr('value');
 
@@ -401,9 +426,7 @@
       console.log(field);
 
       //hide save and cacel buttons
-      tbl_row.find('.btn-save').css({"visibility": "hidden"});
-      tbl_row.find('.btn-cancel').css({"visibility": "hidden"});
-      tbl_row.find('.btn-delete').css({"visibility": "hidden"});
+
 
       var name; //can be capital or name depending on what field to update
       if (field == "altCapital"){
@@ -447,14 +470,60 @@
         }),
         dataType: 'json',
         success: function(data){
-          console.log(data)
-          console.log("Success update request")
+          if (data.n >0){
+            console.log(data)
+            console.log("Success update request")
+          }
+          else{
+            location.reload()
+            alert("Failed to save")
+          }
+
         }
       });
+      tbl_row.find('.btn-save').css({"display": "none"});
+      tbl_row.find('.btn-cancel').css({"display": "none"});
+      tbl_row.find('.btn-delete').css({"display": "none"});
 
     });
 
+    $(document).on('focusout', '.row_data', function(event)
+    {
 
+      var row_div = $(this).removeClass('bg-warning') //add bg css
+      .css('padding','')
+
+    	event.preventDefault();
+    	if($(this).attr('edit_type') == 'button')
+    	{
+        $(this).attr('edit_type', 'click');
+    		return false;
+    	}
+      // $(this).attr('clicked', false);
+      $('.btn-add').css({"display": "none"});
+      $('.btn-save').css({"display": "none"});
+      $('.btn-delete').css({"display": "none"});
+      $('.btn-cancel').css({"display": "none"});
+
+
+    })
+    $(document).on('focusout', '.input', function(event)
+    {
+      	event.preventDefault();
+      console.log("Edit type focus out input")
+      if($(this).attr('edit_type') == 'button')
+      {
+        $(this).attr('edit_type','click');
+        return false;
+      }
+      // $(this).attr('clicked', false);
+      $('.btn-add').css({"display": "none"});
+      $('.btn-save').css({"display": "none"});
+      $('.btn-delete').css({"display": "none"});
+      $('.btn-cancel').css({"display": "none"});
+
+      event.preventDefault();
+    })
 
     </script>
   </body>
