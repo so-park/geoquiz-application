@@ -12,7 +12,7 @@ The project contains codes for quiz and front end for managing database.
 
 * Clone Repository to your machine
 ```
-$ git clone "GIT REPOSITORY"
+$ git clone "GIT REPOSITORY" *Write the actual repo*
 ```
 * Go to the repository and install npm to install all the dependencies.
 
@@ -52,9 +52,9 @@ pm2 start app.js
 
 ## Front end for the database
 
-When the app starts for the first time (/login), there is default credentials for admin. 
-Use id: etm and password: geoquiz2018 to access the page then add a new user. Make sure user name is admin to grant access to manage user page. If you don't want user to have access to manage user page, simply change user name to something else.
-You can remove the default credentials afterwards. 
+When the app starts for the first time (/login), there is a default credential for admin. 
+Use id: `etm` and password: `geoquiz2018` to access the page then add a new user. Make sure user name is admin to grant access to manage user page. If you don't want user to have access to manage user page, simply change user name to something else.
+You can remove the default credentials afterwards. To keep your site secure you should modify the password of user `etm` or delete it completely. 
 
 ![image](/images/database-demo.gif "Database Demo")
 
@@ -72,6 +72,6 @@ and make sure to uncomment the top of the country.routes.js file
 ![image](/images/token.png)
 
 Then you can uncomment the sections router.post('/submission') and router.post('/quizStarted') in the file country.router.js. 
-Make sure to change the url to your school's canvas page. 
+Make sure to change the url to your institution's canvas page. 
 
 ![image](/images/url.png)
