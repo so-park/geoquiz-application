@@ -4,28 +4,22 @@
 ## ABOUT
 This project is originally developed for a political science professor to use for her teaching at SPU and is supported by ETM (Educational Technogloy and Media). 
 
-The project contains codes for quiz and front end for managing database. The live quiz is hosted in digital ocean and integrated to Canvas, however, users will need to configure those settings separately. 
-
+The project contains codes for quiz and front end for managing database.
 ![image](/images/quiz-demo.gif)
 
 
-## Prerequisites 
+## Before Running the application
 
-Install node.js and npm. 
-Make sure all the dependencies below are properly installed before running the application.
+* Clone Repository to your machine
+```
+$ git clone "GIT REPOSITORY"
+```
+* Go to the repository and install npm to install all the dependencies.
 
 ```
-    "bcrypt": "^3.0.6",
-    "compression": "^1.7.4",
-    "dotenv": "^7.0.0",
-    "ejs": "^2.6.1",
-    "express": "^4.16.4",
-    "express-session": "^1.16.1",
-    "formidable": "^1.2.1",
-    "mongo": "^0.1.0",
-    "mongoose": "^5.4.20",
-    "request": "^2.88.0"
+$ npm install
 ```
+
 ## Initializing the database
 
 There are two data files: for countries and users. 
@@ -33,16 +27,25 @@ countryDatabase.json stores information about countries of the world for the qui
 
 Before running the application, make sure to create database using
 ```
-node createdatabase.js
+$ node createdatabase.js
 ```
 
 ## Running the application
 
-```
-node app.js
-```
-In order to run the application permanently, use pm2. Make sure to uncomment the codes to use pm2. 
+After installing npm and initializing the database, the command below will start the application.
 
+```
+$ node app.js
+```
+You should see the messages if the application starts running successfully.
+
+![image](/images/nodeMessage.png)
+
+In order to run the application permanently, install pm2 using
+```
+$ npm install pm2 -g 
+```
+Then use below command to run the application.
 ```
 pm2 start app.js
 ```
@@ -56,3 +59,19 @@ You can remove the default credentials afterwards.
 ![image](/images/database-demo.gif "Database Demo")
 
 
+## Canvas Integration 
+
+First the application needs to be added as an application to Canvas. It also requires a token to send the grade back to Canvas, so the user must generate a token and make sure that it has permission to post grades. For more infomation on how to generate a token, visit https://community.canvaslms.com/docs/DOC-10806-4214724194
+The acquired token can be saved in .env file 
+
+```
+TOKEN = ...
+```
+and make sure to uncomment the top of the country.routes.js file 
+
+![image](/images/token.png)
+
+Then you can uncomment the sections router.post('/submission') and router.post('/quizStarted') in the file country.router.js. 
+Make sure to change the url to your school's canvas page. 
+
+![image](/images/url.png)
