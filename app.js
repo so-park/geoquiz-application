@@ -94,11 +94,6 @@ app.get('/favicon.ico' , function(req , res){
 //  next();
 // });
 
-// app.get('/*', function(req, res, next){
-//   res.set('Last-Modified', (new Date()).toUTCString());
-// 	console.log("entered last modified handler")
-//   next();
-// });
 
 //serve static files in a folder and cache six months
 // app.use('/', express.static(path.join(__dirname,'views'),{

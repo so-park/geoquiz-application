@@ -3,8 +3,10 @@ var router = express.Router();
 var express = require('express-session');
 var httpRequest = require('request');
 const path = require('path');
+//******************************
 // require('dotenv').config();
 // token = process.env.TOKEN
+//******************************
 const countries = require('../controllers/country.controller.js');
 const users = require('../controllers/user.controller.js')
 
@@ -20,7 +22,7 @@ router.post('/',function handleAfricaPage(request, response) {
 router.post('/checkanswers', countries.checkAnswers);
 router.post('/selectContinent', countries.selectContinent);
 
-//Canvas Integration, sending comments and grades.
+//*******************Canvas Integration**************************************************
 // router.post('/submission', function handleSubmissionsPage(request, response){
 // 		console.log("Entered Automatic Submission")
 // 		var inputs = request.body.studentsAnswers;
@@ -108,6 +110,8 @@ router.post('/selectContinent', countries.selectContinent);
 // 	 			}
 // 	 	 });
 // 		})
+//***********************************************************************************************
+//***********************************************************************************************
 router.post('/addData', countries.addData);
 router.post('/deleteData', countries.delete);
 router.post('/addCountry', countries.create);
