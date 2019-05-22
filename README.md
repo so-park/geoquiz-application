@@ -71,13 +71,11 @@ TOKEN = ...
 
 ![image](/images/token.png)
 
-* uncomment the sections router.post('/submission') and router.post('/quizStarted') in the file country.router.js. 
-The sections that need to be uncommented start with 
+* Uncomment the sections router.post('/submission') and router.post('/quizStarted') in the file country.router.js. 
+  The sections that need to be uncommented are between
 ```
 ******Canvas Integration*********
-```
-and end with
-```
+        [Block of codes]
 ********************************
 ```
 
