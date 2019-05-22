@@ -522,7 +522,7 @@ exports.fileUpload = function handlefileUpload(request, response){
               }
 
 							if (option == ""){
-								failedList.push(i+1);
+								failedList.push(i+1 + ": Invalid Option");
 								continue;
 							}
 
@@ -535,7 +535,7 @@ exports.fileUpload = function handlefileUpload(request, response){
 							console.log(result)
 							if (result.n == 0){
 								console.log(i)
-								failedList.push(i+1)
+								failedList.push(i+1 +": " +line)
 							}
         }
 				console.log(failedList);

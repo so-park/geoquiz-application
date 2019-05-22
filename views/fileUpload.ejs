@@ -49,9 +49,13 @@
         <% var message; %>
         <% if (message != undefined){ %>
             <div>
-                <p> <%= message%> </p>
+                <p class="text-success"> <%= message%> </p>
                 <% if (failedList.length > 0){ %>
-                  <p> Lines <%= failedList %> are not updated. Please check spelling of country or options. </p>
+                  <p> Lines that failed to update:</p>
+                  <% for (var i =0; i < failedList.length; i++){ %>
+                    <%= failedList[i] %>
+                    <br>
+                  <% }%>
                 <% }%>
             </div>
         <% } %>
