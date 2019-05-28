@@ -61,8 +61,13 @@ You can remove the default credentials afterwards. To keep your site secure you 
 
 ## Canvas Integration 
 
-First the application needs to be added as an application to Canvas. It also requires a token to send the grade back to Canvas, so the user must generate a token and make sure that it has permission to post grades. For more infomation on how to generate a token, visit https://community.canvaslms.com/docs/DOC-10806-4214724194. The token will be a compination of speical characters, numbers, and letters. 
-* Create .env file in the project to store the acquired token. 
+When creating a server, it needs to be created on https in order to be integrated to Canvas.This application doesn't support redirection from http to https as it uses port 3443 as default. 
+
+The application needs to be added as an application to Canvas. It also requires a token to send the grade back to Canvas, so the user must generate a token and make sure that it has permission to post grades. For more infomation on how to generate a token, visit https://community.canvaslms.com/docs/DOC-10806-4214724194. The token will be a combination of special characters, numbers, and letters. 
+* Create a .env file in your project's directory (csProject/) to store the acquired token 
+```
+$ touch .env
+```
 * Write the below codes and change ... to the actual token acquired
 ```
 TOKEN = ...
