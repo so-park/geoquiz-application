@@ -12,7 +12,7 @@ The project contains codes for quiz and front end for managing database.
 
 * Clone Repository to your machine
 ```
-$ git clone git@github.com:SionPark126/geoquiz-application.git
+$ git clone git@github.com:so-park/geoquiz-application.git
 ```
 * Go to the repository and install npm to install all the dependencies.
 
