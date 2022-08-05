@@ -25,7 +25,7 @@
     "express-session": "^1.16.1",
     "formidable": "^1.2.1",
     "mongo": "^0.1.0",
-    "mongoose": "^5.4.20",
+    "mongoose": "^5.7.5",
     "request": "^2.88.0"
   }
 }
